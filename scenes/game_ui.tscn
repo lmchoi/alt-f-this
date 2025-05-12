@@ -1,24 +1,32 @@
-[gd_scene format=3 uid="uid://bkcqc3g6mk6ky"]
+[gd_scene load_steps=3 format=3 uid="uid://bkcqc3g6mk6ky"]
+
+[ext_resource type="Script" uid="uid://ccibd5kcuisnk" path="res://scenes/game_ui.gd" id="1_yubou"]
+[ext_resource type="Script" uid="uid://o4uecgfegpr2" path="res://scripts/ui/action_button.gd" id="2_rns2u"]
 
 [node name="GameUI" type="Node"]
+script = ExtResource("1_yubou")
 
 [node name="ActionPanel" type="MarginContainer" parent="."]
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Action Buttons" type="HBoxContainer" parent="ActionPanel"]
+[node name="ActionButtons" type="HBoxContainer" parent="ActionPanel"]
 layout_mode = 2
 
-[node name="WorkButtonContainer" type="CenterContainer" parent="ActionPanel/Action Buttons"]
+[node name="WorkButtonContainer" type="CenterContainer" parent="ActionPanel/ActionButtons"]
 layout_mode = 2
 
-[node name="Work" type="Button" parent="ActionPanel/Action Buttons/WorkButtonContainer"]
+[node name="WorkButton" type="Button" parent="ActionPanel/ActionButtons/WorkButtonContainer"]
 layout_mode = 2
 text = "Work"
+script = ExtResource("2_rns2u")
+metadata/_custom_type_script = "uid://o4uecgfegpr2"
 
-[node name="SlackButtonContainer" type="CenterContainer" parent="ActionPanel/Action Buttons"]
+[node name="SlackButtonContainer" type="CenterContainer" parent="ActionPanel/ActionButtons"]
 layout_mode = 2
 
-[node name="Slack" type="Button" parent="ActionPanel/Action Buttons/SlackButtonContainer"]
+[node name="SlackButton" type="Button" parent="ActionPanel/ActionButtons/SlackButtonContainer"]
 layout_mode = 2
 text = "Slack"
+script = ExtResource("2_rns2u")
+metadata/_custom_type_script = "uid://o4uecgfegpr2"
