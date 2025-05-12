@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bkcqc3g6mk6ky"]
+
+[node name="GameUI" type="Node"]
+
+[node name="ActionPanel" type="MarginContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Action Buttons" type="HBoxContainer" parent="ActionPanel"]
+layout_mode = 2
+
+[node name="WorkButtonContainer" type="CenterContainer" parent="ActionPanel/Action Buttons"]
+layout_mode = 2
+
+[node name="Work" type="Button" parent="ActionPanel/Action Buttons/WorkButtonContainer"]
+layout_mode = 2
+text = "Work"
+
+[node name="SlackButtonContainer" type="CenterContainer" parent="ActionPanel/Action Buttons"]
+layout_mode = 2
+
+[node name="Slack" type="Button" parent="ActionPanel/Action Buttons/SlackButtonContainer"]
+layout_mode = 2
+text = "Slack"
