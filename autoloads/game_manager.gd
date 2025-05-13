@@ -31,3 +31,9 @@ func do_work():
 		chaos += event_result.chaos
 
 	event_occurred.emit(event_result)
+
+func slack_off():
+	chaos -= 10
+
+	var event_result := {"text": "Slacker", "money": 0, "chaos": 0}
+	event_occurred.emit(event_result)

@@ -16,10 +16,7 @@ func _on_work_button_pressed():
 	GameManager.do_work()
 
 func _on_slack_button_pressed():
-	# TODO more generic function to update chaos
-	# TODO can't go below 0
-	GameManager.increase_chaos(-10)
-	$EventPopup.show_event("Slacker")
+	GameManager.slack_off()
 	
 func _update_chaos_level(new_amount: int):
 	chaos_bar.value = new_amount
