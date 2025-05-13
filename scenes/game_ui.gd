@@ -20,6 +20,8 @@ func _on_slack_button_pressed():
 	# TODO more generic function to update chaos
 	# TODO can't go below 0
 	PlayerState.increase_chaos(-10)
+	$EventPopup.show_event("Slacker")
+	
 
 func _update_chaos_level(new_amount: int):
 	chaos_bar.value = new_amount

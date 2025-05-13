@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bkcqc3g6mk6ky"]
+[gd_scene load_steps=7 format=3 uid="uid://bkcqc3g6mk6ky"]
 
 [ext_resource type="Script" uid="uid://ccibd5kcuisnk" path="res://scenes/game_ui.gd" id="1_yubou"]
 [ext_resource type="Script" uid="uid://o4uecgfegpr2" path="res://scripts/ui/action_button.gd" id="2_rns2u"]
 [ext_resource type="Script" uid="uid://di3ejf3ytuwkn" path="res://scripts/ui/money_label.gd" id="2_u001w"]
+[ext_resource type="PackedScene" uid="uid://b5nqygpy3h33x" path="res://scenes/event_popup.tscn" id="4_u2dgd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rns2u"]
 bg_color = Color(0.25098, 0, 0, 1)
@@ -54,3 +55,5 @@ layout_mode = 2
 text = "Slack"
 script = ExtResource("2_rns2u")
 metadata/_custom_type_script = "uid://o4uecgfegpr2"
+
+[node name="EventPopup" parent="." instance=ExtResource("4_u2dgd")]
