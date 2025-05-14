@@ -1,5 +1,6 @@
 extends Node
 
+@onready var day_label := $"%DayLabel"
 @onready var work_button := $"%WorkButton" as ActionButton
 @onready var slack_button := $"%SlackButton" as ActionButton
 @onready var money_label := $"%MoneyLabel" as MoneyLabel
@@ -11,6 +12,7 @@ func _ready():
 	GameManager.money_changed.connect(money_label.update_amount)
 	GameManager.chaos_changed.connect(_update_chaos_level)
 	GameManager.event_occurred.connect(_on_event_occurred)
+	GameManager.next_day.connect(_on_next_day)
 
 func _on_work_button_pressed():
 	GameManager.do_work()
@@ -24,3 +26,6 @@ func _update_chaos_level(new_amount: int):
 func _on_event_occurred(event: Dictionary):
 	if event.text != "":
 		$EventPopup.show_event(event.text)
+
+func _on_next_day(nth_day: int):
+	day_label.text = "Day " + str(nth_day)

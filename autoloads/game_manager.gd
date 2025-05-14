@@ -1,7 +1,13 @@
 extends Node
+signal next_day(nth)
 signal money_changed(amount)
 signal chaos_changed(amount)
 signal event_occurred(event_data)
+
+var day := 1:
+	set(value):
+		day = value
+		next_day.emit(day)
 
 var money := 0:
 	set(value):
@@ -22,6 +28,7 @@ const WORK_EVENTS := [
 func do_work():
 	money += 10
 	chaos += 5
+	day += 1
 
 	var event_result := {"text": "", "money": 0, "chaos": 0}
 
@@ -34,6 +41,7 @@ func do_work():
 
 func slack_off():
 	chaos -= 10
+	day += 1
 
 	var event_result := {"text": "Slacker", "money": 0, "chaos": 0}
 	event_occurred.emit(event_result)
