@@ -25,12 +25,12 @@ const WORK_EVENTS := [
 	{"text": "Legacy code explodes. Debug for 3 hours.", "chaos": +25, "money": -50}
 ]
 
-var current_task = {"title": "Fix CEO's PowerPoint", "due_day": 5}
+var current_task = Task.new()
 
 func do_work():
 	money += 10
 	chaos += 5
-	day += 1
+	current_task.do_work(1)
 
 	var event_result := {"text": "", "money": 0, "chaos": 0}
 
@@ -40,6 +40,8 @@ func do_work():
 		chaos += event_result.chaos
 
 	event_occurred.emit(event_result)
+#	// do this at the end
+	day += 1
 
 func slack_off():
 	chaos -= 10
