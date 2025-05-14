@@ -30,7 +30,7 @@ var current_task = Task.new()
 func do_work():
 	money += 10
 	chaos += 5
-	current_task.do_work(1)
+	current_task.do_work()
 
 	var event_result := {"text": "", "money": 0, "chaos": 0}
 
@@ -42,6 +42,8 @@ func do_work():
 	event_occurred.emit(event_result)
 #	// do this at the end
 	day += 1
+	if current_task.due_day == day:
+		event_occurred.emit({"text": "DEADLINE"})		
 
 func slack_off():
 	chaos -= 10

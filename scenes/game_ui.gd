@@ -16,6 +16,8 @@ func _ready():
 	GameManager.chaos_changed.connect(_update_chaos_level)
 	GameManager.event_occurred.connect(_on_event_occurred)
 	GameManager.next_day.connect(_on_next_day)
+	GameManager.current_task.work_completed.connect(_on_event_occurred)
+
 	_on_next_day(GameManager.day)
 
 func _on_work_button_pressed():
