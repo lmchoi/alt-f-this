@@ -14,46 +14,68 @@ bg_color = Color(1, 0, 0, 1)
 [node name="GameUI" type="Node"]
 script = ExtResource("1_yubou")
 
-[node name="StatusBar" type="PanelContainer" parent="."]
-layout_direction = 2
-anchors_preset = 10
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
 anchor_right = 1.0
-offset_bottom = 27.0
+anchor_bottom = 1.0
 grow_horizontal = 2
-scale = Vector2(1.0043, 0.98527)
+grow_vertical = 2
+theme_override_constants/separation = 20
 
-[node name="MoneyLabel" type="Label" parent="StatusBar"]
+[node name="StatusBar" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="DayLabel" type="Label" parent="VBoxContainer/StatusBar"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Day 1"
+
+[node name="MoneyLabel" type="Label" parent="VBoxContainer/StatusBar"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "$0"
+horizontal_alignment = 1
 script = ExtResource("2_u001w")
 metadata/_custom_type_script = "uid://di3ejf3ytuwkn"
 
-[node name="ChaosBar" type="ProgressBar" parent="StatusBar"]
+[node name="ChaosBar" type="ProgressBar" parent="VBoxContainer/StatusBar"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_styles/background = SubResource("StyleBoxFlat_rns2u")
 theme_override_styles/fill = SubResource("StyleBoxFlat_u001w")
 
-[node name="ActionButtons" type="HBoxContainer" parent="."]
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -31.0
-grow_horizontal = 2
-grow_vertical = 0
+[node name="TaskPanel" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
 
-[node name="WorkButton" type="Button" parent="ActionButtons"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TaskPanel"]
+layout_mode = 2
+
+[node name="TaskLabel" type="Label" parent="VBoxContainer/TaskPanel/VBoxContainer"]
+layout_mode = 2
+text = "TASK: Fix CEO's PowerPoint"
+
+[node name="DeadlineLabel" type="Label" parent="VBoxContainer/TaskPanel/VBoxContainer"]
+layout_mode = 2
+text = "Deadline: 5 days left"
+
+[node name="ActionButtons" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="WorkButton" type="Button" parent="VBoxContainer/ActionButtons"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Work"
 script = ExtResource("2_rns2u")
 metadata/_custom_type_script = "uid://o4uecgfegpr2"
 
-[node name="SlackButton" type="Button" parent="ActionButtons"]
+[node name="SlackButton" type="Button" parent="VBoxContainer/ActionButtons"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Slack"
 script = ExtResource("2_rns2u")
 metadata/_custom_type_script = "uid://o4uecgfegpr2"
 
 [node name="EventPopup" parent="." instance=ExtResource("4_u2dgd")]
+position = Vector2i(40, 60)

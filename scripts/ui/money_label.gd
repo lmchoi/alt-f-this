@@ -8,7 +8,7 @@ extends Label
 
 func update_amount(new_amount: int):
 	text = prefix + str(new_amount)
-	_play_scale_animation()
+	#_play_scale_animation()
 
 func _play_scale_animation():
 	var tween = create_tween().set_trans(Tween.TRANS_ELASTIC)

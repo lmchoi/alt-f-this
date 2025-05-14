@@ -3,7 +3,9 @@
 [ext_resource type="Script" uid="uid://cfgmagjgs0vvn" path="res://scenes/event_popup.gd" id="1_fu0u0"]
 
 [node name="EventPopup" type="PopupPanel"]
+transparent_bg = false
 visible = true
+transparent = false
 script = ExtResource("1_fu0u0")
 
 [node name="EventMessage" type="Label" parent="."]

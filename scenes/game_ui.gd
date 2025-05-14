@@ -1,9 +1,9 @@
 extends Node
 
-@onready var work_button := $ActionButtons/WorkButton as ActionButton
-@onready var slack_button := $ActionButtons/SlackButton as ActionButton
-@onready var money_label := $StatusBar/MoneyLabel as MoneyLabel
-@onready var chaos_bar := $StatusBar/ChaosBar
+@onready var work_button := $"%WorkButton" as ActionButton
+@onready var slack_button := $"%SlackButton" as ActionButton
+@onready var money_label := $"%MoneyLabel" as MoneyLabel
+@onready var chaos_bar := $"%ChaosBar"
 
 func _ready():
 	work_button.pressed.connect(_on_work_button_pressed)
