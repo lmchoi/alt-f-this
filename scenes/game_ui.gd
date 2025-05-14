@@ -6,6 +6,8 @@ extends Node
 @onready var money_label := $"%MoneyLabel" as MoneyLabel
 @onready var chaos_bar := $"%ChaosBar"
 
+@onready var deadline_label := $"%DeadlineLabel"
+
 func _ready():
 	work_button.pressed.connect(_on_work_button_pressed)
 	slack_button.pressed.connect(_on_slack_button_pressed)
@@ -13,6 +15,7 @@ func _ready():
 	GameManager.chaos_changed.connect(_update_chaos_level)
 	GameManager.event_occurred.connect(_on_event_occurred)
 	GameManager.next_day.connect(_on_next_day)
+	_on_next_day(GameManager.day)
 
 func _on_work_button_pressed():
 	GameManager.do_work()
@@ -29,3 +32,5 @@ func _on_event_occurred(event: Dictionary):
 
 func _on_next_day(nth_day: int):
 	day_label.text = "Day " + str(nth_day)
+	var days_left = GameManager.current_task.get("due_day") - nth_day
+	deadline_label.text = "Deadline: " + str(days_left) + " days left"

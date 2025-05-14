@@ -53,10 +53,12 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="TaskLabel" type="Label" parent="VBoxContainer/TaskPanel/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "TASK: Fix CEO's PowerPoint"
 
 [node name="DeadlineLabel" type="Label" parent="VBoxContainer/TaskPanel/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Deadline: 5 days left"
 
@@ -79,3 +81,4 @@ metadata/_custom_type_script = "uid://o4uecgfegpr2"
 
 [node name="EventPopup" parent="." instance=ExtResource("4_u2dgd")]
 position = Vector2i(40, 60)
+visible = false

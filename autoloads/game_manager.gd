@@ -25,6 +25,8 @@ const WORK_EVENTS := [
 	{"text": "Legacy code explodes. Debug for 3 hours.", "chaos": +25, "money": -50}
 ]
 
+var current_task = {"title": "Fix CEO's PowerPoint", "due_day": 5}
+
 func do_work():
 	money += 10
 	chaos += 5
