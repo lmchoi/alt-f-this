@@ -76,3 +76,60 @@ You’re trapped in a tech job hellscape. Your goal? Escape with $5K—or lose e
 Would you add:  
 1) **Duck customization** (hats, rage-quit animations), or  
 2) **A secret duck god** (final boss: the CEO’s pet goose)?
+
+
+---
+
+Here’s the **revised design summary** incorporating all our refinements, styled like your original document:
+
+---
+
+# **Alt+F+This**  
+*A darkly comedic sim about surviving the corporate grind—measured in lost ducks and dwindling paychecks.*  
+
+### **Core Loop**  
+- **Grind** through tasks to earn cash.  
+- **Lose Ducks** with every unethical choice.  
+- **Escape** by saving $5K—or get trapped by golden handcuffs.  
+
+---
+
+## **Act 1: Corporate Prison (Mobile Optimized)**  
+### **Resources**  
+- **💰 Cash:** Earned daily ($100 base + task bonuses).  
+- **🦆 Ducks:** Start with 5. Lose them to exploitation.  
+- **📅 Time:** Calendar timeline shows paydays/deadlines.  
+
+### **UI Layout**  
+1. **CRT Monitor (Center):**  
+   - *Top:* Calendar strip (days, payday icons, deadlines).  
+   - *Middle:* Task + 🍝 progress bar.  
+   - *Bottom:* Bank balance + duck counter.  
+
+2. **Notifications:**  
+   - *Urgent:* Red top banner (e.g., *"LAYOFFS TOMORROW!"*).  
+   - *Decisions:* HR modal (blocks gameplay until choice).  
+   - *Flavor Text:* Subtle ticker (e.g., *"The coffee is decaf."*).  
+
+3. **Controls (Thumb-Friendly):**  
+   - *Work* (standard progress).  
+   - *Hustle* (fast progress, -1 🦆).  
+
+### **Twists**  
+- **"Loyalty Bonuses"** every 5 days (satirizes corporate exploitation).  
+- **0 Ducks Left?** Autopilot nihilism (e.g., *"You email the CEO ‘lol’"*).  
+
+---
+
+## **Why It Works**  
+- **Mobile-First:** Clean sightlines, one-handed play.  
+- **Satire:** Ducks + CRT nostalgia = meme potential.  
+- **Depth:** Calendar and bonuses add strategy.  
+
+**Next Steps?**  
+- Finalize **duck animations**.  
+- Add **printer jam mini-game**.  
+
+--- 
+
+This keeps your original’s spirit while refining for mobile. Want to tweak any pillars?

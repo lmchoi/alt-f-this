@@ -28,6 +28,12 @@ const WORK_EVENTS := [
 var current_task = Task.new()
 
 func do_work():
+# trigger random event
+# wait response
+# update task
+# update player state
+# emit outcome
+
 	money += 10
 	chaos += 5
 	current_task.do_work()
@@ -43,7 +49,8 @@ func do_work():
 #	// do this at the end
 	day += 1
 	if current_task.due_day == day:
-		event_occurred.emit({"text": "DEADLINE"})		
+		event_occurred.emit({"text": "DEADLINE"})
+	
 
 func slack_off():
 	chaos -= 10
