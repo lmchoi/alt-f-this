@@ -51,7 +51,7 @@ horizontal_alignment = 1
 script = ExtResource("2_u001w")
 metadata/_custom_type_script = "uid://di3ejf3ytuwkn"
 
-[node name="ChaosBar" type="ProgressBar" parent="VBoxContainer/StatusBar"]
+[node name="DucksBar" type="ProgressBar" parent="VBoxContainer/StatusBar"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
@@ -59,6 +59,8 @@ size_flags_horizontal = 8
 size_flags_vertical = 4
 theme_override_styles/background = SubResource("StyleBoxFlat_rns2u")
 theme_override_styles/fill = SubResource("StyleBoxFlat_u001w")
+max_value = 10.0
+value = 7.0
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2

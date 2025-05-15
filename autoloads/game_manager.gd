@@ -1,7 +1,7 @@
 extends Node
 signal next_day(nth)
 signal money_changed(amount)
-signal chaos_changed(amount)
+signal ducks_changed(amount)
 signal event_occurred(event_data)
 
 var day := 1:
@@ -14,15 +14,15 @@ var money := 0:
 		money = value
 		money_changed.emit(money)
 
-var chaos := 0:
+var ducks := 7:
 	set(value):
-		chaos = value
-		chaos_changed.emit(chaos)
+		ducks = value
+		ducks_changed.emit(ducks)
 
 const WORK_EVENTS := [
-	{"text": "Boss says: 'We’re a family.'", "chaos": +20, "money": 0},
-	{"text": "Free pizza! (It's vegan.)", "chaos": -5, "money": 0},
-	{"text": "Legacy code explodes. Debug for 3 hours.", "chaos": +25, "money": -50}
+	{"text": "Boss says: 'We’re a family.'", "ducks": -1, "money": 0},
+	{"text": "Free pizza! (It's vegan.)", "ducks": 1, "money": 0},
+	{"text": "Legacy code explodes. Debug for 3 hours.", "ducks": 0, "money": -50}
 ]
 
 var current_task = Task.new()
@@ -34,16 +34,15 @@ func do_work():
 # update player state
 # emit outcome
 
-	money += 10
-	chaos += 5
+	money += 100
 	current_task.do_work()
 
-	var event_result := {"text": "", "money": 0, "chaos": 0}
+	var event_result := {"text": "", "money": 0, "ducks": 0}
 
 	if randf() <= 0.3:  # 30% chance for event
 		event_result = WORK_EVENTS[randi() % WORK_EVENTS.size()]
 		money += event_result.money
-		chaos += event_result.chaos
+		ducks += event_result.ducks
 
 	event_occurred.emit(event_result)
 #	// do this at the end
@@ -53,8 +52,8 @@ func do_work():
 	
 
 func slack_off():
-	chaos -= 10
+	ducks += 1
 	day += 1
 
-	var event_result := {"text": "Slacker", "money": 0, "chaos": 0}
+	var event_result := {"text": "Slacker", "money": 0, "ducks": 0}
 	event_occurred.emit(event_result)
