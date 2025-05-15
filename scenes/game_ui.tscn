@@ -1,9 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://bkcqc3g6mk6ky"]
+[gd_scene load_steps=8 format=3 uid="uid://bkcqc3g6mk6ky"]
 
 [ext_resource type="Script" uid="uid://ccibd5kcuisnk" path="res://scenes/game_ui.gd" id="1_yubou"]
 [ext_resource type="Script" uid="uid://o4uecgfegpr2" path="res://scripts/ui/action_button.gd" id="2_rns2u"]
 [ext_resource type="Script" uid="uid://di3ejf3ytuwkn" path="res://scripts/ui/money_label.gd" id="2_u001w"]
 [ext_resource type="PackedScene" uid="uid://b5nqygpy3h33x" path="res://scenes/event_popup.tscn" id="4_u2dgd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u2dgd"]
+bg_color = Color(0.324219, 0.324219, 0.324219, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rns2u"]
 bg_color = Color(0.25098, 0, 0, 1)
@@ -20,7 +23,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.101961, 0.121569, 0.109804, 1)
+color = Color(0.722656, 0.722656, 0.722656, 1)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = 15
@@ -31,7 +34,9 @@ grow_vertical = 2
 theme_override_constants/separation = 20
 
 [node name="StatusBar" type="PanelContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_u2dgd")
 
 [node name="DayLabel" type="Label" parent="VBoxContainer/StatusBar"]
 unique_name_in_owner = true
@@ -51,46 +56,82 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 8
+size_flags_vertical = 4
 theme_override_styles/background = SubResource("StyleBoxFlat_rns2u")
 theme_override_styles/fill = SubResource("StyleBoxFlat_u001w")
 
-[node name="TaskPanel" type="PanelContainer" parent="VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="TaskPanel" type="PanelContainer" parent="VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(0, 500)
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TaskPanel"]
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/MarginContainer/TaskPanel"]
+layout_mode = 2
+color = Color(0.101961, 0.121569, 0.109804, 1)
+
+[node name="Container" type="VBoxContainer" parent="VBoxContainer/MarginContainer/TaskPanel"]
 layout_mode = 2
 
-[node name="TaskLabel" type="Label" parent="VBoxContainer/TaskPanel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer/TaskPanel/Container"]
+custom_minimum_size = Vector2(0, 40)
+layout_direction = 2
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="TaskLabel" type="Label" parent="VBoxContainer/MarginContainer/TaskPanel/Container/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.847059, 0.847059, 0.847059, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 text = "TASK: Fix CEO's PowerPoint"
 
-[node name="DeadlineLabel" type="Label" parent="VBoxContainer/TaskPanel/VBoxContainer"]
+[node name="DeadlineLabel" type="Label" parent="VBoxContainer/MarginContainer/TaskPanel/Container/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.847059, 0.847059, 0.847059, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 text = "Due in 5 days"
+horizontal_alignment = 2
 
-[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer/TaskPanel/VBoxContainer"]
+[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer/MarginContainer/TaskPanel/Container"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 
-[node name="ActionButtons" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
+[node name="ActionButtons" type="HBoxContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 100
+alignment = 1
 
-[node name="WorkButton" type="Button" parent="VBoxContainer/ActionButtons"]
+[node name="WorkButton" type="Button" parent="ActionButtons"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 40)
 layout_mode = 2
 text = "Work"
 script = ExtResource("2_rns2u")
 metadata/_custom_type_script = "uid://o4uecgfegpr2"
 
-[node name="SlackButton" type="Button" parent="VBoxContainer/ActionButtons"]
+[node name="SlackButton" type="Button" parent="ActionButtons"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 40)
 layout_mode = 2
 text = "Slack"
 script = ExtResource("2_rns2u")
 metadata/_custom_type_script = "uid://o4uecgfegpr2"
 
 [node name="EventPopup" parent="." instance=ExtResource("4_u2dgd")]
-position = Vector2i(40, 60)
+initial_position = 1
 visible = false
