@@ -9,8 +9,12 @@ signal work_completed(event_data)
 
 func do_work():
 #	update this value
-	var work_done = 10
-	progress += work_done
+	progress += 20
 
-	if progress == 100:
+	if progress >= 100:
 		work_completed.emit({"text": "Work Completed!"})
+		_new_task()
+
+func _new_task():
+#	for now, just reset the existing
+	progress = 0
