@@ -11,7 +11,7 @@ bg_color = Color(0.25098, 0, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u001w"]
 bg_color = Color(1, 0, 0, 1)
 
-[node name="GameUI" type="Node"]
+[node name="GameUI" type="CanvasLayer"]
 script = ExtResource("1_yubou")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -60,9 +60,9 @@ text = "TASK: Fix CEO's PowerPoint"
 [node name="DeadlineLabel" type="Label" parent="VBoxContainer/TaskPanel/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Deadline: 5 days left"
+text = "Due in 5 days"
 
-[node name="WorkRemainingLabel" type="Label" parent="VBoxContainer/TaskPanel/VBoxContainer"]
+[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer/TaskPanel/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 

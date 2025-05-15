@@ -7,7 +7,7 @@ extends Node
 @onready var chaos_bar := $"%ChaosBar"
 
 @onready var deadline_label := $"%DeadlineLabel"
-@onready var work_remaining_label := $"%WorkRemainingLabel"
+@onready var progress_bar := $"%ProgressBar"
 
 func _ready():
 	work_button.pressed.connect(_on_work_button_pressed)
@@ -36,5 +36,5 @@ func _on_event_occurred(event: Dictionary):
 func _on_next_day(nth_day: int):
 	day_label.text = "Day " + str(nth_day)
 	var days_left = GameManager.current_task.due_day - nth_day
-	deadline_label.text = "Deadline: " + str(days_left) + " days left"
-	work_remaining_label.text = "Work Remaining: " + str(GameManager.current_task.work_remaining) + " days of work"
+	deadline_label.text = "Due in " + str(days_left) + " days"
+	progress_bar.value = GameManager.current_task.progress
