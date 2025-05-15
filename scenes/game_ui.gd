@@ -27,7 +27,7 @@ func _on_slack_button_pressed():
 	GameManager.slack_off()
 	
 func _update_ducks_level(new_amount: int):
-	ducks_bar.value = new_amount
+	ducks_bar.current_ducks = new_amount
 
 func _on_event_occurred(event: Dictionary):
 	if event.text != "":
