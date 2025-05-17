@@ -1,0 +1,84 @@
+{
+  "tasks": [
+	{
+	  "title": "Make the Logo Bigger (Again)",
+	  "description": "The CEO’s nephew said the logo looks 'weak.' Make it 10% bigger… for the 5th time this week.",
+	  "allowed_time": 2,
+	  "complexity": 1,
+	  "category": "Design Hell",
+	  "completion_text": "Logo now occupies 30% of the screen. Marketing weeps quietly in the break room."
+	},
+	{
+	  "title": "Fix the 'Sent with Wrong Font' Email",
+	  "description": "Marketing sent 50K emails in Comic Sans. 'Undo' the send before customers notice.",
+	  "allowed_time": 1,
+	  "complexity": 3,
+	  "category": "Marketing Disaster",
+	  "completion_text": "Emails 'recalled.' 12 customers still replied with 'lol nice font'."
+	},
+	{
+	  "title": "Add Blockchain (For Some Reason)",
+	  "description": "The board read a buzzword-heavy article. Now your to-do app 'needs blockchain integration.'",
+	  "allowed_time": 4,
+	  "complexity": 5,
+	  "category": "Buzzword Compliance",
+	  "completion_text": "Added a button that says 'Blockchain Enabled!' It just plays mining sounds."
+	},
+	{
+	  "title": "The Printer is 'Hacking Us'",
+	  "description": "Office printer randomly prints cat memes. CFO insists it’s a cyberattack. 'Investigate.'",
+	  "allowed_time": 3,
+	  "complexity": 2,
+	  "category": "IT Nightmares",
+	  "completion_text": "Found Jim from Accounting feeding the printer memes. He got a promotion for 'security awareness.'"
+	},
+	{
+	  "title": "Make It Pop (But Don’t Change Anything)",
+	  "description": "Designer says the UI needs to 'pop more,' but rejects every color/font/animation you try.",
+	  "allowed_time": 3,
+	  "complexity": 4,
+	  "category": "Design Hell",
+	  "completion_text": "Added a single 1-pixel glow. Designer calls it 'revolutionary.' You need a drink."
+	},
+	{
+	  "title": "CEO’s ‘Simple’ Excel Macro",
+	  "description": "'Just automate this 200-step spreadsheet! How hard could it be?' *(Spoiler: Very.)*",
+	  "allowed_time": 5,
+	  "complexity": 5,
+	  "category": "Spreadsheet Suffering",
+	  "completion_text": "Macro works. CEO now wants it to also brew coffee. Your soul leaves your body."
+	},
+	{
+	  "title": "Optimize the ‘Like’ Button (For 0.0001s Gain)",
+	  "description": "VP wants the button 0.0001s faster to 'beat competitors.' Rewrite the entire stack.",
+	  "allowed_time": 6,
+	  "complexity": 4,
+	  "category": "Micro-Optimization",
+	  "completion_text": "Speed improved by 0.0001s. VP claims credit. The backend is now held together by duct tape."
+	},
+	{
+	  "title": "Fix the ‘Ghost Bug’ in Production",
+	  "description": "'Sometimes the app crashes, but only on Tuesdays when it rains.' No logs. Good luck.",
+	  "allowed_time": 7,
+	  "complexity": 5,
+	  "category": "Debugging Purgatory",
+	  "completion_text": "Turns out it was a timezone bug in a dependency from 2008. You get a stress ball as a reward."
+	},
+	{
+	  "title": "Add Dark Mode (But Keep the Old One)",
+	  "description": "Half the team wants dark mode, the other half hates change. Support both… forever.",
+	  "allowed_time": 4,
+	  "complexity": 3,
+	  "category": "UI Chaos",
+	  "completion_text": "Now maintaining two UIs. The team argues about which one is 'canon.'"
+	},
+	{
+	  "title": "The ‘AI’ Sticker Feature",
+	  "description": "Sales promised 'AI-powered stickers' to a client. You have 3 days to fake it.",
+	  "allowed_time": 3,
+	  "complexity": 4,
+	  "category": "Fake AI",
+	  "completion_text": "Stickers now 'magically' appear when clicked. Client is thrilled. You feel dirty."
+	}
+  ]
+}

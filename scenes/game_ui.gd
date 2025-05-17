@@ -21,10 +21,14 @@ func _ready():
 	GameManager.next_day.connect(_on_next_day)
 	GameManager.work_completed.connect(_on_work_completed)
 	GameManager.game_over.connect(_on_game_over)
+	GameManager.current_task_updated.connect(_on_current_task_updated)
 
 	$DeadlineDialog.custom_action.connect(_on_deadline_action)
-
+	GameManager.start_game()
 	_on_next_day(GameManager.day)
+
+func _on_current_task_updated(current_task: Task):
+	$"%TaskLabel".text = current_task.title
 
 func _on_work_button_pressed():
 	GameManager.do_work()

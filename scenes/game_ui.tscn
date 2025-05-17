@@ -128,13 +128,16 @@ layout_mode = 2
 
 [node name="TaskLabel" type="Label" parent="VBoxContainer/MarginContainer/TaskPanel/MarginContainer/Container/HBoxContainer/TaskInfo"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 60)
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_colors/font_color = Color(0.847059, 0.847059, 0.847059, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 text = "TASK: Fix CEO's PowerPoint"
+autowrap_mode = 3
 
 [node name="ComplexityLabel" type="Label" parent="VBoxContainer/MarginContainer/TaskPanel/MarginContainer/Container/HBoxContainer/TaskInfo"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.847059, 0.847059, 0.847059, 1)
 text = "Complexity: 🍝"
@@ -143,6 +146,7 @@ text = "Complexity: 🍝"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 0
 theme_override_colors/font_color = Color(0.847059, 0.847059, 0.847059, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 text = "Due in 5 days"

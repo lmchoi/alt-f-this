@@ -1,7 +1,5 @@
 TODOs
 
-- hustle button
-- new tasks
 - clear indicators when something happened
 - progress bar to change colours depending on how likely deadline will be me
 - game over - 3 days overdue - get fired
@@ -13,3 +11,5 @@ TODOs
 DONE
 - out of ducks -> end the game
 - if progress is 100% and due, it's still fine
+- hustle button
+- new tasks
