@@ -1,6 +1,5 @@
 TODOs
 
-- if progress is 100% and due, it's still fine
 - new tasks
 - hustle button
 - clear indicators when something happened
@@ -9,3 +8,4 @@ TODOs
 
 DONE
 - out of ducks -> end the game
+- if progress is 100% and due, it's still fine

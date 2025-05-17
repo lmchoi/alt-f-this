@@ -17,7 +17,7 @@ func _ready():
 	GameManager.salary_changed.connect(_update_salary_label)
 	GameManager.ducks_changed.connect(_update_ducks_level)
 	GameManager.event_occurred.connect(_on_event_occurred)
-	GameManager.deadline_due.connect(_on_deadline_due)
+	GameManager.missed_deadline.connect(_on_deadline_due)
 	GameManager.next_day.connect(_on_next_day)
 	GameManager.work_completed.connect(_on_work_completed)
 	GameManager.game_over.connect(_on_game_over)

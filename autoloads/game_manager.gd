@@ -4,7 +4,7 @@ signal money_changed(amount)
 signal salary_changed(amount)
 signal ducks_changed(amount)
 signal event_occurred(event_data)
-signal deadline_due()
+signal missed_deadline()
 signal work_completed()
 signal game_over(message)
 
@@ -48,18 +48,20 @@ func _trigger_random_work_event():
 		event_occurred.emit(event_result)
 
 func daily_updates():
+	if current_task.progress >= 100:
+		print("work completed")
+		work_completed.emit()
+		current_task = Task.new(day)
+
 	if current_task.due_day == day:
 		# check progress to calculate bugs chance
-		deadline_due.emit()
+		missed_deadline.emit()		
 
 func do_work():
 	# _trigger_random_work_event():
 	# wait response to work_event
 
-	if current_task.do_work():
-		print("work completed")
-		work_completed.emit()
-		current_task = Task.new(day)
+	current_task.do_work()
 
 	# update player state
 	money += salary
