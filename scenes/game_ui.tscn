@@ -69,7 +69,7 @@ layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 1
 theme_override_font_sizes/font_size = 28
-text = "🦆🦆🦆🦆🦆🦆🦆"
+horizontal_alignment = 2
 vertical_alignment = 1
 script = ExtResource("3_bt76a")
 
@@ -191,3 +191,6 @@ visible = false
 [node name="DeadlineDialog" type="AcceptDialog" parent="."]
 initial_position = 1
 script = ExtResource("6_djwj0")
+
+[node name="GameOverDialog" type="ConfirmationDialog" parent="."]
+initial_position = 1

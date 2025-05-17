@@ -20,6 +20,7 @@ func _ready():
 	GameManager.deadline_due.connect(_on_deadline_due)
 	GameManager.next_day.connect(_on_next_day)
 	GameManager.work_completed.connect(_on_work_completed)
+	GameManager.game_over.connect(_on_game_over)
 
 	$DeadlineDialog.custom_action.connect(_on_deadline_action)
 
@@ -47,6 +48,13 @@ func _on_work_completed():
 func _on_deadline_due():
 	$DeadlineDialog.popup()
 
+func _on_game_over(message):
+	$GameOverDialog.dialog_text = message
+	$GameOverDialog.title = "GAME OVER"
+	$GameOverDialog.ok_button_text = "Rage Quit"
+	$GameOverDialog.get_cancel_button().hide()
+	$GameOverDialog.popup()
+
 func _update_deadline_label(days_left: int):
 	if days_left < 0:
 		deadline_label.text = str(abs(days_left)) + " days overdue"
@@ -58,6 +66,7 @@ func _on_next_day(nth_day: int):
 	var days_left = GameManager.current_task.due_day - nth_day
 	_update_deadline_label(days_left)
 	progress_bar.value = GameManager.current_task.progress
+	ducks_bar.current_ducks = GameManager.ducks
 	GameManager.daily_updates()
 
 func _on_deadline_action(action: String):

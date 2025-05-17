@@ -6,6 +6,7 @@ signal ducks_changed(amount)
 signal event_occurred(event_data)
 signal deadline_due()
 signal work_completed()
+signal game_over(message)
 
 var day := 1:
 	set(value):
@@ -22,10 +23,12 @@ var salary := 100:
 		salary = value
 		salary_changed.emit(salary)
 
-var ducks := 7:
+var ducks := 2:
 	set(value):
 		ducks = value
 		ducks_changed.emit(ducks)
+		if ducks <= 0:
+			game_over.emit("Ran out of ducks to give...")
 
 var current_task = Task.new()
 
