@@ -5,6 +5,7 @@ signal salary_changed(amount)
 signal ducks_changed(amount)
 signal event_occurred(event_data)
 signal deadline_due()
+signal work_completed()
 
 var day := 1:
 	set(value):
@@ -52,7 +53,10 @@ func do_work():
 	# _trigger_random_work_event():
 	# wait response to work_event
 
-	current_task.do_work()
+	if current_task.do_work():
+		print("work completed")
+		work_completed.emit()
+		current_task = Task.new(day)
 
 	# update player state
 	money += salary

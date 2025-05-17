@@ -1,8 +1,6 @@
 class_name Task
 extends Resource
 
-signal work_completed(event_data)
-
 @export var title := "Fix CEO's PowerPoint"
 @export var due_day := 5 # Day number (e.g., Day 3)
 @export var progress := 0
@@ -12,14 +10,8 @@ func _init(today_date: int = 1, new_title: String = "Fix CEO's PowerPoint", allo
 	due_day = today_date + allowed_time
 	progress = 0
 
-func do_work():
+func do_work() -> bool:
 #	update this value
 	progress += 20
 
-	if progress >= 100:
-		work_completed.emit({"text": "Work Completed!"})
-		_new_task()
-
-func _new_task():
-#	for now, just reset the existing
-	progress = 0
+	return progress >= 100

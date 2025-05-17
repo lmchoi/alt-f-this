@@ -19,7 +19,7 @@ func _ready():
 	GameManager.event_occurred.connect(_on_event_occurred)
 	GameManager.deadline_due.connect(_on_deadline_due)
 	GameManager.next_day.connect(_on_next_day)
-	GameManager.current_task.work_completed.connect(_on_event_occurred)
+	GameManager.work_completed.connect(_on_work_completed)
 
 	$DeadlineDialog.custom_action.connect(_on_deadline_action)
 
@@ -41,6 +41,9 @@ func _on_event_occurred(event: Dictionary):
 	if event.text != "":
 		$EventPopup.show_event(event.text)
 
+func _on_work_completed():
+	$EventPopup.show_event("Congrats!")
+
 func _on_deadline_due():
 	$DeadlineDialog.popup()
 
@@ -49,7 +52,6 @@ func _update_deadline_label(days_left: int):
 		deadline_label.text = str(abs(days_left)) + " days overdue"
 	else:
 		deadline_label.text = "Due in " + str(days_left) + " days"
-	
 
 func _on_next_day(nth_day: int):
 	day_label.text = "Day " + str(nth_day)
