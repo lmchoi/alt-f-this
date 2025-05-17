@@ -94,13 +94,21 @@ layout_direction = 2
 layout_mode = 2
 size_flags_vertical = 2
 
-[node name="TaskLabel" type="Label" parent="VBoxContainer/MarginContainer/TaskPanel/Container/HBoxContainer"]
+[node name="TaskInfo" type="VBoxContainer" parent="VBoxContainer/MarginContainer/TaskPanel/Container/HBoxContainer"]
+layout_mode = 2
+
+[node name="TaskLabel" type="Label" parent="VBoxContainer/MarginContainer/TaskPanel/Container/HBoxContainer/TaskInfo"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_colors/font_color = Color(0.847059, 0.847059, 0.847059, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 text = "TASK: Fix CEO's PowerPoint"
+
+[node name="ComplexityLabel" type="Label" parent="VBoxContainer/MarginContainer/TaskPanel/Container/HBoxContainer/TaskInfo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.847059, 0.847059, 0.847059, 1)
+text = "Complexity: 🍝🍝🍝"
 
 [node name="DeadlineLabel" type="Label" parent="VBoxContainer/MarginContainer/TaskPanel/Container/HBoxContainer"]
 unique_name_in_owner = true
@@ -115,6 +123,7 @@ horizontal_alignment = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+size_flags_vertical = 1
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 
 [node name="ActionButtons" type="HBoxContainer" parent="."]
@@ -130,17 +139,19 @@ alignment = 1
 
 [node name="WorkButton" type="Button" parent="ActionButtons"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(80, 40)
+custom_minimum_size = Vector2(120, 40)
 layout_mode = 2
-text = "Work"
+text = "Work
+£100"
 script = ExtResource("2_rns2u")
 metadata/_custom_type_script = "uid://o4uecgfegpr2"
 
 [node name="SlackButton" type="Button" parent="ActionButtons"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(80, 40)
+custom_minimum_size = Vector2(120, 40)
 layout_mode = 2
-text = "Slack"
+text = "Side Hustle
+£300"
 script = ExtResource("2_rns2u")
 metadata/_custom_type_script = "uid://o4uecgfegpr2"
 
