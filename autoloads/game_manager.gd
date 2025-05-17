@@ -1,8 +1,10 @@
 extends Node
 signal next_day(nth)
 signal money_changed(amount)
+signal salary_changed(amount)
 signal ducks_changed(amount)
 signal event_occurred(event_data)
+signal deadline_due()
 
 var day := 1:
 	set(value):
@@ -14,10 +16,17 @@ var money := 0:
 		money = value
 		money_changed.emit(money)
 
+var salary := 100:
+	set(value):
+		salary = value
+		salary_changed.emit(salary)
+
 var ducks := 7:
 	set(value):
 		ducks = value
 		ducks_changed.emit(ducks)
+
+var current_task = Task.new()
 
 const WORK_EVENTS := [
 	{"text": "Boss says: 'We’re a family.'", "ducks": -1, "money": 0},
@@ -25,31 +34,32 @@ const WORK_EVENTS := [
 	{"text": "Legacy code explodes. Debug for 3 hours.", "ducks": 0, "money": -50}
 ]
 
-var current_task = Task.new()
-
-func do_work():
-# trigger random event
-# wait response
-# update task
-# update player state
-# emit outcome
-
-	money += 100
-	current_task.do_work()
-
+func _trigger_random_work_event():
 	var event_result := {"text": "", "money": 0, "ducks": 0}
 
 	if randf() <= 0.3:  # 30% chance for event
-		event_result = WORK_EVENTS[randi() % WORK_EVENTS.size()]
+		event_result = WORK_EVENTS[randi() % WORK_EVENTS.size()]		
 		money += event_result.money
 		ducks += event_result.ducks
+		event_occurred.emit(event_result)
 
-	event_occurred.emit(event_result)
-#	// do this at the end
-	day += 1
+func daily_updates():
 	if current_task.due_day == day:
-		event_occurred.emit({"text": "DEADLINE"})
-	
+		# check progress to calculate bugs chance
+		deadline_due.emit()
+
+func do_work():
+	# _trigger_random_work_event():
+	# wait response to work_event
+
+	current_task.do_work()
+
+	# update player state
+	money += salary
+
+	# do this at the end
+	# emit outcome
+	day += 1
 
 func slack_off():
 	ducks += 1
@@ -57,3 +67,14 @@ func slack_off():
 
 	var event_result := {"text": "Slacker", "money": 0, "ducks": 0}
 	event_occurred.emit(event_result)
+
+func process_action(action: String):
+	# Handle button press and forward signal
+	match action:
+		"mercy":
+			salary -= 10
+			print("mercy")
+		"duck_it":
+			ducks -= 1
+			current_task = Task.new(day)
+			print("duck it")

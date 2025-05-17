@@ -30,6 +30,11 @@ Example:
 - Work
 - Hustle (No progress on task, but earn more money) 
 
+#### Deadlines
+
+- When deadline is due, player have to option to ship it and lose a duck (only if > 80% completed)
+- Bugs might come back later and stop progress on a future task. (bugs meter?)
+
 #### Office Events
 
 Random events requiring moral decision, impacting deadline, task progress and salary.
