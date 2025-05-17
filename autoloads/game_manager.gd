@@ -58,6 +58,7 @@ func daily_updates():
 		missed_deadline.emit()		
 
 func do_work():
+	print('work')
 	# _trigger_random_work_event():
 	# wait response to work_event
 
@@ -70,12 +71,14 @@ func do_work():
 	# emit outcome
 	day += 1
 
-func slack_off():
-	ducks += 1
-	day += 1
+func hustle():
+	print('hustle')
+	
+	money += (salary * 2)
 
-	var event_result := {"text": "Slacker", "money": 0, "ducks": 0}
-	event_occurred.emit(event_result)
+	# do this at the end
+	# emit outcome
+	day += 1
 
 func process_action(action: String):
 	# Handle button press and forward signal

@@ -30,7 +30,7 @@ func _on_work_button_pressed():
 	GameManager.do_work()
 
 func _on_slack_button_pressed():
-	GameManager.slack_off()
+	GameManager.hustle()
 	
 func _update_ducks_level(new_amount: int):
 	ducks_bar.current_ducks = new_amount
