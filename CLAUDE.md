@@ -56,8 +56,9 @@ See [ideas/workflow-incremental-implementation.md](ideas/workflow-incremental-im
 
 **GameManager** ([autoloads/game_manager.gd](autoloads/game_manager.gd))
 - Central game state: `day`, `money`, `salary`, `ducks`, `bugs`, `strikes`, `current_task`
-- All properties use setters that emit signals (e.g., `money_changed`, `ducks_changed`)
-- Game actions: `do_work()`, `hustle()`, `debug()`, `rest()`
+- All properties use setters that emit signals (e.g., `money_changed`, `ducks_changed`, `bugs_changed`)
+- Game actions: `do_work()`, `hustle()`, `debug()`, `process_action()`
+- Bug system: `get_bug_multiplier()`, `add_bugs(amount)`
 - Events: `next_day`, `missed_deadline`, `work_completed`, `game_over`, `production_outage`
 
 **TaskManager** ([autoloads/task_manager.gd](autoloads/task_manager.gd))
@@ -69,19 +70,30 @@ See [ideas/workflow-incremental-implementation.md](ideas/workflow-incremental-im
 
 ## Key Systems to Implement
 
-### 1. Bugs System (CRITICAL)
+### 1. Bugs System (IMPLEMENTED)
 ```gdscript
 # In GameManager
 var bugs := 0  # Accumulates from rushed work
 
-# When shipping incomplete task
-func rush_ship_task(progress: int):
-    bugs += (100 - progress) / 10  # Ship at 50% = +5 bugs
+# Each bug = 1% slowdown
+func get_bug_multiplier() -> float:
+    return 1.0 + (bugs * 0.01)  # 40 bugs = 1.4x slower (40% slower)
 
-# Bugs slow ALL future work
-func calculate_work_progress(base_progress: int, complexity: int) -> int:
-    var bug_multiplier = 1.0 + (bugs / 100.0)  # 40 bugs = 40% slower
-    return base_progress / (complexity * bug_multiplier)
+# Bugs slow ALL work
+func do_work():
+    var bug_multiplier = get_bug_multiplier()
+    var work = 20.0 / bug_multiplier
+    current_task.do_work(work)
+
+# Add bugs from various sources
+func add_bugs(amount: int):
+    bugs += amount
+
+# Task.do_work() accepts work amount
+func do_work(amount: float) -> float:
+    var actual_amount = min(amount, 100 - progress)
+    progress += actual_amount
+    return actual_amount
 ```
 
 ### 2. Time Bombs (Production Outages)
@@ -139,6 +151,12 @@ var complexity: int  # 1-10
 var due_day: int     # Absolute day number
 var progress: int    # 0-100
 var allowed_time: int
+
+func do_work(amount: float) -> float:
+    # Accepts work amount, returns actual progress added
+    var actual_amount = min(amount, 100 - progress)
+    progress += actual_amount
+    return actual_amount
 ```
 
 ### Task JSON Format
@@ -157,7 +175,10 @@ var allowed_time: int
 ## Development Phases
 
 ### Phase 1: Core Loop (Current Focus)
-- [ ] Bugs system (accumulation + slowdown multiplier)
+- [x] Bugs system (accumulation + slowdown multiplier)
+- [x] Task.do_work() refactored to accept work amount
+- [x] Bugs slow ALL work via get_bug_multiplier()
+- [x] UI displays bugs label with color coding
 - [ ] Task complexity affects progress
 - [ ] 4 stamp decisions (Accept/Negotiate/Rush/Refuse)
 - [ ] Time bombs (production outages)

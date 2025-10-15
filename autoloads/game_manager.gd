@@ -48,6 +48,12 @@ const WORK_EVENTS := [
 	{"text": "Legacy code explodes. Debug for 3 hours.", "ducks": 0, "money": -50}
 ]
 
+func get_bug_multiplier() -> float:
+	"""Returns slowdown multiplier based on current bugs.
+	Each bug = 1% slower
+	"""
+	return 1.0 + (bugs * 0.01)
+
 func add_bugs(amount: int) -> void:
 	"""Add bugs from rushing or other sources."""
 	bugs += amount
@@ -80,7 +86,9 @@ func do_work():
 	# _trigger_random_work_event():
 	# wait response to work_event
 
-	current_task.do_work(20)
+	var bug_multiplier = get_bug_multiplier()
+	var work = 20.0 / bug_multiplier
+	current_task.do_work(work)
 
 	# update player state
 	money += salary
