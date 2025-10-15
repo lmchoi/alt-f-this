@@ -42,6 +42,16 @@ The game uses a reactive signal architecture where:
 3. State changes propagate automatically through signals
 4. **Never update UI directly** - always emit signals from GameManager
 
+### Incremental Implementation Workflow
+**IMPORTANT:** Break features into small, testable commits (20-100 lines, 1-3 files each).
+
+Before implementing any feature:
+1. Plan 3-6 small commits
+2. Each commit should be immediately testable
+3. Implement → Test → Commit → Next
+
+See [ideas/workflow-incremental-implementation.md](ideas/workflow-incremental-implementation.md) for details.
+
 ### Autoloaded Singletons
 
 **GameManager** ([autoloads/game_manager.gd](autoloads/game_manager.gd))
