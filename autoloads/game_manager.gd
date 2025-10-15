@@ -3,6 +3,7 @@ signal next_day(nth)
 signal money_changed(amount)
 signal salary_changed(amount)
 signal ducks_changed(amount)
+signal bugs_changed(amount)
 signal event_occurred(event_data)
 signal missed_deadline()
 signal work_completed()
@@ -36,11 +37,21 @@ var ducks := 2:
 		if ducks <= 0:
 			game_over.emit("Ran out of ducks to give...")
 
+var bugs := 0:
+	set(value):
+		bugs = value
+		bugs_changed.emit(bugs)
+
 const WORK_EVENTS := [
 	{"text": "Boss says: 'We’re a family.'", "ducks": -1, "money": 0},
 	{"text": "Free pizza! (It's vegan.)", "ducks": 1, "money": 0},
 	{"text": "Legacy code explodes. Debug for 3 hours.", "ducks": 0, "money": -50}
 ]
+
+func add_bugs(amount: int) -> void:
+	"""Add bugs from rushing or other sources."""
+	bugs += amount
+	print("Bugs added: +%d (total: %d)" % [amount, bugs])
 
 func start_game():
 	current_task = TaskManager.get_random_task()
@@ -95,5 +106,6 @@ func process_action(action: String):
 			print("mercy")
 		"duck_it":
 			ducks -= 1
+			add_bugs(5)
 			current_task = TaskManager.get_random_task(day)
 			print("duck it")

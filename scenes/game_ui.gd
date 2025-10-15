@@ -17,6 +17,7 @@ func _ready():
 	GameManager.money_changed.connect(money_label.update_amount)
 	GameManager.salary_changed.connect(_update_salary_label)
 	GameManager.ducks_changed.connect(_update_ducks_level)
+	GameManager.bugs_changed.connect(_update_bugs_label)
 	GameManager.event_occurred.connect(_on_event_occurred)
 	GameManager.missed_deadline.connect(_on_deadline_due)
 	GameManager.next_day.connect(_on_next_day)
