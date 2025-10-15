@@ -80,7 +80,7 @@ func do_work():
 	# _trigger_random_work_event():
 	# wait response to work_event
 
-	current_task.do_work()
+	current_task.do_work(20)
 
 	# update player state
 	money += salary

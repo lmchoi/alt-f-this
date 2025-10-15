@@ -10,6 +10,8 @@ func _init(today_date: int = 1, new_title: String = "Fix CEO's PowerPoint", allo
 	due_day = today_date + allowed_time
 	progress = 0
 
-func do_work():
-#	update this value
-	progress += 20
+func do_work(amount: float) -> float:
+	"""Add progress to task. Returns actual amount added."""
+	var actual_amount = min(amount, 100 - progress)
+	progress += actual_amount
+	return actual_amount
