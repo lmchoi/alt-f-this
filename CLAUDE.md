@@ -269,7 +269,4 @@ When testing game balance:
 ## Files to Reference
 
 - **Complete game plan**: [ideas/game-plan.md](ideas/game-plan.md)
-- **Fun improvement checklist**: [ideas/fun-improvements.md](ideas/fun-improvements.md)
-- **Code review items**: [ideas/code-review-checklist.md](ideas/code-review-checklist.md)
-- **Active TODOs**: [TODO.md](TODO.md)
-- **Original game design**: [GAME.md](GAME.md)
+- **Godot best practices**: [ideas/godot-best-practices.md](ideas/godot-best-practices.md)
