@@ -6,6 +6,7 @@ extends Node
 @onready var money_label := $"%MoneyLabel" as MoneyLabel
 @onready var salary_label := $"%SalaryLabel"
 @onready var ducks_bar := $"%DucksBar"
+@onready var bugs_label := $"%BugsLabel"
 
 @onready var deadline_label := $"%DeadlineLabel"
 @onready var progress_bar := $"%ProgressBar"
@@ -41,6 +42,9 @@ func _update_ducks_level(new_amount: int):
 
 func _update_salary_label(new_amount: int):
 	salary_label.text = "Salary: $" + str(new_amount)
+
+func _update_bugs_label(new_amount: int):
+	bugs_label.text = "🐛 " + str(new_amount)
 
 func _on_event_occurred(event: Dictionary):
 	if event.text != "":

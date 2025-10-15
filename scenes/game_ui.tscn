@@ -62,6 +62,11 @@ text = "0"
 script = ExtResource("2_u001w")
 metadata/_custom_type_script = "uid://di3ejf3ytuwkn"
 
+[node name="BugsLabel" type="Label" parent="VBoxContainer/StatusBar/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "🐛 0"
+
 [node name="DucksBar" type="Label" parent="VBoxContainer/StatusBar/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 40)
