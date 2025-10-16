@@ -5,7 +5,51 @@
 
 ## Vision Statement
 
-A darkly comedic inspection/management game where you're a tech worker trapped in corporate hell. Every work ticket is a moral dilemma. Every shortcut creates future pain. Every duck lost is a piece of your soul. Escape with $5K before you run out of ducks to give.
+A darkly comedic inspection/management game where you're a tech worker trapped in corporate hell. Every work ticket is a moral dilemma. Every shortcut creates future pain. Every duck lost is a piece of your soul. Escape with $5K before bugs make work impossible.
+
+---
+
+## 5 Core Design Principles
+
+### 1. **No Forgiveness, Only Forward**
+*Every choice has permanent consequences. No undo, no reset, no cleanup.*
+
+- Bugs NEVER decrease (technical debt is forever)
+- Ducks rarely regenerate (burnout accumulates)
+- Shipped work can't be unshipped (production outages linger)
+- Past choices echo into future events
+
+### 2. **Simplicity Through Subtraction**
+*Every mechanic must do 2+ jobs. Remove anything that doesn't compound.*
+
+- Max 2 decision stamps (ACCEPT/NEGOTIATE)
+- Max 3 work actions (WORK/HUSTLE/SHIP IT)
+- Every action affects multiple resources (no single-purpose buttons)
+- Tutorial < 30 seconds (learn by playing)
+
+### 3. **The Death Spiral Is The Game**
+*Losing slowly is more engaging than winning easily. Difficulty should accelerate.*
+
+- Bugs accumulate faster than you can work
+- Tasks get harder while you get slower
+- Money pressure increases (salary trap)
+- No equilibrium state (always escalating)
+
+### 4. **Emotional Bookkeeping Over Spreadsheets**
+*Resources represent feelings, not numbers. Make math visceral.*
+
+- **Ducks** = patience/sanity/fucks-to-give (not "health points")
+- **Bugs** = guilt/technical debt/sins (not "difficulty modifier")
+- **Money** = escape velocity/freedom countdown (not "score")
+- **Day** = time running out/aging/exhaustion (not "level number")
+
+### 5. **Shared Suffering Creates Community**
+*The game should generate stories players need to tell others.*
+
+- Specific, memorable disasters (not generic failures)
+- Moral dilemmas with no right answer
+- Outcomes vary enough that players compare notes
+- Built-in "can you believe this happened" moments
 
 ---
 
@@ -27,9 +71,9 @@ A darkly comedic inspection/management game where you're a tech worker trapped i
    - Running out = existential burnout
 
 4. **Consequence Cascades**
-   - Rushed work creates bugs
-   - Bugs slow future work
-   - Financial penalties force more rushing
+   - Rushed work creates bugs (PERMANENTLY)
+   - Bugs slow future work (no way to fix)
+   - Must escape before bugs make progress impossible
    - Death spiral mechanics
 
 ---
@@ -37,7 +81,7 @@ A darkly comedic inspection/management game where you're a tech worker trapped i
 ## Act 1: Corporate Prison (MVP Scope)
 
 ### Goal
-Save $5,000 to escape to Act 2 (or burn out trying)
+Save $5,000 to escape before bugs accumulate to unworkable levels (or burn out trying)
 
 ### Core Loop
 ```
@@ -49,24 +93,30 @@ Save $5,000 to escape to Act 2 (or burn out trying)
    - Check company rulebook (updates weekly)
    ↓
 3. Make decision (stamp mechanic)
-   - [ACCEPT] Standard work
-   - [NEGOTIATE] Extension/help (costs resources)
-   - [RUSH] Ship incomplete (gains bugs)
-   - [REFUSE] Skip task (reputation hit)
+   - [ACCEPT] Take the task
+   - [NEGOTIATE] Extension/help/scope (costs resources upfront)
    ↓
-4. Work phase (actions per day)
-   - Work: +progress, +money
-   - Hustle: +money, no progress, -duck
-   - Debug: -bugs, no progress, no money
-   - Rest: +ducks, lose time
+4. Work phase (daily choice - THIS IS THE CORE LOOP)
+   - WORK: +progress, earn salary (on completion/payday)
+   - HUSTLE: +ducks, +salary×2 (payday), no progress
+   - SHIP IT: Complete task NOW, earn payment, gain/lose ducks based on quality
    ↓
-5. Consequences unfold
+5. Daily decision: "Is this good enough to ship?"
+   - Ship at 95%? +1 duck (pride), +1 bug
+   - Ship at 60%? ±0 ducks, +4 bugs
+   - Ship at 25%? -2 ducks (guilt), +7.5 bugs
+   - Keep working? Risk missing deadline, but cleaner code
+   ↓
+6. Consequences unfold
    - Task complete or deadline missed
+   - Bugs accumulate (NEVER reduce)
    - Events trigger (random or consequence-based)
    - Stats update, day advances
    ↓
-6. Return to step 1 with compounding pressure
+7. Return to step 1 with MORE bugs, SLOWER work, HARDER tasks
 ```
+
+**The Race:** Earn $5K before bug accumulation makes progress impossible.
 
 ---
 
@@ -95,16 +145,14 @@ Save $5,000 to escape to Act 2 (or burn out trying)
 │  │              │      │ 📧 INBOX (3)    │ │
 │  │ Complexity:  │      │  CEO demands... │ │
 │  │ ████████░░   │      │  Coworker asks  │ │
-│  │ (8/10)       │      │  HR warning...  │ │
+│  │ (8/10)       │      │                 │ │
 │  │              │      │                 │ │
 │  │ Est: 5 days  │      │ 💰 PAYCHECK     │ │
 │  │ Pay: $500    │      │  $100/day       │ │
-│  └──────────────┘      │  (salary info)  │ │
+│  └──────────────┘      │  (on complete)  │ │
 │                        └─────────────────┘ │
 │  [STAMP: ACCEPT]                           │
 │  [STAMP: NEGOTIATE]                        │
-│  [STAMP: RUSH JOB]                         │
-│  [STAMP: REFUSE]                           │
 │                                             │
 │ >> Math: 2 days × (8 complexity × 1.4 bug  │
 │    slowdown) = IMPOSSIBLE without help     │
@@ -122,140 +170,186 @@ Save $5,000 to escape to Act 2 (or burn out trying)
 
 ---
 
-### 2. Stamp Decisions (Meaningful Choices)
+### 2. Stamp Decisions (Simplified)
 
 #### **[ACCEPT]** - Standard path
-- Work task normally
+- Take the task
+- Work it during work phase
 - Subject to all rules and deadlines
-- Safest but slowest
 
 #### **[NEGOTIATE]** - Ask for help
 Opens submenu:
-- **Extension:** +3 days, costs $100, -1 duck (begging is humiliating)
-- **Get Help:** Reduce complexity 50%, owe coworker favor
-- **Reduce Scope:** Easier task, pays 50% less
+- **Extension:** +3 days to deadline, costs $100, -1 duck (begging is humiliating)
+- **Get Help:** Reduce complexity 50%, owe coworker favor (callback event later)
+- **Reduce Scope:** Easier requirements, pays 50% less
 - **Overtime:** +40% instant progress, -2 ducks, skip next payday
 
-#### **[RUSH JOB]** - Ship incomplete
-- Complete task immediately (50-80% progress counts)
-- Add bugs: `(100 - progress) / 10` bug points
-- Immediate payment but...
-- Time bomb: Production outage in 2-5 days
-- -2 ducks (guilt about quality)
-
-#### **[REFUSE]** - Skip task
-- Get new easier task
-- Penalties: -$200, -1 duck, +1 strike
-- 3 strikes = fired (game over)
-- Only viable when desperate
+**Note:** REFUSE removed - no escape hatch. Must face every task.
 
 ---
 
-### 3. Work Phase Actions
+### 3. Work Phase Actions (THE CORE LOOP)
 
-After accepting ticket, each day you choose:
+After accepting ticket, **each day** you choose one action. This is where the game lives.
 
-**WORK** (primary action)
-- Progress += `20 / (complexity * bug_multiplier)`
-- Money += salary
+#### **WORK** (primary action)
+- Progress += `20 / (complexity × bug_multiplier)`
+- Money += 0 (paid on completion or payday)
 - Small event chance (30%)
 - Standard advancement
 
-**HUSTLE** (money focus)
-- Progress += 0 (no work done)
-- Money += salary × 2
-- -1 duck (stress of side hustle)
+**Example:**
+- Complexity 5, 40 bugs (1.4x multiplier)
+- Progress gain: 20 / (5 × 1.4) = 2.86% per day
+- Takes ~35 days to complete without shipping early
+
+#### **HUSTLE** (sanity recovery)
+- Progress += 0 (no work done on main task)
+- Money += salary × 2 (on payday only)
+- **Ducks += 1** (side project gives autonomy/relief)
 - Higher event chance (50% - you're distracted)
 
-**DEBUG** (maintenance)
-- Progress += 0
-- Money += 0
-- Bugs -= 15
-- Necessary to unfuck past mistakes
+**Reframed as positive:**
+- "I need a mental health day"
+- Side hustle fantasy (working on YOUR thing, not company's)
+- Tension: gain sanity but lose time on deadline
 
-**REST** (recovery)
-- Progress += 0
-- Money += 0
-- +1 duck (recover sanity)
-- Rare - only when desperate
+#### **SHIP IT** (available at 20%+ progress)
+**The daily temptation. This is the game.**
+
+- Complete task immediately at current progress
+- Add bugs: `(100 - progress) / 10`
+- Duck change based on quality:
+  - **90-100%:** +1 duck (pride in craftsmanship)
+  - **70-89%:** +0 ducks (acceptable)
+  - **50-69%:** -1 duck (compromised values)
+  - **20-49%:** -2 ducks (deep shame)
+- Receive payment immediately
+- Advance to next day/task
+
+**Quality flavor text:**
+- 90%+: "Actually good work. You feel competent."
+- 70-89%: "It works. Probably."
+- 50-69%: "Barely functional MVP."
+- 30-49%: "AI-generated slop with your name on it."
+- 20-29%: "You shipped TODO comments as features."
+
+**Every day you ask:** "Is this good enough? Do I need the money NOW? Can I afford more bugs?"
 
 ---
 
-### 4. The Bugs System (Cascading Consequences)
+### 4. The Bugs System (Permanent Consequences)
 
 **How Bugs Accumulate:**
 ```gdscript
 # When shipping incomplete task
 var bugs_added = (100 - progress) / 10
-# Ship at 50%? +5 bugs
-# Ship at 80%? +2 bugs
+
+# Ship at 95%? +0.5 bugs (rounds to 1)
+# Ship at 70%? +3 bugs
+# Ship at 40%? +6 bugs
+# Ship at 22%? +7.8 bugs
 ```
 
 **How Bugs Hurt You:**
 ```gdscript
 # Bugs slow ALL future work
-var bug_multiplier = 1 + (bugs / 100)
-# 40 bugs = 1.4x slower (40% penalty)
-# 80 bugs = 1.8x slower (80% penalty)
+var bug_multiplier = 1 + (bugs * 0.01)
+# 20 bugs = 1.2x slower (20% penalty)
+# 50 bugs = 1.5x slower (50% penalty)
+# 100 bugs = 2.0x slower (work takes TWICE as long)
 
 var progress_gain = 20 / (complexity * bug_multiplier)
 ```
 
-**The Death Spiral:**
-1. Rush task to meet deadline → +20 bugs
-2. Bugs slow next task by 20%
-3. Can't meet next deadline naturally
-4. Must rush again → +25 bugs
-5. Now 45 bugs = 45% slower
-6. Eventually impossible to complete anything
+**Bugs NEVER Reduce:**
+- No DEBUG action
+- No "refactor" tasks
+- Every bug you ship is permanent
+- Your only hope: escape before they crush you
 
-**The Only Way Out:**
-- Spend days debugging (no money, no progress)
-- But you need money to escape...
-- Tension!
+**The Death Spiral:**
+1. Ship task at 60% to meet deadline → +4 bugs
+2. Now at 24 bugs total = 24% slower
+3. Next task takes longer, can't meet deadline naturally
+4. Ship at 50% → +5 bugs
+5. Now at 29 bugs = 29% slower
+6. Pattern accelerates
+7. Eventually work is so slow you MUST ship everything early
+8. Bugs accumulate exponentially
+9. At 100+ bugs, game becomes nearly unwinnable
+
+**This is intentional.** The game is a race: earn $5K before bugs make it impossible.
 
 ---
 
 ### 5. Production Outage Events (The Bomb Explodes)
 
-**Trigger:** 2-5 days after shipping buggy code
+**Trigger:** 2-5 days after shipping at <50% quality
 
 ```gdscript
 var time_bombs := []
 
-func rush_ship_task(progress: int):
-    var severity = (100 - progress) / 10
-    time_bombs.append({
-        "trigger_day": day + randi_range(2, 5),
-        "severity": severity,
-        "task_name": current_task.title
-    })
+func ship_task(progress: int):
+    if progress < 50:
+        var severity = (100 - progress) / 10
+        time_bombs.append({
+            "trigger_day": day + randi_range(2, 5),
+            "severity": severity,
+            "task_name": current_task.title
+        })
 ```
 
 **When It Explodes:**
 ```
 🚨 PRODUCTION OUTAGE 🚨
 
-"Your '{task_name}' feature crashed the payment system."
+"Your 'Blockchain Todo App' feature crashed the payment system."
 
 Consequences:
-- Salary penalty: -$200 to -$500
-- Emergency fix task (blocks other work, no pay)
-- +20 bugs (emergency patches break things)
-- +1 strike toward firing
-- PIP if 2+ outages
+- Salary penalty: -$200 to -$500 (based on severity)
+- Emergency fix task (blocks other work, complexity 3, no pay, 1 day deadline)
+- +10 bugs (emergency patches always break things)
+- -2 ducks (stress + humiliation)
 
 [EMAIL FROM CEO]
-"We need to talk about your recent work..."
+"We need to talk about your recent work quality..."
 ```
 
 **This is the Papers Please "terrorist exploded" moment**
 
+Low-quality shipping has DOUBLE penalty:
+1. Immediate bugs from shipping
+2. Future production outage (more bugs + money loss + time loss)
+
 ---
 
-### 6. Stack Ranking Meeting System (Voting Disguised as Work)
+### 6. Payment System (Creates SHIP IT Urgency)
 
-**NEW SYSTEM - Key engagement and educational mechanic**
+**Salary is only paid on:**
+1. **Task completion** (via SHIP IT)
+2. **Payday** (every 5 days)
+
+**Example:**
+- Day 11: Accept task, work 3 days (no money yet)
+- Day 13: Work (no money yet)
+- Day 14: Task at 65%, deadline tomorrow
+  - **Choice A:** SHIP IT now → earn $500 immediately, +3.5 bugs
+  - **Choice B:** Work 1 more day → miss deadline → penalties
+  - **Choice C:** Work 1 more day, hope to finish → wait for Day 15 payday
+
+**If you get fired before payday:** Lose all accumulated unpaid salary (brutal!)
+
+**Creates pressure:**
+- "I need money NOW to escape"
+- "But shipping early = more bugs = harder future"
+- "But waiting = might miss deadline = penalties"
+
+---
+
+### 7. Stack Ranking Meeting System (Voting + Education)
+
+**NEW SYSTEM - Key engagement and trauma bonding mechanic**
 
 #### **When It Triggers**
 - Random chance (10-15%) when advancing to next day
@@ -348,51 +442,32 @@ You're not crazy. The system is broken.
 [Share this] [Learn more about workplace dynamics]
 ```
 
-#### **Variations (Keep It Fresh)**
-
-Different meeting types with same mechanics:
-- **"Bug Triage"** - Rank by severity
-- **"Tech Debt Review"** - Rank by "should we fix this?"
-- **"Feature Voting"** - Rank by "customers will actually use this"
-- **"Incident Postmortem"** - Rank causes by importance (boss blames wrong things)
-
-#### **Strategic Depth (Optional)**
-
-Make meetings affect your run:
-
-**"Emergency Roadmap Meeting":**
-- Your #1 ranked task might become your NEXT task (careful what you rank high!)
-
-**"Bug Triage":**
-- If community/good rankings win, global bugs -5
-- If bad rankings win, bugs +3
-
-**"Tech Debt Review"** (rare, only if bugs > 50):
-- Good outcome: Company allocates debug time, bugs -20
-- Bad outcome: Leadership ignores it, bugs +10
-
 ---
 
-### 7. Escalating Pressure
+### 8. Escalating Pressure
 
 #### **Week 1-2 (Days 1-10): Onboarding**
 - Simple tasks (complexity 1-3)
 - Long deadlines (5-7 days)
-- Low bugs
+- Low bugs (you're still clean)
 - Learning the systems
+- Can afford to ship at 80-90% quality
 
 #### **Week 3-4 (Days 11-20): Reality Sets In**
 - NEW RULE: "All CEO requests are mandatory"
 - Medium tasks (complexity 4-6)
 - Shorter deadlines (3-5 days)
 - Salary increases +$20/week (golden handcuffs forming)
-- Past bugs starting to bite
+- Past bugs starting to bite (20-30 bugs accumulated)
+- Tempted to ship at 60-70%
 
 #### **Week 5-6 (Days 21-30): Crisis Mode**
 - NEW RULE: "Overtime banned" (but deadlines still tight)
 - Hard tasks (complexity 7-9)
 - Tight deadlines (2-3 days)
-- High bugs if you've been rushing
+- High bugs if you've been shipping early (40-60 bugs)
+- Work is 40-60% slower
+- Must ship at 40-50% just to survive
 - Coworker relationships matter
 - Moral dilemmas ("fire junior dev or take blame?")
 
@@ -400,20 +475,27 @@ Make meetings affect your run:
 - NEW RULE: "Code reviews mandatory" (+1 day per task)
 - Very hard tasks (complexity 8-10)
 - Brutal deadlines (1-2 days)
-- If you're at 60+ bugs, nearly impossible
+- If you're at 60+ bugs, nearly impossible to complete normally
 - If you're at $4K+, SO CLOSE to freedom
-- Desperate choices
+- Desperate choices: ship at 20-30%?
+- Production outages from past sins
+- Every day is a scramble
+
+**The curve creates natural three-act structure:**
+- Act I: "This is manageable"
+- Act II: "Oh no, this is catching up to me"
+- Act III: "SHIP EVERYTHING, ESCAPE NOW"
 
 ---
 
-### 7. Event System
+### 9. Event System
 
-#### **Random Events (30% chance on Work, 50% on Hustle)**
+#### **Random Events (30% chance on Work)**
 
 **Flavor Events:**
 ```javascript
 "Boss says 'We're a family'" → -1 duck
-"Free pizza! (It's vegan)" → +1 duck
+"Free pizza! (It's vegan)" → +1 duck (maybe)
 "Coffee machine broken" → -10% progress today
 "Mandatory fun team building" → -1 duck, lose half day
 ```
@@ -481,6 +563,8 @@ You're not crazy. Everyone feels this.
 
 // If you helped junior dev
 "Day 30: Junior dev returns the favor, debugs 20 bugs for free"
+  → WAIT, this breaks the "bugs never reduce" rule!
+  → REVISED: Junior dev speeds up your work +20% for 3 days
 
 // If you ranked sensibly in stack ranking 3+ times
 "Day 35: Boss notices you 'don't get the big picture'"
@@ -489,7 +573,7 @@ You're not crazy. Everyone feels this.
 
 ---
 
-### 8. Company Rulebook (Papers Please Rules)
+### 10. Company Rulebook (Papers Please Rules)
 
 **Updates every 5 days via company-wide email**
 
@@ -503,13 +587,13 @@ You're not crazy. Everyone feels this.
 #### **Day 5 Update:**
 ```
 NEW RULE: All CEO-assigned tasks are mandatory
-(Cannot refuse without termination)
+(Cannot negotiate extension without approval)
 ```
 
 #### **Day 10 Update:**
 ```
 NEW RULE: Code reviews required for all deployments
-(Adds 1 day to every task)
+(Adds 1 day to every task deadline)
 ```
 
 #### **Day 15 Update:**
@@ -522,10 +606,10 @@ CONFLICTING WITH: CEO mandatory tasks with impossible deadlines
 
 #### **Day 20 Update:**
 ```
-NEW RULE: Performance Improvement Plan (PIP) for anyone with 2+ outages
+NEW RULE: Performance Improvement Plan (PIP) for 2+ production outages
 - All work requires approval
 - Weekly 1-on-1 meetings (-1 duck each)
-- 3 strikes = termination
+- Next outage = termination
 ```
 
 **The Papers Please Magic:** Rules contradict each other, forcing impossible choices
@@ -537,8 +621,29 @@ NEW RULE: Performance Improvement Plan (PIP) for anyone with 2+ outages
 ### **Victory: Escape to Act 2**
 - Reach $5,000 in savings
 - Quit with dramatic email
-- Your stats carry forward (bugs, relationships, reputation)
+- Victory screen shows:
+  - Days survived
+  - Bugs shipped
+  - Lowest quality ship (%)
+  - Most catastrophic task
+  - Moral choices made
+- Stats carry forward (bugs, relationships, reputation)
 - Unlock Act 2: Startup Chaos
+
+**Post-game shareable:**
+```
+I ESCAPED CORPORATE HELL!
+
+Day 43 | 71 bugs shipped | $5,000 earned | 0 ducks remaining
+
+Lowest ship: "CEO Logo Revision" at 18% (AI slop)
+Most bugs from: "Blockchain Todo App" (+8 bugs)
+Closest call: 1 duck remaining on Day 38
+
+I'll never be clean again.
+
+[Share] [Try to escape faster]
+```
 
 ### **Game Over: Ran Out of Ducks**
 ```
@@ -550,21 +655,34 @@ You feel nothing.
 
 You open Slack and type to the CEO: "lol"
 
+Days survived: 34
+Money earned: $4,200 (so close!)
+Bugs shipped: 92
+Ducks remaining: 0
+
 [Ending: Nihilist Burnout]
 ```
 
-### **Game Over: Fired (3 strikes)**
+### **Game Over: Impossible Workload (100+ bugs)**
 ```
-"HR would like to see you."
+"The bugs have won."
 
-After the meeting, security escorts you out.
-You never finished your last commit.
+You open a task: Complexity 8, deadline 2 days.
+Your bug multiplier: 2.1x (110 bugs)
+Time to complete: 8.4 days
 
-Money earned: $2,847
-Ducks remaining: 0
-Bugs shipped: 127
+The math doesn't work anymore.
+You can't ship fast enough.
+You can't earn money fast enough.
 
-[Ending: Terminated]
+You're trapped.
+
+Days survived: 38
+Money earned: $3,600
+Bugs shipped: 110
+Progress on final task: 15%
+
+[Ending: Death Spiral]
 ```
 
 ### **Game Over: Golden Handcuffs**
@@ -575,6 +693,11 @@ You can't afford to quit anymore.
 The stock options vest in 3 years.
 You'll never leave.
 
+Days survived: 50
+Money earned: $8,200 (but you need $5K to escape, and you passed that threshold when salary hit trap threshold)
+Bugs shipped: 45
+Salary trap: $2,500/5 days
+
 [Ending: Corporate Drone]
 ```
 
@@ -582,51 +705,76 @@ You'll never leave.
 
 ## MVP Implementation Roadmap
 
-### **Phase 1: Core Loop (Week 1-2)**
-- [ ] Ticket inspection UI (simple version)
-- [ ] 4 stamp decisions (Accept/Negotiate/Rush/Refuse)
-- [ ] Work phase with 4 actions
-- [ ] Bugs system (accumulation + slowdown)
+### **Phase 1: Core Loop (CURRENT FOCUS)**
+**Goal:** Playable loop with meaningful daily decisions
+
+- [x] Bugs system (accumulation + slowdown)
+- [x] Task.do_work() refactored to accept work amount
+- [x] Bugs slow ALL work via get_bug_multiplier()
+- [x] UI displays bugs label with color coding
+- [ ] Remove REFUSE/DEBUG/REST actions
+- [ ] Add SHIP IT action (available at 20%+ progress)
+  - [ ] Bug calculation: (100 - progress) / 10
+  - [ ] Duck rewards/penalties based on quality
+  - [ ] Quality flavor text
+- [ ] Update HUSTLE to gain ducks (+1)
+- [ ] Payment on completion system
+  - [ ] Remove daily salary
+  - [ ] Add payday every 5 days
+  - [ ] Payment on SHIP IT
 - [ ] Task complexity affects progress speed
-- [ ] Basic consequences (outages, penalties)
+- [ ] 2 stamp decisions (ACCEPT/NEGOTIATE)
 
-**Deliverable:** Playable loop with meaningful decisions
+**Deliverable:** Can play a full task loop with daily SHIP IT temptation
 
-### **Phase 2: Escalation (Week 3)**
+---
+
+### **Phase 2: Escalation (After core loop works)**
 - [ ] Escalating salary (+$20/week)
 - [ ] Task difficulty increases over time
 - [ ] Deadline lengths decrease
 - [ ] Company rulebook system
-- [ ] Strike system (3 strikes = fired)
+- [ ] Production outage time bombs
+- [ ] Golden handcuffs game over
 
 **Deliverable:** Difficulty curve that creates pressure
 
-### **Phase 3: Events & Personality (Week 4)**
-- [ ] Enable random events (30% chance)
+---
+
+### **Phase 3: Events & Personality**
+- [ ] Enable random events (30% chance on Work)
 - [ ] Add 10+ choice events
 - [ ] Implement consequence tracking
 - [ ] Event callbacks (past choices referenced)
+- [ ] Stack ranking meeting system
+- [ ] Industry survey events
 - [ ] Expand event pool to 20+ events
 
 **Deliverable:** Dark humor and moral weight
 
-### **Phase 4: Polish & Juice (Week 5)**
+---
+
+### **Phase 4: Polish & Juice**
 - [ ] Screen shake on duck loss
 - [ ] Money/progress animations
 - [ ] Sound effects (keyboard, duck quack, cash register)
 - [ ] Progress bar color changes
 - [ ] Task completion celebration
 - [ ] Production outage dramatic popup
+- [ ] Duck deflation animation (meetings)
 
 **Deliverable:** Feels good to play
 
-### **Phase 5: Balance & Content (Week 6)**
+---
+
+### **Phase 5: Balance & Content**
 - [ ] Playtest full game (Day 1 → escape)
 - [ ] Balance difficulty curve
-- [ ] Add more tasks (20+ total)
+- [ ] Add more tasks (30+ total)
 - [ ] Tune event probabilities
 - [ ] Multiple game over endings
 - [ ] Victory screen with stats recap
+- [ ] Shareable post-game cards
 
 **Deliverable:** Complete Act 1
 
@@ -635,18 +783,29 @@ You'll never leave.
 ## Success Metrics
 
 **You'll know it's working when:**
-- Players agonize over stamp decisions for 10+ seconds
-- "One more day" addiction kicks in
+- Players agonize over SHIP IT decisions daily
+- "Just one more day" addiction kicks in
 - Players scream at production outage popups
 - They laugh at events then feel guilty
-- They replay to try different moral choices
+- They replay to optimize "cleanest escape"
 - Streamers can create content (drama + comedy)
+- Players share their bug counts / lowest quality ships
 
 **Target feeling:**
 - Papers Please's inspection tension
 - Office Space's "did he just say that?" moments
 - This War of Mine's moral weight
 - Cookie Clicker's "one more click" but with actual decisions
+- FTL's "one more jump" desperation
+
+**Target metrics:**
+- With 0 bugs: Complexity 5 task takes ~5 days of work
+- With 40 bugs: Same task takes ~7 days (40% slower)
+- With 80 bugs: Same task takes ~9 days (80% slower)
+- Salary should increase from $100 → $500 over ~40 days
+- Escape goal ($5K) should take 30-50 days depending on choices
+- Ducks should be scarce (start with 3, rarely gain them back)
+- Most players ship first tasks at 80-90%, later tasks at 40-60%
 
 ---
 
@@ -728,25 +887,27 @@ You'll never leave.
 ## Development Priorities
 
 ### **DO FIRST:**
-1. Ticket inspection UI
-2. Bugs system
-3. Stamp decisions
-4. One production outage event
+1. SHIP IT as daily decision
+2. Bug accumulation (permanent)
+3. Payment on completion
+4. HUSTLE gains ducks
 
-**Why:** This is the core "Papers Please" hook. If this isn't fun, nothing else matters.
+**Why:** This is the core innovation. If "should I ship now?" isn't compelling, nothing else matters.
 
 ### **DO SECOND:**
 1. Event system with choices
 2. Consequence tracking
 3. Escalation curve
+4. Production outages
 
 **Why:** This adds the "one more day" addiction and moral weight.
 
 ### **DO LAST:**
 1. Polish (animations, sounds)
 2. More content (tasks, events)
-3. Meta-progression
-4. Act 2
+3. Stack ranking system
+4. Meta-progression
+5. Act 2
 
 **Why:** Only polish something that's already fun.
 
@@ -757,27 +918,30 @@ You'll never leave.
 **Alt+F+This**
 *Papers Please meets Office Space with duck-based emotional damage*
 
-You're a tech worker trapped in corporate hell. Every work ticket is a moral dilemma. Ship buggy code to meet impossible deadlines, or work overtime and lose your sanity? Help your coworker or throw them under the bus? Each choice costs ducks (your patience). Run out of ducks, you break. Save $5K before that happens, and escape to start your own company in Act 2—where everyone you wronged shows up.
+You're a tech worker trapped in corporate hell. Every day you choose: work on your task, side hustle for sanity, or ship it early and accumulate bugs. Bugs slow ALL future work and NEVER go away. Ship fast to meet deadlines, or ship clean to survive long-term? You can't do both. Save $5K before bug accumulation makes work impossible, then escape to start your own company in Act 2—where everyone you wronged shows up.
 
 **Genre:** Inspection/management sim with dark comedy
 **Platform:** Mobile-first (portrait), PC later
 **Playtime:** 2-3 hours per run, high replayability
-**Hook:** "Papers Please but you're debugging corporate capitalism"
+**Hook:** "Papers Please but you're debugging corporate capitalism, and your sins never wash away"
 
 ---
 
 ## Final Thoughts
 
+**Fun Assessment Score: 21/21** (see [fun-assessment-framework.md](fun-assessment-framework.md))
+
 This game is **3/10 right now** but could be **9/10** because:
 
-✅ Strong unique hook (duck economy)
-✅ Proven mechanics (Papers Please)
+✅ Strong unique hook (permanent bugs + daily SHIP IT temptation)
+✅ Proven mechanics (Papers Please inspection)
 ✅ Relatable theme (corporate burnout)
 ✅ Great writing already (task descriptions)
 ✅ Clean technical foundation
 ✅ Clear escalation path
+✅ Simple mechanics (5 total, not 8)
 
-The gap is execution: implement the inspection gameplay, add consequence systems, and juice it up.
+The gap is execution: implement SHIP IT as daily choice, make bugs permanent, and juice it up.
 
 **This could be your "Vampire Survivors" moment—a simple, focused game with a unique twist that resonates.**
 
