@@ -59,7 +59,7 @@ See [ideas/workflow-incremental-implementation.md](ideas/workflow-incremental-im
 - All properties use setters that emit signals (e.g., `money_changed`, `ducks_changed`, `bugs_changed`)
 - Game actions: `do_work()`, `hustle()`, `debug()`, `process_action()`
 - Bug system: `get_bug_multiplier()`, `add_bugs(amount)`
-- Events: `next_day`, `missed_deadline`, `work_completed`, `game_over`, `production_outage`
+- Events: `next_day`, `missed_deadline`, `event_occurred`, `game_over`, `production_outage`
 
 **TaskManager** ([autoloads/task_manager.gd](autoloads/task_manager.gd))
 - Loads tasks from [data/tasks.json](data/tasks.json)
