@@ -708,21 +708,35 @@ Salary trap: $2,500/5 days
 ### **Phase 1: Core Loop (CURRENT FOCUS)**
 **Goal:** Playable loop with meaningful daily decisions
 
+#### ✅ Completed
 - [x] Bugs system (accumulation + slowdown)
 - [x] Task.do_work() refactored to accept work amount
 - [x] Bugs slow ALL work via get_bug_multiplier()
 - [x] UI displays bugs label with color coding
-- [ ] Remove REFUSE/DEBUG/REST actions
-- [ ] Add SHIP IT action (available at 20%+ progress)
+
+#### 🚧 In Progress: SHIP IT Action
+- [ ] Add ship_it() function to GameManager
+  - [ ] Available at 20%+ progress
   - [ ] Bug calculation: (100 - progress) / 10
-  - [ ] Duck rewards/penalties based on quality
-  - [ ] Quality flavor text
+  - [ ] Duck rewards/penalties based on quality tier
+  - [ ] Quality flavor text by tier
+  - [ ] Complete task immediately
+  - [ ] Get new task
+  - [ ] Advance day
+- [ ] Add SHIP IT button to UI (conditionally visible at 20%+)
+- [ ] Connect button to ship_it() function
+- [ ] Manual testing (ship at different %s)
+
+#### 📋 Next Up
 - [ ] Update HUSTLE to gain ducks (+1)
 - [ ] Payment on completion system
-  - [ ] Remove daily salary
+  - [ ] Remove daily salary from do_work()
   - [ ] Add payday every 5 days
-  - [ ] Payment on SHIP IT
+  - [ ] Add immediate payment on ship_it()
 - [ ] Task complexity affects progress speed
+  - [ ] Add complexity field to Task resource
+  - [ ] Load complexity from tasks.json
+  - [ ] Use in do_work() calculation
 - [ ] 2 stamp decisions (ACCEPT/NEGOTIATE)
 
 **Deliverable:** Can play a full task loop with daily SHIP IT temptation

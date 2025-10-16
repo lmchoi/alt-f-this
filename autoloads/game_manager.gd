@@ -99,11 +99,31 @@ func do_work():
 
 func hustle():
 	print('hustle')
-	
+
 	money += (salary * 2)
 
 	# do this at the end
 	# emit outcome
+	day += 1
+
+func ship_it():
+	"""Complete task early at current progress. Adds bugs based on incompleteness."""
+	print('ship it at %d%%' % current_task.progress)
+
+	var progress = current_task.progress
+
+	# Calculate bugs to add: (100 - progress) / 10
+	var bugs_to_add = (100 - progress) / 10.0
+	add_bugs(int(bugs_to_add))
+
+	# Complete task
+	current_task.progress = 100
+	work_completed.emit()
+
+	# Get new task
+	current_task = TaskManager.get_random_task(day)
+
+	# Advance day
 	day += 1
 
 func process_action(action: String):
@@ -114,6 +134,5 @@ func process_action(action: String):
 			print("mercy")
 		"duck_it":
 			ducks -= 1
-			add_bugs(5)
-			current_task = TaskManager.get_random_task(day)
+			ship_it()
 			print("duck it")
