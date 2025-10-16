@@ -14,16 +14,16 @@ A darkly comedic inspection/management game built in Godot 4.5 where you're a te
 
 ## Game Design Vision
 
-See [ideas/game-plan.md](ideas/game-plan.md) for the complete design document.
+**See [ideas/game-plan.md](ideas/game-plan.md) for complete design, mechanics, and systems.**
 
-### Core Pillars
-1. **Inspection Gameplay** (Papers Please) - Examine tickets, check resources, make deliberate decisions
-2. **Dark Corporate Satire** (Office Space) - Absurd tasks, impossible deadlines, TPS report energy
-3. **Emotional Resource Management** - Ducks = patience/sanity. Every compromise costs ducks.
-4. **Consequence Cascades** - Rushed work → bugs → slower work → forced to rush more → death spiral
+### Core Concept
+Papers Please meets Office Space with duck-based emotional damage. Save $5K before bugs make work impossible.
 
-### Goal (Act 1)
-Save $5,000 to escape while keeping ducks > 0. If you run out of ducks, you burn out.
+### Key Design Rules
+1. **Bugs NEVER decrease** - No DEBUG action, permanent consequences
+2. **3 actions only** - WORK, HUSTLE, SHIP IT (daily choice is the core loop)
+3. **SHIP IT is the game** - Daily temptation to ship incomplete work, creates bugs
+4. **Payment on completion only** - Creates urgency to ship early vs. ship clean
 
 ---
 
@@ -68,177 +68,31 @@ See [ideas/workflow-incremental-implementation.md](ideas/workflow-incremental-im
 
 ---
 
-## Key Systems to Implement
-
-### 1. Bugs System (IMPLEMENTED)
-```gdscript
-# In GameManager
-var bugs := 0  # Accumulates from rushed work
-
-# Each bug = 1% slowdown
-func get_bug_multiplier() -> float:
-    return 1.0 + (bugs * 0.01)  # 40 bugs = 1.4x slower (40% slower)
-
-# Bugs slow ALL work
-func do_work():
-    var bug_multiplier = get_bug_multiplier()
-    var work = 20.0 / bug_multiplier
-    current_task.do_work(work)
-
-# Add bugs from various sources
-func add_bugs(amount: int):
-    bugs += amount
-
-# Task.do_work() accepts work amount
-func do_work(amount: float) -> float:
-    var actual_amount = min(amount, 100 - progress)
-    progress += actual_amount
-    return actual_amount
-```
-
-### 2. Time Bombs (Production Outages)
-```gdscript
-# In GameManager
-var time_bombs := []  # Consequences waiting to explode
-
-func rush_ship_task(progress: int):
-    time_bombs.append({
-        "type": "production_outage",
-        "trigger_day": day + randi_range(2, 5),  # Explodes 2-5 days later
-        "severity": (100 - progress) / 10,
-        "task_name": current_task.title
-    })
-
-func daily_updates():
-    for bomb in time_bombs:
-        if bomb.trigger_day == day:
-            trigger_production_outage(bomb)
-```
-
-### 3. Task Complexity Scaling
-```gdscript
-# Task progress should respect complexity
-func do_work():
-    var base_progress = 20
-    var bug_multiplier = 1.0 + (bugs / 100.0)
-    var actual_progress = base_progress / (current_task.complexity * bug_multiplier)
-    current_task.progress += actual_progress
-```
-
-### 4. Escalating Difficulty
-- Week 1-2: Complexity 1-3, deadlines 5-7 days
-- Week 3-4: Complexity 4-6, deadlines 3-5 days, salary +$20/week
-- Week 5+: Complexity 7-10, deadlines 2-3 days, bugs accumulating
-
-### 5. Decision Points (Stamp Mechanic)
-When new task arrives, player chooses:
-- **ACCEPT** - Standard work path
-- **NEGOTIATE** - Extension (+3 days, -$100, -1 duck) or Get Help (reduce complexity, owe favor)
-- **RUSH** - Ship incomplete immediately, add bugs, create time bomb
-- **REFUSE** - Get new task, -$200, -1 duck, +1 strike (3 strikes = fired)
-
----
-
-## Data Structure
-
-### Task (Resource)
-```gdscript
-class_name Task
-extends Resource
-
-var title: String
-var complexity: int  # 1-10
-var due_day: int     # Absolute day number
-var progress: int    # 0-100
-var allowed_time: int
-
-func do_work(amount: float) -> float:
-    # Accepts work amount, returns actual progress added
-    var actual_amount = min(amount, 100 - progress)
-    progress += actual_amount
-    return actual_amount
-```
-
-### Task JSON Format
-```json
-{
-  "title": "Add Blockchain (For Some Reason)",
-  "complexity": 5,
-  "allowed_time": 4,
-  "category": "Buzzword Compliance",
-  "completion_text": "Added a button that says 'Blockchain Enabled!'"
-}
-```
-
----
-
-## Development Phases
-
-### Phase 1: Core Loop (Current Focus)
-- [x] Bugs system (accumulation + slowdown multiplier)
-- [x] Task.do_work() refactored to accept work amount
-- [x] Bugs slow ALL work via get_bug_multiplier()
-- [x] UI displays bugs label with color coding
-- [ ] Task complexity affects progress
-- [ ] 4 stamp decisions (Accept/Negotiate/Rush/Refuse)
-- [ ] Time bombs (production outages)
-- [ ] Strikes system (3 strikes = fired)
-
-### Phase 2: Escalation
-- [ ] Salary increases over time (+$20/week)
-- [ ] Task difficulty scaling by week
-- [ ] Deadline lengths decrease
-- [ ] Company rulebook updates
-
-### Phase 3: Events & Personality
-- [ ] Random events (30% Work, 50% Hustle)
-- [ ] Choice events with moral dilemmas
-- [ ] Consequence tracking and callbacks
-- [ ] Event system in GameManager
-
-### Phase 4: Polish
-- [ ] Visual feedback (screen shake, animations)
-- [ ] Sound effects (keyboard, duck quack, cash register)
-- [ ] Progress bar color changes
-- [ ] Juice and game feel
-
----
-
 ## Critical Implementation Notes
 
-### Task Complexity Usage
+### ⚠️ Bugs Are PERMANENT
+**NEVER implement bug reduction.** No DEBUG action. Bugs never decrease. This is the core tension.
+
+### ⚠️ Task Complexity (NOT YET IMPLEMENTED)
 **ALWAYS use task complexity** when calculating progress:
 ```gdscript
 # WRONG (current code)
 progress += 20
 
 # CORRECT (what it should be)
-var bug_multiplier = 1.0 + (bugs / 100.0)
+var bug_multiplier = get_bug_multiplier()  # 1.0 + (bugs * 0.01)
 progress += 20 / (complexity * bug_multiplier)
 ```
 
-### Event System
-Events are currently commented out in `do_work()` - they need to be re-enabled and expanded:
-```gdscript
-# Current (disabled)
-# _trigger_random_work_event()
+### ⚠️ SHIP IT Is The Core Mechanic
+Daily decision: "Is this good enough to ship?"
+- Available at 20%+ progress
+- Bugs added: `(100 - progress) / 10`
+- Duck change based on quality (see game plan for details)
+- Immediate payment (creates urgency)
 
-# Should be
-if action_type == "work":
-    _trigger_random_event(0.3)  # 30% chance
-elif action_type == "hustle":
-    _trigger_random_event(0.5)  # 50% chance
-```
-
-### Death Spiral Mechanics
-The bugs system creates intentional difficulty spirals:
-1. Rush task → add bugs
-2. Bugs slow future work
-3. Can't meet next deadline naturally
-4. Must rush again → more bugs
-5. Eventually need to spend days debugging
-
-This is **intentional game design** - not a bug to fix!
+### ⚠️ Death Spiral Is Intentional
+Bugs → slower work → can't meet deadlines → ship early → more bugs → repeat. This is **intentional game design**, not a bug to fix. The game is a race: earn $5K before bugs make it impossible.
 
 ---
 
@@ -268,36 +122,25 @@ Examples from [data/tasks.json](data/tasks.json):
 
 ## Quick Reference
 
-### Win Conditions
-- **Victory**: Reach $5,000 and quit
-- **Game Over**: Ducks reach 0 (burnout)
-- **Game Over**: 3 strikes (fired)
-- **Game Over**: Salary reaches $2,500/5 days (golden handcuffs)
+### Target Actions (Final Design)
+- **WORK**: +progress (scaled by complexity + bugs), 30% event chance, paid on completion/payday
+- **HUSTLE**: +salary×2 (on payday), +1 duck, 50% event chance, no progress
+- **SHIP IT**: Complete task, add bugs `(100-progress)/10`, duck change by quality, immediate payment
 
-### Resource Costs
-- **Work**: +progress, +salary
-- **Hustle**: +salary×2, no progress, -1 duck
-- **Debug**: -15 bugs, no progress, no money
-- **Rest**: +1 duck, no progress, no money
-- **Rush ship**: Complete task, add bugs, -2 ducks, create time bomb
-- **Negotiate extension**: +3 days, -$100, -1 duck
-- **Refuse task**: New task, -$200, -1 duck, +1 strike
+### Win/Lose Conditions
+- **Victory**: $5,000 → escape to Act 2
+- **Game Over**: 0 ducks (burnout) OR 100+ bugs (death spiral) OR salary trap ($2,500/5 days)
 
----
-
-## Testing Notes
-
-When testing game balance:
-- With 0 bugs: Complexity 5 task should take ~5 days of work
-- With 40 bugs: Same task takes ~7 days (40% slower)
-- With 80 bugs: Same task takes ~9 days (80% slower)
-- Salary should increase from $100 → $500 over ~40 days
-- Escape goal ($5K) should take 30-50 days depending on choices
-- Ducks should be scarce (start with 2-3, rarely gain them back)
+### Balance Targets
+- Complexity 5 task: ~5 days (0 bugs), ~7 days (40 bugs), ~9 days (80 bugs)
+- Escape: 30-50 days depending on choices
+- Ducks: Start with 3, rarely gain back
+- Most players: ship 80-90% early, 40-60% later
 
 ---
 
-## Files to Reference
+## Key Files
 
-- **Complete game plan**: [ideas/game-plan.md](ideas/game-plan.md)
+- **Game plan & design**: [ideas/game-plan.md](ideas/game-plan.md)
 - **Godot best practices**: [ideas/godot-best-practices.md](ideas/godot-best-practices.md)
+- **Incremental workflow**: [ideas/workflow-incremental-implementation.md](ideas/workflow-incremental-implementation.md)
