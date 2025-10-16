@@ -41,11 +41,20 @@ var bugs := 0:
 		bugs = value
 		bugs_changed.emit(bugs)
 
+var ship_messages: Dictionary = {}
+
 const WORK_EVENTS := [
 	{"text": "Boss says: 'We’re a family.'", "ducks": -1, "money": 0},
 	{"text": "Free pizza! (It's vegan.)", "ducks": 1, "money": 0},
 	{"text": "Legacy code explodes. Debug for 3 hours.", "ducks": 0, "money": -50}
 ]
+
+func _ready():
+	load_ship_messages()
+
+func load_ship_messages():
+	var json_text = FileAccess.get_file_as_string("res://data/ship_messages.json")
+	ship_messages = JSON.parse_string(json_text)
 
 func get_bug_multiplier() -> float:
 	"""Returns slowdown multiplier based on current bugs.
@@ -105,6 +114,26 @@ func hustle():
 	# emit outcome
 	day += 1
 
+func get_ship_quality_message(progress: int) -> String:
+	"""Get random quality flavor text based on progress percentage."""
+	var tier_key = ""
+
+	# Find the appropriate tier
+	if progress >= 90:
+		tier_key = "excellent"
+	elif progress >= 70:
+		tier_key = "acceptable"
+	elif progress >= 50:
+		tier_key = "compromised"
+	elif progress >= 30:
+		tier_key = "shameful"
+	else:
+		tier_key = "rock_bottom"
+
+	# Get random message from tier
+	var messages = ship_messages["quality_tiers"][tier_key]["messages"]
+	return messages[randi() % messages.size()]
+
 func ship_it():
 	"""Complete task early at current progress. Adds bugs based on incompleteness."""
 	print('ship it at %d%%' % current_task.progress)
@@ -120,7 +149,8 @@ func ship_it():
 	if progress >= 100:
 		event_text = "Task complete! Nice work."
 	else:
-		event_text = "Shipped at %d%%. Good enough.\n\nBugs added: +%d" % [progress, int(bugs_to_add)]
+		var quality_msg = get_ship_quality_message(progress)
+		event_text = "Shipped at %d%%\n\n%s\n\nBugs added: +%d" % [progress, quality_msg, int(bugs_to_add)]
 
 	event_occurred.emit({"text": event_text, "money": 0, "ducks": 0})
 

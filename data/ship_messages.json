@@ -1,0 +1,53 @@
+{
+  "quality_tiers": {
+    "excellent": {
+      "min": 90,
+      "messages": [
+        "Actually good work. You feel competent.",
+        "Clean code. A rare feeling of pride.",
+        "You even wrote tests. Who are you?",
+        "Polished. Professional. You remember what that feels like."
+      ]
+    },
+    "acceptable": {
+      "min": 70,
+      "messages": [
+        "It works. Probably.",
+        "Good enough for production. Maybe.",
+        "The tests pass. That's something.",
+        "Functional. That's all anyone can ask for.",
+        "Not your best work, but it'll hold."
+      ]
+    },
+    "compromised": {
+      "min": 50,
+      "messages": [
+        "Barely functional MVP.",
+        "It boots. Ship it.",
+        "Technical debt for future-you to handle.",
+        "You'll fix it later. (You won't.)",
+        "The code smells, but the deadline looms."
+      ]
+    },
+    "shameful": {
+      "min": 30,
+      "messages": [
+        "AI-generated slop with your name on it.",
+        "You shipped TODO comments as features.",
+        "The 'good enough' you'll regret tomorrow.",
+        "This will wake you up at 3am someday.",
+        "You know this is wrong. You ship it anyway."
+      ]
+    },
+    "rock_bottom": {
+      "min": 0,
+      "messages": [
+        "Did you even test this?",
+        "Your GitHub commits say 'fix fix fix fix'.",
+        "This is a crime against computer science.",
+        "You copy-pasted from Stack Overflow without reading.",
+        "Future-you will curse present-you."
+      ]
+    }
+  }
+}
