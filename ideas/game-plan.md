@@ -253,7 +253,127 @@ Consequences:
 
 ---
 
-### 6. Escalating Pressure
+### 6. Stack Ranking Meeting System (Voting Disguised as Work)
+
+**NEW SYSTEM - Key engagement and educational mechanic**
+
+#### **When It Triggers**
+- Random chance (10-15%) when advancing to next day
+- OR forced event every 7-10 days
+- Interrupts normal flow (like real meetings!)
+
+#### **The Meeting Experience**
+
+```
+🎭 EMERGENCY ROADMAP MEETING 🎭
+"This will only take 15 minutes" (Narrator: It won't)
+
+⏱️ 20 SECOND TIMER
+
+[5 ABSURD TASKS APPEAR]
+
+Drag to rank by priority (or swipe: 👉 high / 👈 low):
+
+☰ 1. "Fix critical security bug"
+☰ 2. "Make logo 'pop' more (CEO's 47th revision)"
+☰ 3. "Add blockchain to login button"
+☰ 4. "Refactor code you rushed last week"
+☰ 5. "Emergency: CEO saw competitor's feature"
+
+[Submit Ranking]
+```
+
+**Each task card shows:**
+- Title (absurdist)
+- Complexity (1-10)
+- Brief description
+- Category tag
+- "📖 Based on real story" (for authenticity)
+
+#### **The Punchline**
+
+```
+Your ranking:
+1. Fix security bug
+2. Refactor rushed code
+3. Add blockchain
+4. CEO competitor panic
+5. Make logo pop
+
+[BOSS'S RANKING SLAMS ONTO SCREEN]
+
+ACTUAL PRIORITY:
+1. Make logo pop (CEO wants it NOW)
+2. Add blockchain (board meeting tomorrow)
+3. CEO competitor panic (strategic!)
+4. ??? (Boss forgot)
+5. ??? (Boss forgot)
+
+"Great collaboration! We're doing ALL 6 by Friday."
+"Wait, there's only 5—"
+"Oh right, and migrate the database. Forgot to mention."
+
+[Your duck physically deflates on screen]
+🦆 → 🐥
+
+-2 ducks (pointless meeting)
+-1 hour (lost time)
++6 tasks (somehow gained work)
+```
+
+#### **Post-Ranking Options (Power Fantasy)**
+
+```
+[💼 Accept Defeat] Continue with BOSS's priority
+[🖕 Pushback] "This is impossible" (-1 duck, boss annoyed, might work)
+[🤐 Malicious Compliance] Do EXACTLY what boss said (breaks everything, not your fault)
+[📧 Document It] Email recap "confirming priorities" (CYA, might help later)
+```
+
+#### **Educational Component**
+
+After meeting, optional tooltip:
+```
+💡 INDUSTRY DATA
+
+47,283 engineers have ranked similar tasks.
+
+Average ranking for "Make logo pop": 4.7/5 (lowest priority)
+Average ranking for "Fix security bug": 1.2/5 (highest priority)
+
+Management overrode sensible rankings in 89% of meetings.
+
+You're not crazy. The system is broken.
+
+[Share this] [Learn more about workplace dynamics]
+```
+
+#### **Variations (Keep It Fresh)**
+
+Different meeting types with same mechanics:
+- **"Bug Triage"** - Rank by severity
+- **"Tech Debt Review"** - Rank by "should we fix this?"
+- **"Feature Voting"** - Rank by "customers will actually use this"
+- **"Incident Postmortem"** - Rank causes by importance (boss blames wrong things)
+
+#### **Strategic Depth (Optional)**
+
+Make meetings affect your run:
+
+**"Emergency Roadmap Meeting":**
+- Your #1 ranked task might become your NEXT task (careful what you rank high!)
+
+**"Bug Triage":**
+- If community/good rankings win, global bugs -5
+- If bad rankings win, bugs +3
+
+**"Tech Debt Review"** (rare, only if bugs > 50):
+- Good outcome: Company allocates debug time, bugs -20
+- Bad outcome: Leadership ignores it, bugs +10
+
+---
+
+### 7. Escalating Pressure
 
 #### **Week 1-2 (Days 1-10): Onboarding**
 - Simple tasks (complexity 1-3)
@@ -318,6 +438,37 @@ Consequences:
   [Blame IT] → -2 ducks, +$200, IT sabotages you later
 ```
 
+#### **Industry Survey Events (Educational Trauma Bonding)**
+
+Occasional event disguised as corporate busywork:
+
+```
+📊 ANONYMOUS WORKPLACE SURVEY
+(HR promises this is anonymous) (it's not)
+
+Rate your agreement (1-5):
+
+"Our deadlines are realistic"           [1][2][3][4][5]
+"I feel heard in planning meetings"     [1][2][3][4][5]
+"Management values quality over speed"  [1][2][3][4][5]
+"I would recommend this workplace"      [1][2][3][4][5]
+
+[Submit] (It won't change anything)
+
+[RESULTS FROM 47,000 REAL PLAYERS]
+
+"Deadlines are realistic" - Avg: 1.3/5
+"Feel heard in meetings" - Avg: 1.8/5
+"Quality over speed" - Avg: 1.1/5
+"Would recommend workplace" - Avg: 1.4/5
+
+You're not crazy. Everyone feels this.
+
+-1 duck (pointless survey)
++0 to all stats
++100% solidarity
+```
+
 #### **Consequence Events (Triggered by past choices)**
 
 ```javascript
@@ -330,6 +481,10 @@ Consequences:
 
 // If you helped junior dev
 "Day 30: Junior dev returns the favor, debugs 20 bugs for free"
+
+// If you ranked sensibly in stack ranking 3+ times
+"Day 35: Boss notices you 'don't get the big picture'"
+  → -$100, +1 duck (you stood your ground)
 ```
 
 ---
