@@ -21,7 +21,6 @@ func _ready():
 	GameManager.event_occurred.connect(_on_event_occurred)
 	GameManager.missed_deadline.connect(_on_deadline_due)
 	GameManager.next_day.connect(_on_next_day)
-	GameManager.work_completed.connect(_on_work_completed)
 	GameManager.game_over.connect(_on_game_over)
 	GameManager.current_task_updated.connect(_on_current_task_updated)
 
@@ -50,9 +49,6 @@ func _update_bugs_label(new_amount: int):
 func _on_event_occurred(event: Dictionary):
 	if event.text != "":
 		$EventPopup.show_event(event.text)
-
-func _on_work_completed():
-	$EventPopup.show_event("Congrats!")
 
 func _on_deadline_due():
 	$DeadlineDialog.popup()

@@ -6,7 +6,6 @@ signal ducks_changed(amount)
 signal bugs_changed(amount)
 signal event_occurred(event_data)
 signal missed_deadline()
-signal work_completed()
 signal game_over(message)
 signal current_task_updated(task)
 
@@ -74,7 +73,7 @@ func _trigger_random_work_event():
 func daily_updates():
 	if current_task.progress >= 100:
 		print("work completed")
-		work_completed.emit()
+		event_occurred.emit({"text": "Task complete! Nice work.", "money": 0, "ducks": 0})
 		current_task = TaskManager.get_random_task(day)
 
 	if current_task.due_day == day:
@@ -116,9 +115,17 @@ func ship_it():
 	var bugs_to_add = (100 - progress) / 10.0
 	add_bugs(int(bugs_to_add))
 
+	# Show shipped message
+	var event_text = ""
+	if progress >= 100:
+		event_text = "Task complete! Nice work."
+	else:
+		event_text = "Shipped at %d%%. Good enough.\n\nBugs added: +%d" % [progress, int(bugs_to_add)]
+
+	event_occurred.emit({"text": event_text, "money": 0, "ducks": 0})
+
 	# Complete task
 	current_task.progress = 100
-	work_completed.emit()
 
 	# Get new task
 	current_task = TaskManager.get_random_task(day)
