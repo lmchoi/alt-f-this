@@ -95,8 +95,9 @@ func do_work():
 	# wait response to work_event
 
 	var bug_multiplier = get_bug_multiplier()
-	var work = 20.0 / bug_multiplier
+	var work = 20.0 / (current_task.complexity * bug_multiplier)
 	current_task.do_work(work)
+	print("Progress: +%.1f%% (complexity: %d, bugs: %d)" % [work, current_task.complexity, bugs])
 
 	# update player state
 	money += salary
