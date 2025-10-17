@@ -197,6 +197,11 @@ func process_action(action: String):
 			salary -= 10
 			print("mercy")
 		"duck_it":
-			ducks -= 1
-			ship_it()
-			print("duck it")
+			if current_task.progress < 20:
+				# Same cheeky message as trying to ship early
+				var cheeky_message = get_too_early_message()
+				event_occurred.emit({"text": cheeky_message, "money": 0, "ducks": 0})
+			else:
+				ducks -= 1
+				ship_it()
+				print("duck it")
