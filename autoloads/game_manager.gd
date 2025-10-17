@@ -117,12 +117,17 @@ func do_work():
 func hustle():
 	print('hustle')
 
-	# Gain 1 duck (side hustle gives autonomy/relief)
-	ducks += 1
-
 	# Side hustle pays immediately (freelance work, not company payroll)
-	# TODO: Balance this amount for proper game economy
 	money += 200
+
+	# Check if task is overdue
+	if day > current_task.due_day:
+		# Guilt/stress from ignoring work - costs a duck instead of gaining
+		ducks -= 1  # Net -1 (normally would gain +1)
+		event_occurred.emit({"text": "Side hustling while work is overdue...\n\nYou're ignoring the deadline.\n\nStress mounting.\n\n-1 duck", "money": 0, "ducks": 0})
+	else:
+		# Normal duck gain when not overdue
+		ducks += 1
 
 	# do this at the end
 	# emit outcome
