@@ -102,18 +102,24 @@ Save $5,000 to escape before bugs accumulate to unworkable levels (or burn out t
    - SHIP IT: Complete task NOW, earn payment, gain/lose ducks based on quality
    ↓
 5. Daily decision: "Is this good enough to ship?"
-   - Ship at 95%? +1 duck (pride), +1 bug
-   - Ship at 60%? ±0 ducks, +4 bugs
-   - Ship at 25%? -2 ducks (guilt), +7.5 bugs
-   - Keep working? Risk missing deadline, but cleaner code
+   - Ship at 95%? +1 bug, immediate payment
+   - Ship at 60%? +4 bugs, immediate payment
+   - Ship at 25%? +7.5 bugs, immediate payment
+   - Keep working? Risk deadline penalties, but cleaner code
    ↓
-6. Consequences unfold
-   - Task complete or deadline missed
+6. Deadline consequences
+   - Before deadline: No penalty, work freely
+   - After deadline (overdue): -$100/day + CEO anger builds
+   - CEO anger → future tasks harder, risk of firing
+   - Choose: ship early (bugs) vs go overdue (money penalty)
+   ↓
+7. Consequences unfold
+   - Task complete when shipped
    - Bugs accumulate (NEVER reduce)
    - Events trigger (random or consequence-based)
    - Stats update, day advances
    ↓
-7. Return to step 1 with MORE bugs, SLOWER work, HARDER tasks
+8. Return to step 1 with MORE bugs, SLOWER work, HARDER tasks
 ```
 
 **The Race:** Earn $5K before bug accumulation makes progress impossible.
@@ -219,22 +225,18 @@ After accepting ticket, **each day** you choose one action. This is where the ga
 
 - Complete task immediately at current progress
 - Add bugs: `(100 - progress) / 10`
-- Duck change based on quality:
-  - **90-100%:** +1 duck (pride in craftsmanship)
-  - **70-89%:** +0 ducks (acceptable)
-  - **50-69%:** -1 duck (compromised values)
-  - **20-49%:** -2 ducks (deep shame)
 - Receive payment immediately
-- Advance to next day/task
+- Get new task
+- Advance to next day
 
-**Quality flavor text:**
+**Quality flavor text** (from [data/ship_messages.json](../data/ship_messages.json)):
 - 90%+: "Actually good work. You feel competent."
 - 70-89%: "It works. Probably."
 - 50-69%: "Barely functional MVP."
 - 30-49%: "AI-generated slop with your name on it."
 - 20-29%: "You shipped TODO comments as features."
 
-**Every day you ask:** "Is this good enough? Do I need the money NOW? Can I afford more bugs?"
+**Every day you ask:** "Is this good enough? Do I need the money NOW? Can I afford more bugs? Should I risk going overdue?"
 
 ---
 
@@ -324,30 +326,55 @@ Low-quality shipping has DOUBLE penalty:
 
 ---
 
-### 6. Payment System (Creates SHIP IT Urgency)
+### 6. Soft Deadlines (Flexible Pressure System)
 
-**Salary is only paid on:**
-1. **Task completion** (via SHIP IT)
-2. **Payday** (every 5 days)
+**How it works:**
+- Tasks have a **suggested deadline** (e.g., 5 days)
+- **Before deadline:** Work freely, no penalties
+- **After deadline (overdue):** Each day triggers:
+  - `-$100 salary penalty` (directly reduces escape fund)
+  - `+1 CEO anger` (permanent, escalates consequences)
+  - `Small firing chance` (~2% per anger point)
 
 **Example:**
-- Day 11: Accept task, work 3 days (no money yet)
-- Day 13: Work (no money yet)
+- Day 11: Accept task, deadline Day 15 (4 days)
 - Day 14: Task at 65%, deadline tomorrow
-  - **Choice A:** SHIP IT now → earn $500 immediately, +3.5 bugs
-  - **Choice B:** Work 1 more day → miss deadline → penalties
-  - **Choice C:** Work 1 more day, hope to finish → wait for Day 15 payday
+  - **Choice A:** SHIP IT now → +3.5 bugs, get $500, clean deadline
+  - **Choice B:** WORK 1 more day → hit 80%, ship clean at deadline
+  - **Choice C:** WORK 2 more days → ship at 95% but -$100 penalty + CEO anger
+  - **Choice D:** WORK 3 more days → ship perfect but -$200 + high CEO anger
 
-**If you get fired before payday:** Lose all accumulated unpaid salary (brutal!)
+**Creates trade-offs:**
+- Ship early (more bugs) vs go overdue (money penalty + anger)
+- Expert players can take calculated risks
+- No hard fail state, but consequences accumulate
+
+**Implementation:**
+```gdscript
+func daily_updates():
+    if day > current_task.due_day:
+        var days_overdue = day - current_task.due_day
+        money -= 100
+        ceo_anger += 1
+
+        if randf() < (ceo_anger * 0.02):
+            game_over.emit("Fired for chronic lateness")
+```
+
+### 7. Payment System (Creates SHIP IT Urgency)
+
+**Salary is only paid on:**
+1. **Task completion** (via SHIP IT) - immediate payment
+2. **Payday** (every 5 days) - for accumulated work
 
 **Creates pressure:**
 - "I need money NOW to escape"
 - "But shipping early = more bugs = harder future"
-- "But waiting = might miss deadline = penalties"
+- "But going overdue = lose money + CEO gets angry"
 
 ---
 
-### 7. Stack Ranking Meeting System (Voting + Education)
+### 8. Stack Ranking Meeting System (Voting + Education)
 
 **NEW SYSTEM - Key engagement and trauma bonding mechanic**
 
@@ -444,7 +471,7 @@ You're not crazy. The system is broken.
 
 ---
 
-### 8. Escalating Pressure
+### 9. Escalating Pressure
 
 #### **Week 1-2 (Days 1-10): Onboarding**
 - Simple tasks (complexity 1-3)
@@ -488,7 +515,7 @@ You're not crazy. The system is broken.
 
 ---
 
-### 9. Event System
+### 10. Event System
 
 #### **Random Events (30% chance on Work)**
 
@@ -573,7 +600,7 @@ You're not crazy. Everyone feels this.
 
 ---
 
-### 10. Company Rulebook (Papers Please Rules)
+### 11. Company Rulebook (Papers Please Rules)
 
 **Updates every 5 days via company-wide email**
 
@@ -630,9 +657,10 @@ NEW RULE: Performance Improvement Plan (PIP) for 2+ production outages
 - Stats carry forward (bugs, relationships, reputation)
 - Unlock Act 2: Startup Chaos
 
-**Post-game shareable:**
+**Post-game shareable (with dynamic title):**
 ```
-I ESCAPED CORPORATE HELL!
+[ENDING: THE BURNT-OUT HUSTLER]
+"I escaped, but at what cost?"
 
 Day 43 | 71 bugs shipped | $5,000 earned | 0 ducks remaining
 
@@ -640,10 +668,39 @@ Lowest ship: "CEO Logo Revision" at 18% (AI slop)
 Most bugs from: "Blockchain Todo App" (+8 bugs)
 Closest call: 1 duck remaining on Day 38
 
+My Compromises:
+✅ Shipped tabs (CEO mandate)
+✅ Skipped TDD (no time)
+✅ Blamed 2 junior devs
+✅ Shipped TODO comments as features
+
 I'll never be clean again.
 
 [Share] [Try to escape faster]
 ```
+
+**Victory Ending Titles (based on stats):**
+
+| Title | Conditions | Flavor Text |
+|-------|-----------|-------------|
+| **THE PERFECTIONIST** | <20 bugs, >30 days | "You escaped with your soul intact." |
+| **THE PRAGMATIST** | 20-50 bugs, avg ship quality 60-80% | "You made the deals you had to make." |
+| **THE BURNT-OUT HUSTLER** | 0 ducks remaining | "I escaped, but at what cost?" |
+| **THE SPEED RUNNER** | <25 days | "You got out before they could break you." |
+| **THE TECHNICAL DEBT MONSTER** | 50-90 bugs | "You left a trail of destruction behind you." |
+| **THE AI PROMPT ENGINEER** | Avg ship quality <40% | "You shipped TODO comments as features." |
+| **THE SURVIVOR** | 3+ production outages survived | "You crawled through hell and came out broken." |
+| **THE SELLOUT** | Complied with 90%+ CEO demands | "You became what you hated." |
+| **THE REBEL** | Refused/pushed back 50%+ of time | "You fought the system and won." |
+| **THE MARTYR** | Helped coworkers 5+ times, 1 duck left | "You saved others but couldn't save yourself." |
+| **THE SOCIOPATH** | Blamed others 3+ times, high escape | "Your coworkers paid for your freedom." |
+| **THE GOLDEN PARACHUTE** | Escaped with $7K+ (over-earned) | "You didn't just escape. You robbed them." |
+
+**Multi-condition priority:**
+1. Check for extreme stats first (AI Prompt Engineer, Sociopath, Perfectionist)
+2. Check for playstyle patterns (Speed Runner, Rebel, Martyr)
+3. Default to bug count + duck count (Pragmatist, Burnt-Out, Survivor)
+
 
 ### **Game Over: Ran Out of Ducks**
 ```
