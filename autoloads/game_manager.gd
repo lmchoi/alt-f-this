@@ -99,8 +99,7 @@ func do_work():
 	current_task.do_work(work)
 	print("Progress: +%.1f%% (complexity: %d, bugs: %d)" % [work, current_task.complexity, bugs])
 
-	# update player state
-	money += salary
+	# No immediate payment - only on completion or payday
 
 	# do this at the end
 	# emit outcome
@@ -109,7 +108,12 @@ func do_work():
 func hustle():
 	print('hustle')
 
-	money += (salary * 2)
+	# Gain 1 duck (side hustle gives autonomy/relief)
+	ducks += 1
+
+	# Side hustle pays immediately (freelance work, not company payroll)
+	# TODO: Balance this amount for proper game economy
+	money += 200
 
 	# do this at the end
 	# emit outcome
@@ -150,13 +154,16 @@ func ship_it():
 	var bugs_to_add = (100 - progress) / 10.0
 	add_bugs(int(bugs_to_add))
 
+	# Pay salary immediately on completion
+	money += salary
+
 	# Show shipped message
 	var event_text = ""
 	if progress >= 100:
-		event_text = "Task complete! Nice work."
+		event_text = "Task complete! Nice work.\n\nPaid: $%d" % salary
 	else:
 		var quality_msg = get_ship_quality_message(progress)
-		event_text = "Shipped at %d%%\n\n%s\n\nBugs added: +%d" % [progress, quality_msg, int(bugs_to_add)]
+		event_text = "Shipped at %d%%\n\n%s\n\nBugs added: +%d\nPaid: $%d" % [progress, quality_msg, int(bugs_to_add), salary]
 
 	event_occurred.emit({"text": event_text, "money": 0, "ducks": 0})
 
