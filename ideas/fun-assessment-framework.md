@@ -207,6 +207,18 @@ Different game types prioritize different dimensions:
 - Cognitive Load (must be low for mobile)
 - Pace & Rhythm (escalation crucial)
 
+**Papers Please-Style Management Sims:**
+- IDPM: **3x** (every decision must matter, time pressure essential)
+- Consequence Weight: **3x** (permanence is core design pillar)
+- Cognitive Load: **2x** (must be low for mobile/accessibility)
+- Emotional Range: **2x** (dark humor and moral weight)
+- Pace & Rhythm: **3x** (escalation/death spiral is the game)
+- Mastery Curve: **1x** (nice to have, secondary to immediate decisions)
+- Shareability: **2x** (memorable disasters drive word-of-mouth)
+- **Max Weighted Score:** 48 points
+
+Examples: Papers Please, This War of Mine, Alt+F+This
+
 ---
 
 ## Framework Limitations
