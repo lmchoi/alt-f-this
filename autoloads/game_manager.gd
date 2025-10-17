@@ -7,6 +7,7 @@ signal bugs_changed(amount)
 signal event_occurred(event_data)
 signal missed_deadline()
 signal game_over(message)
+signal victory(message)
 signal current_task_updated(task)
 
 var current_task := Task.new(1):
@@ -23,6 +24,7 @@ var money := 0:
 	set(value):
 		money = value
 		money_changed.emit(money)
+		check_victory()
 
 var salary := 100:
 	set(value):
@@ -69,6 +71,11 @@ func add_bugs(amount: int) -> void:
 
 func start_game():
 	current_task = TaskManager.get_random_task()
+
+func check_victory():
+	"""Check if player has reached $5000 escape goal."""
+	if money >= 5000:
+		victory.emit("You saved $5,000!\n\nYou quit with a dramatic email and escape to start your own company.\n\nVICTORY!")
 
 func _trigger_random_work_event():
 	var event_result := {"text": "", "money": 0, "ducks": 0}

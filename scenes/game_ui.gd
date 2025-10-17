@@ -24,6 +24,7 @@ func _ready():
 	GameManager.missed_deadline.connect(_on_deadline_due)
 	GameManager.next_day.connect(_on_next_day)
 	GameManager.game_over.connect(_on_game_over)
+	GameManager.victory.connect(_on_victory)
 	GameManager.current_task_updated.connect(_on_current_task_updated)
 
 	$DeadlineDialog.custom_action.connect(_on_deadline_action)
@@ -75,6 +76,13 @@ func _on_game_over(message):
 	$GameOverDialog.dialog_text = message
 	$GameOverDialog.title = "GAME OVER"
 	$GameOverDialog.ok_button_text = "Rage Quit"
+	$GameOverDialog.get_cancel_button().hide()
+	$GameOverDialog.popup()
+
+func _on_victory(message):
+	$GameOverDialog.dialog_text = message
+	$GameOverDialog.title = "VICTORY!"
+	$GameOverDialog.ok_button_text = "I'm Free!"
 	$GameOverDialog.get_cancel_button().hide()
 	$GameOverDialog.popup()
 
