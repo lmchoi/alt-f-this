@@ -42,6 +42,8 @@ var bugs := 0:
 	set(value):
 		bugs = value
 		bugs_changed.emit(bugs)
+		if bugs >= 100:
+			game_over.emit("The bugs have won.\n\nYour code is so broken that work is impossible.\n\nYou can't ship fast enough to escape.\n\n[Ending: Death Spiral]")
 
 var ship_messages: Dictionary = {}
 
