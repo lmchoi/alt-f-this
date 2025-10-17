@@ -32,6 +32,7 @@ func _ready():
 
 func _on_current_task_updated(current_task: Task):
 	$"%TaskLabel".text = current_task.title
+	_update_complexity_label(current_task.complexity)
 
 func _on_work_button_pressed():
 	GameManager.do_work()
@@ -55,6 +56,13 @@ func _update_salary_label(new_amount: int):
 
 func _update_bugs_label(new_amount: int):
 	bugs_label.text = "🐛 " + str(new_amount)
+
+func _update_complexity_label(complexity: int):
+	# Spaghetti code indicator (more spaghetti = more complex)
+	var spaghetti = ""
+	for i in range(complexity):
+		spaghetti += "🍝"
+	$"%ComplexityLabel".text = "Complexity: " + spaghetti
 
 func _on_event_occurred(event: Dictionary):
 	if event.text != "":
