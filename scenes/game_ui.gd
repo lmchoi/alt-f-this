@@ -3,6 +3,7 @@ extends Node
 @onready var day_label := $"%DayLabel"
 @onready var work_button := $"%WorkButton" as ActionButton
 @onready var slack_button := $"%SlackButton" as ActionButton
+@onready var ship_it_button := $"%ShipItButton" as ActionButton
 @onready var money_label := $"%MoneyLabel" as MoneyLabel
 @onready var salary_label := $"%SalaryLabel"
 @onready var ducks_bar := $"%DucksBar"
@@ -14,6 +15,7 @@ extends Node
 func _ready():
 	work_button.pressed.connect(_on_work_button_pressed)
 	slack_button.pressed.connect(_on_slack_button_pressed)
+	ship_it_button.pressed.connect(_on_ship_it_button_pressed)
 	GameManager.money_changed.connect(money_label.update_amount)
 	GameManager.salary_changed.connect(_update_salary_label)
 	GameManager.ducks_changed.connect(_update_ducks_level)
@@ -36,6 +38,9 @@ func _on_work_button_pressed():
 
 func _on_slack_button_pressed():
 	GameManager.hustle()
+
+func _on_ship_it_button_pressed():
+	GameManager.ship_it()
 	
 func _update_ducks_level(new_amount: int):
 	ducks_bar.current_ducks = new_amount
