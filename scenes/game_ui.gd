@@ -40,7 +40,12 @@ func _on_slack_button_pressed():
 	GameManager.hustle()
 
 func _on_ship_it_button_pressed():
-	GameManager.ship_it()
+	if GameManager.current_task.progress < 20:
+		# Cheeky punishment for trying to ship nothing
+		var cheeky_message = GameManager.get_too_early_message()
+		$EventPopup.show_event(cheeky_message)
+	else:
+		GameManager.ship_it()
 	
 func _update_ducks_level(new_amount: int):
 	ducks_bar.current_ducks = new_amount

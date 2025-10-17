@@ -134,6 +134,11 @@ func get_ship_quality_message(progress: int) -> String:
 	var messages = ship_messages["quality_tiers"][tier_key]["messages"]
 	return messages[randi() % messages.size()]
 
+func get_too_early_message() -> String:
+	"""Get random message for trying to ship at <20% progress."""
+	var messages = ship_messages["too_early"]
+	return messages[randi() % messages.size()]
+
 func ship_it():
 	"""Complete task early at current progress. Adds bugs based on incompleteness."""
 	print('ship it at %d%%' % current_task.progress)

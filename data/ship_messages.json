@@ -1,4 +1,12 @@
 {
+  "too_early": [
+    "You opened the file. That's it. That's all you did.\n\nEven YOU won't ship this.\n\n(Minimum 20% progress required)",
+    "The deploy script laughed at you.\n\n'There's nothing here,' it said.\n\n(Minimum 20% progress required)",
+    "The CI/CD pipeline sent you an automated therapy referral.\n\n(Minimum 20% progress required)",
+    "You can't ship what doesn't exist.\n\nThis isn't quantum mechanics.\n\n(Minimum 20% progress required)",
+    "Git status: 'No changes staged for commit.'\n\nBecause you didn't do anything.\n\n(Minimum 20% progress required)",
+    "The linter gave up trying to parse nothing.\n\n(Minimum 20% progress required)"
+  ],
   "quality_tiers": {
     "excellent": {
       "min": 90,
