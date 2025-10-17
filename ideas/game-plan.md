@@ -326,40 +326,34 @@ Low-quality shipping has DOUBLE penalty:
 
 ---
 
-### 6. Soft Deadlines (Flexible Pressure System)
+### 6. Soft Deadlines (Duck Cost System)
 
 **How it works:**
-- Tasks have a **suggested deadline** (e.g., 5 days)
+- Tasks have deadlines (e.g., 5 days)
 - **Before deadline:** Work freely, no penalties
-- **After deadline (overdue):** Each day triggers:
-  - `-$100 salary penalty` (directly reduces escape fund)
-  - `+1 CEO anger` (permanent, escalates consequences)
-  - `Small firing chance` (~2% per anger point)
+- **After deadline (overdue):** HUSTLE costs ducks instead of gaining them
 
-**Example:**
-- Day 11: Accept task, deadline Day 15 (4 days)
-- Day 14: Task at 65%, deadline tomorrow
-  - **Choice A:** SHIP IT now → +3.5 bugs, get $500, clean deadline
-  - **Choice B:** WORK 1 more day → hit 80%, ship clean at deadline
-  - **Choice C:** WORK 2 more days → ship at 95% but -$100 penalty + CEO anger
-  - **Choice D:** WORK 3 more days → ship perfect but -$200 + high CEO anger
-
-**Creates trade-offs:**
-- Ship early (more bugs) vs go overdue (money penalty + anger)
-- Expert players can take calculated risks
-- No hard fail state, but consequences accumulate
-
-**Implementation:**
+**HUSTLE mechanics:**
 ```gdscript
-func daily_updates():
-    if day > current_task.due_day:
-        var days_overdue = day - current_task.due_day
-        money -= 100
-        ceo_anger += 1
+func hustle():
+    money += 200  # Always pays
 
-        if randf() < (ceo_anger * 0.02):
-            game_over.emit("Fired for chronic lateness")
+    if day > current_task.due_day:
+        ducks -= 1  # Guilt/stress (net 0 ducks, normally would gain +1)
+        event_occurred.emit("Side hustling while work is overdue...\n\nStress mounting.")
+    else:
+        ducks += 1  # Normal gain when not overdue
 ```
+
+**Effect:**
+- Prevents "hustle spam to win" exploit
+- Self-balancing: hustle while overdue → duck drain → 0 ducks → game over
+- Player choice preserved: CAN hustle when desperate, but costs sanity
+- Thematic: guilt from ignoring your job for side gigs
+
+**Optional future enhancement (post-playtesting):**
+- Add random PIP check (10% chance/day when overdue) for instant firing
+- Only add if duck system isn't punishing enough
 
 ### 7. Payment System (Creates SHIP IT Urgency)
 
