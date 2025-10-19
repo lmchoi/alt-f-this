@@ -25,9 +25,11 @@ func _ready():
 	GameManager.next_day.connect(_on_next_day)
 	GameManager.game_over.connect(_on_game_over)
 	GameManager.victory.connect(_on_victory)
+	GameManager.production_outage_occurred.connect(_on_production_outage)
 	GameManager.current_task_updated.connect(_on_current_task_updated)
 
 	$DeadlineDialog.custom_action.connect(_on_deadline_action)
+	$OutageDialog.outage_choice.connect(_on_outage_choice)
 	GameManager.start_game()
 	_on_next_day(GameManager.day)
 
@@ -102,5 +104,12 @@ func _on_next_day(nth_day: int):
 
 func _on_deadline_action(action: String):
 	GameManager.process_action(action)
-
 	$DeadlineDialog.hide()
+
+func _on_production_outage(task_name: String):
+	$OutageDialog.show_outage(task_name)
+
+func _on_outage_choice(choice: String):
+	# For now, just print (no effect yet - Step 1 complete)
+	print("Outage choice: %s" % choice)
+	# TODO: Wire up to GameManager in Step 2

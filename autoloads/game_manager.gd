@@ -8,6 +8,7 @@ signal event_occurred(event_data)
 signal missed_deadline()
 signal game_over(message)
 signal victory(message)
+signal production_outage_occurred(task_name)
 signal current_task_updated(task)
 
 var current_task := Task.new(1):
@@ -45,6 +46,9 @@ var bugs := 0:
 		if bugs >= 100:
 			game_over.emit("The bugs have won.\n\nYour code is so broken that work is impossible.\n\nYou can't ship fast enough to escape.\n\n[Ending: Death Spiral]")
 
+var production_outages := 0  # Track total outages for firing (3 = fired)
+var poorly_shipped_tasks := []  # Tasks shipped at <50% (can trigger outages)
+
 var ship_messages: Dictionary = {}
 
 const WORK_EVENTS := [
@@ -74,6 +78,29 @@ func add_bugs(amount: int) -> void:
 func start_game():
 	current_task = TaskManager.get_random_task()
 
+func check_time_bombs():
+	"""Check for production outages based on bugs and poorly shipped tasks."""
+	if poorly_shipped_tasks.size() == 0:
+		return  # No poorly shipped tasks = no outages possible
+
+	# Outage chance = (bugs × 0.5%) per poorly shipped task
+	# Example: 60 bugs × 3 bad tasks = 90% daily chance
+	var outage_chance = bugs * 0.005 * poorly_shipped_tasks.size()
+
+	if randf() < outage_chance:
+		# Pick a random poorly shipped task to blame
+		var task_name = poorly_shipped_tasks.pick_random()
+		trigger_production_outage(task_name)
+		# Remove so it can't trigger again
+		poorly_shipped_tasks.erase(task_name)
+
+func trigger_production_outage(task_name: String):
+	"""Handle a production outage - the Papers Please 'terrorist exploded' moment."""
+	production_outages += 1
+
+	# Emit signal for UI to show outage dialog with choices
+	production_outage_occurred.emit(task_name)
+
 func check_victory():
 	"""Check if player has reached $5000 escape goal."""
 	if money >= 5000:
@@ -89,6 +116,9 @@ func _trigger_random_work_event():
 		event_occurred.emit(event_result)
 
 func daily_updates():
+	# Check for production outages (time bombs)
+	check_time_bombs()
+
 	if current_task.progress >= 100:
 		print("work completed")
 		event_occurred.emit({"text": "Task complete! Nice work.", "money": 0, "ducks": 0})
@@ -167,6 +197,11 @@ func ship_it():
 	# Calculate bugs to add: (100 - progress) / 10
 	var bugs_to_add = (100 - progress) / 10.0
 	add_bugs(int(bugs_to_add))
+
+	# Track poorly shipped tasks (can cause outages later)
+	if progress < 50:
+		poorly_shipped_tasks.append(current_task.title)
+		print("⚠️ Poor quality ship: '%s' added to outage risk pool" % current_task.title)
 
 	# Pay salary immediately on completion
 	money += salary
