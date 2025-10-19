@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ccibd5kcuisnk" path="res://scenes/game_ui.gd" id="1_yubou"]
 [ext_resource type="Script" uid="uid://o4uecgfegpr2" path="res://scripts/ui/action_button.gd" id="2_rns2u"]
 [ext_resource type="PackedScene" path="res://scenes/top_bar.tscn" id="2_topbar"]
+[ext_resource type="PackedScene" path="res://scenes/task_panel.tscn" id="3_taskpanel"]
 [ext_resource type="PackedScene" uid="uid://b5nqygpy3h33x" path="res://scenes/event_popup.tscn" id="4_u2dgd"]
 [ext_resource type="Script" uid="uid://c6kb37pd6cpiu" path="res://scenes/deadline_dialog.gd" id="6_djwj0"]
 [ext_resource type="Script" uid="uid://57tvoy16rd5j" path="res://scenes/outage_dialog.gd" id="7_e0pfi"]
@@ -35,86 +36,8 @@ layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_right = 20
 
-[node name="TaskPanel" type="PanelContainer" parent="VBoxContainer/MarginContainer"]
-custom_minimum_size = Vector2(0, 500)
+[node name="TaskPanel" parent="VBoxContainer/MarginContainer" instance=ExtResource("3_taskpanel")]
 layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="VBoxContainer/MarginContainer/TaskPanel"]
-layout_mode = 2
-color = Color(0.101961, 0.121569, 0.109804, 1)
-
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer/TaskPanel"]
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="Container" type="VBoxContainer" parent="VBoxContainer/MarginContainer/TaskPanel/MarginContainer"]
-layout_mode = 2
-
-[node name="JobContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer/TaskPanel/MarginContainer/Container"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-
-[node name="JobTitleLabel" type="Label" parent="VBoxContainer/MarginContainer/TaskPanel/MarginContainer/Container/JobContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.847059, 0.847059, 0.847059, 1)
-text = "Job Title: Junior Developer"
-
-[node name="SalaryLabel" type="Label" parent="VBoxContainer/MarginContainer/TaskPanel/MarginContainer/Container/JobContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.847059, 0.847059, 0.847059, 1)
-text = "Salary: £100"
-
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer/MarginContainer/TaskPanel/MarginContainer/Container"]
-modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(0, 20)
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer/TaskPanel/MarginContainer/Container"]
-custom_minimum_size = Vector2(0, 40)
-layout_direction = 2
-layout_mode = 2
-size_flags_vertical = 2
-
-[node name="TaskInfo" type="VBoxContainer" parent="VBoxContainer/MarginContainer/TaskPanel/MarginContainer/Container/HBoxContainer"]
-layout_mode = 2
-
-[node name="TaskLabel" type="Label" parent="VBoxContainer/MarginContainer/TaskPanel/MarginContainer/Container/HBoxContainer/TaskInfo"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(500, 60)
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_colors/font_color = Color(0.847059, 0.847059, 0.847059, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-text = "TASK: Fix CEO's PowerPoint"
-autowrap_mode = 3
-
-[node name="ComplexityLabel" type="Label" parent="VBoxContainer/MarginContainer/TaskPanel/MarginContainer/Container/HBoxContainer/TaskInfo"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.847059, 0.847059, 0.847059, 1)
-text = "Complexity: 🍝"
-
-[node name="DeadlineLabel" type="Label" parent="VBoxContainer/MarginContainer/TaskPanel/MarginContainer/Container/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme_override_colors/font_color = Color(0.847059, 0.847059, 0.847059, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-text = "Due in 5 days"
-horizontal_alignment = 2
-
-[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer/MarginContainer/TaskPanel/MarginContainer/Container"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-size_flags_vertical = 1
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 
 [node name="ActionButtons" type="HBoxContainer" parent="."]
 anchors_preset = 12

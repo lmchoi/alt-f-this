@@ -4,9 +4,6 @@ extends Node
 @onready var slack_button := $"%SlackButton" as ActionButton
 @onready var ship_it_button := $"%ShipItButton" as ActionButton
 
-@onready var deadline_label := $"%DeadlineLabel"
-@onready var progress_bar := $"%ProgressBar"
-
 func _ready():
 	work_button.pressed.connect(_on_work_button_pressed)
 	slack_button.pressed.connect(_on_slack_button_pressed)
@@ -17,7 +14,6 @@ func _ready():
 	GameManager.game_over.connect(_on_game_over)
 	GameManager.victory.connect(_on_victory)
 	GameManager.production_outage_occurred.connect(_on_production_outage)
-	GameManager.current_task_updated.connect(_on_current_task_updated)
 
 	$DeadlineDialog.custom_action.connect(_on_deadline_action)
 	$OutageDialog.outage_choice.connect(_on_outage_choice)
@@ -28,10 +24,6 @@ func _ready():
 		_setup_test_scenario()
 
 	_on_next_day(GameManager.day)
-
-func _on_current_task_updated(current_task: Task):
-	$"%TaskLabel".text = current_task.title
-	_update_complexity_label(current_task.complexity)
 
 func _on_work_button_pressed():
 	GameManager.do_work()
@@ -46,13 +38,6 @@ func _on_ship_it_button_pressed():
 		$EventPopup.show_event(cheeky_message)
 	else:
 		GameManager.ship_it()
-
-func _update_complexity_label(complexity: int):
-	# Spaghetti code indicator (more spaghetti = more complex)
-	var spaghetti = ""
-	for i in range(complexity):
-		spaghetti += "🍝"
-	$"%ComplexityLabel".text = "Complexity: " + spaghetti
 
 func _on_event_occurred(event: Dictionary):
 	if event.text != "":
@@ -75,16 +60,7 @@ func _on_victory(message):
 	$GameOverDialog.get_cancel_button().hide()
 	$GameOverDialog.popup()
 
-func _update_deadline_label(days_left: int):
-	if days_left < 0:
-		deadline_label.text = str(abs(days_left)) + " days overdue"
-	else:
-		deadline_label.text = "Due in " + str(days_left) + " days"
-
-func _on_next_day(nth_day: int):
-	var days_left = GameManager.current_task.due_day - nth_day
-	_update_deadline_label(days_left)
-	progress_bar.value = GameManager.current_task.progress
+func _on_next_day(_nth_day: int):
 	GameManager.daily_updates()
 
 func _on_deadline_action(action: String):
