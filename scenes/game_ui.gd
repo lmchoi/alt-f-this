@@ -31,6 +31,11 @@ func _ready():
 	$DeadlineDialog.custom_action.connect(_on_deadline_action)
 	$OutageDialog.outage_choice.connect(_on_outage_choice)
 	GameManager.start_game()
+
+	# Debug: Load test scenario in debug builds
+	if OS.is_debug_build():
+		_setup_test_scenario()
+
 	_on_next_day(GameManager.day)
 
 func _on_current_task_updated(current_task: Task):
@@ -113,3 +118,18 @@ func _on_outage_choice(choice: String):
 	# For now, just print (no effect yet - Step 1 complete)
 	print("Outage choice: %s" % choice)
 	# TODO: Wire up to GameManager in Step 2
+
+func _setup_test_scenario():
+	"""Debug: Setup test scenario for production outage testing"""
+	GameManager.bugs = 60  # High bugs = high outage chance (60 × 0.5% × 3 = 90% daily)
+	GameManager.poorly_shipped_tasks = ["Blockchain", "Logo Fix", "Printer Bug"]
+	GameManager.money = 2000
+	GameManager.ducks = 2
+	GameManager.day = 10
+	print("🔧 DEBUG TEST SCENARIO LOADED:")
+	print("  - Bugs: 60 (high outage chance)")
+	print("  - 3 poorly shipped tasks ready to explode")
+	print("  - Money: $2000")
+	print("  - Ducks: 2")
+	print("  - Day: 10")
+	print("  → Outage should trigger soon! (~90% chance per day)")
