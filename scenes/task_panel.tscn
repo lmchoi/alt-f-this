@@ -45,40 +45,40 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="Container" type="VBoxContainer" parent="MarginContainer"]
+[node name="MainContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="JobContainer" type="HBoxContainer" parent="MarginContainer/Container"]
+[node name="JobContainer" type="HBoxContainer" parent="MarginContainer/MainContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="JobTitleLabel" type="Label" parent="MarginContainer/Container/JobContainer"]
+[node name="JobTitleLabel" type="Label" parent="MarginContainer/MainContainer/JobContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.2, 0.8, 0.2, 1)
 text = "Job Title: Junior Developer"
 
-[node name="SalaryLabel" type="Label" parent="MarginContainer/Container/JobContainer"]
+[node name="SalaryLabel" type="Label" parent="MarginContainer/MainContainer/JobContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.2, 0.8, 0.2, 1)
 text = "Salary: £100"
 
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/Container"]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/MainContainer"]
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Container"]
+[node name="TaskHeaderContainer" type="HBoxContainer" parent="MarginContainer/MainContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_direction = 2
 layout_mode = 2
 size_flags_vertical = 2
 
-[node name="TaskInfo" type="VBoxContainer" parent="MarginContainer/Container/HBoxContainer"]
+[node name="TaskInfoContainer" type="VBoxContainer" parent="MarginContainer/MainContainer/TaskHeaderContainer"]
 layout_mode = 2
 
-[node name="TaskLabel" type="Label" parent="MarginContainer/Container/HBoxContainer/TaskInfo"]
+[node name="TaskLabel" type="Label" parent="MarginContainer/MainContainer/TaskHeaderContainer/TaskInfoContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(500, 60)
 layout_mode = 2
@@ -88,13 +88,13 @@ theme_override_font_sizes/font_size = 18
 text = "TASK: Fix CEO's PowerPoint"
 autowrap_mode = 3
 
-[node name="ComplexityLabel" type="Label" parent="MarginContainer/Container/HBoxContainer/TaskInfo"]
+[node name="ComplexityLabel" type="Label" parent="MarginContainer/MainContainer/TaskHeaderContainer/TaskInfoContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.2, 0.8, 0.2, 1)
 text = "Complexity: 🍝"
 
-[node name="DeadlineLabel" type="Label" parent="MarginContainer/Container/HBoxContainer"]
+[node name="DeadlineLabel" type="Label" parent="MarginContainer/MainContainer/TaskHeaderContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -103,7 +103,7 @@ theme_override_colors/font_color = Color(0.2, 0.8, 0.2, 1)
 text = "Due in 5 days"
 horizontal_alignment = 2
 
-[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/Container"]
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/MainContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
