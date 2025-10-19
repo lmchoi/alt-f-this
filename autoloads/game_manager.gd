@@ -22,6 +22,7 @@ signal game_over(message)
 signal victory(message)
 signal production_outage_occurred(task_name)
 signal current_task_updated(task)
+signal task_progress_changed(progress)
 
 var current_task := Task.new(1):
 	set(value):
@@ -187,6 +188,7 @@ func do_work():
 	var bug_multiplier = get_bug_multiplier()
 	var work = 20.0 / (current_task.complexity * bug_multiplier)
 	current_task.do_work(work)
+	task_progress_changed.emit(current_task.progress)
 	print("Progress: +%.1f%% (complexity: %d, bugs: %d)" % [work, current_task.complexity, bugs])
 
 	# No immediate payment - only on completion or payday

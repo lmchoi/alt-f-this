@@ -10,6 +10,7 @@ func _ready():
 	GameManager.current_task_updated.connect(_on_current_task_updated)
 	GameManager.next_day.connect(_on_next_day)
 	GameManager.salary_changed.connect(_update_salary)
+	GameManager.task_progress_changed.connect(_update_progress)
 
 	# Initialize with current values
 	if GameManager.current_task:
@@ -41,3 +42,6 @@ func _update_deadline_label(days_left: int):
 
 func _update_salary(amount: int):
 	salary_label.text = "Salary: £" + str(amount)
+
+func _update_progress(progress: float):
+	progress_bar.value = progress
