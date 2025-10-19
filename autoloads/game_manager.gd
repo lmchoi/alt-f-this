@@ -1,4 +1,16 @@
 extends Node
+
+# Game balance constants
+const MAX_PIP_WARNINGS = 2
+const MAX_BLAMES = 3
+const OUTAGE_CHANCE_PER_BUG = 0.005
+const BUGS_PER_INCOMPLETE_PERCENT = 10.0
+const POOR_QUALITY_THRESHOLD = 50
+const MIN_SHIP_PROGRESS = 20
+const MAX_BUGS_GAME_OVER = 100
+const VICTORY_MONEY_GOAL = 5000
+const HUSTLE_PAY = 200
+
 signal next_day(nth)
 signal money_changed(amount)
 signal salary_changed(amount)
@@ -43,7 +55,7 @@ var bugs := 0:
 	set(value):
 		bugs = value
 		bugs_changed.emit(bugs)
-		if bugs >= 100:
+		if bugs >= MAX_BUGS_GAME_OVER:
 			game_over.emit("The bugs have won.\n\nYour code is so broken that work is impossible.\n\nYou can't ship fast enough to escape.\n\n[Ending: Death Spiral]")
 
 var production_outages := 0  # Track total outages for firing (3 = fired)
@@ -100,7 +112,7 @@ func check_time_bombs():
 
 	# Outage chance = (bugs × 0.5%) per poorly shipped task
 	# Example: 60 bugs × 3 bad tasks = 90% daily chance
-	var outage_chance = bugs * 0.005 * poorly_shipped_tasks.size()
+	var outage_chance = bugs * OUTAGE_CHANCE_PER_BUG * poorly_shipped_tasks.size()
 
 	if randf() < outage_chance:
 		# Pick a random poorly shipped task to blame
@@ -127,22 +139,22 @@ func handle_outage_choice(choice: String):
 	match choice:
 		"responsibility":
 			pip_warnings += 1
-			if pip_warnings >= 2:
+			if pip_warnings >= MAX_PIP_WARNINGS:
 				game_over.emit(outage_messages["responsibility"]["fired"])
 			else:
 				event_occurred.emit({"text": outage_messages["responsibility"]["first_pip"], "money": 0, "ducks": 0})
 
 		"scapegoat", "systemic":
 			total_blames += 1
-			if total_blames >= 3:
+			if total_blames >= MAX_BLAMES:
 				game_over.emit(outage_messages[choice]["company_collapse"])
 			else:
 				var message_key = "first" if total_blames == 1 else "second"
 				event_occurred.emit({"text": outage_messages[choice][message_key], "money": 0, "ducks": 0})
 
 func check_victory():
-	"""Check if player has reached $5000 escape goal."""
-	if money >= 5000:
+	"""Check if player has reached victory money goal."""
+	if money >= VICTORY_MONEY_GOAL:
 		victory.emit("You saved $5,000!\n\nYou quit with a dramatic email and escape to start your own company.\n\nVICTORY!")
 
 func _trigger_random_work_event():
@@ -187,7 +199,7 @@ func hustle():
 	print('hustle')
 
 	# Side hustle pays immediately (freelance work, not company payroll)
-	money += 200
+	money += HUSTLE_PAY
 
 	# Check if task is overdue
 	if day > current_task.due_day:
@@ -234,11 +246,11 @@ func ship_it():
 	var progress = current_task.progress
 
 	# Calculate bugs to add: (100 - progress) / 10
-	var bugs_to_add = (100 - progress) / 10.0
+	var bugs_to_add = (100 - progress) / BUGS_PER_INCOMPLETE_PERCENT
 	add_bugs(int(bugs_to_add))
 
 	# Track poorly shipped tasks (can cause outages later)
-	if progress < 50:
+	if progress < POOR_QUALITY_THRESHOLD:
 		poorly_shipped_tasks.append(current_task.title)
 		print("⚠️ Poor quality ship: '%s' added to outage risk pool" % current_task.title)
 
@@ -271,7 +283,7 @@ func process_action(action: String):
 			salary -= 10
 			print("mercy")
 		"duck_it":
-			if current_task.progress < 20:
+			if current_task.progress < MIN_SHIP_PROGRESS:
 				# Same cheeky message as trying to ship early
 				var cheeky_message = get_too_early_message()
 				event_occurred.emit({"text": cheeky_message, "money": 0, "ducks": 0})

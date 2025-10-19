@@ -49,7 +49,7 @@ func _on_slack_button_pressed():
 	GameManager.hustle()
 
 func _on_ship_it_button_pressed():
-	if GameManager.current_task.progress < 20:
+	if GameManager.current_task.progress < GameManager.MIN_SHIP_PROGRESS:
 		# Cheeky punishment for trying to ship nothing
 		var cheeky_message = GameManager.get_too_early_message()
 		$EventPopup.show_event(cheeky_message)
