@@ -115,9 +115,8 @@ func _on_production_outage(task_name: String):
 	$OutageDialog.show_outage(task_name)
 
 func _on_outage_choice(choice: String):
-	# For now, just print (no effect yet - Step 1 complete)
-	print("Outage choice: %s" % choice)
-	# TODO: Wire up to GameManager in Step 2
+	GameManager.handle_outage_choice(choice)
+	$OutageDialog.hide()
 
 func _setup_test_scenario():
 	"""Debug: Setup test scenario for production outage testing"""

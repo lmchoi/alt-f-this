@@ -49,6 +49,15 @@ var bugs := 0:
 var production_outages := 0  # Track total outages for firing (3 = fired)
 var poorly_shipped_tasks := []  # Tasks shipped at <50% (can trigger outages)
 
+# PIP and blame tracking
+var pip_warnings := 0  # 2 warnings = fired
+var total_blames := 0  # 3 blames = company collapse
+var blame_stats := {
+	"responsibility": 0,  # Took personal responsibility
+	"scapegoat": 0,       # Blamed others
+	"systemic": 0         # Blamed system/process
+}
+
 var ship_messages: Dictionary = {}
 
 const WORK_EVENTS := [
@@ -100,6 +109,47 @@ func trigger_production_outage(task_name: String):
 
 	# Emit signal for UI to show outage dialog with choices
 	production_outage_occurred.emit(task_name)
+
+func handle_outage_choice(choice: String):
+	"""Process the player's blame choice for a production outage."""
+	# Track blame statistics
+	blame_stats[choice] += 1
+
+	# No progress for a day as consequence
+	day += 1
+
+	match choice:
+		"responsibility":
+			# Taking responsibility: get PIP warning
+			pip_warnings += 1
+
+			if pip_warnings >= 2:
+				game_over.emit("You've received 2 PIP warnings.\n\nHR called you in for a 'conversation.'\n\nYou're fired.\n\n[Ending: Managed Out]")
+			else:
+				event_occurred.emit({"text": "You take responsibility for the outage.\n\nManagement puts you on a Performance Improvement Plan.\n\n⚠️ One more PIP and you're out.", "money": 0, "ducks": 0})
+
+		"scapegoat", "systemic":
+			# Blaming others or system: increment blame counter
+			total_blames += 1
+
+			if total_blames >= 3:
+				game_over.emit("The blame culture is toxic.\n\nEngineers are quitting en masse.\n\nInvestors pulled funding.\n\nThe company collapses.\n\n[Ending: Toxic Culture]")
+			else:
+				var message = ""
+				if total_blames == 2:
+					# Second blame: hint at danger
+					if choice == "scapegoat":
+						message = "You blame the intern who just left.\n\nManagement seems satisfied.\n\nBut the team morale feels... different."
+					else:  # systemic
+						message = "You blame impossible product requirements.\n\nManagement notes your complaint.\n\nThe blame game is getting old."
+				else:
+					# First blame: no hint
+					if choice == "scapegoat":
+						message = "You blame the intern who just left.\n\nManagement seems satisfied... for now."
+					else:  # systemic
+						message = "You blame impossible product requirements.\n\nManagement notes your complaint."
+
+				event_occurred.emit({"text": message, "money": 0, "ducks": 0})
 
 func check_victory():
 	"""Check if player has reached $5000 escape goal."""
