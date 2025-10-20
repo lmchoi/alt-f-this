@@ -1,6 +1,8 @@
 extends PanelContainer
 
 @onready var task_label := $"%TaskLabel"
+@onready var description_label := $"%DescriptionLabel"
+@onready var flavor_label := $"%FlavorLabel"
 @onready var complexity_label := $"%ComplexityLabel"
 @onready var category_label := $"%CategoryLabel"
 @onready var deadline_label := $"%DeadlineLabel"
@@ -18,6 +20,8 @@ func _ready():
 
 func _on_current_task_updated(current_task: Task):
 	task_label.text = current_task.title
+	description_label.text = current_task.description
+	flavor_label.text = current_task.flavor
 	_update_complexity_label(current_task.complexity)
 	_update_category_label(current_task.categories)
 

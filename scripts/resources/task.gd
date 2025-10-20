@@ -2,6 +2,8 @@ class_name Task
 extends Resource
 
 @export var title := "Fix CEO's PowerPoint"
+@export var description := "The CEO needs this done ASAP"
+@export var flavor := ""  # e.g., "Design Hell", "Buzzword Compliance"
 @export var complexity := 5  # 1-10 scale (affects work speed)
 @export var due_day := 5 # Day number (e.g., Day 3)
 @export var progress := 0
