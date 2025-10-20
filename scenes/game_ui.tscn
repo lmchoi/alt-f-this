@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ccibd5kcuisnk" path="res://scenes/game_ui.gd" id="1_yubou"]
 [ext_resource type="Script" uid="uid://o4uecgfegpr2" path="res://scripts/ui/action_button.gd" id="2_rns2u"]
 [ext_resource type="PackedScene" path="res://scenes/top_bar.tscn" id="2_topbar"]
+[ext_resource type="PackedScene" path="res://scenes/job_info.tscn" id="3_jobinfo"]
 [ext_resource type="PackedScene" path="res://scenes/task_panel.tscn" id="3_taskpanel"]
 [ext_resource type="PackedScene" uid="uid://b5nqygpy3h33x" path="res://scenes/event_popup.tscn" id="4_u2dgd"]
 [ext_resource type="Script" uid="uid://c6kb37pd6cpiu" path="res://scenes/deadline_dialog.gd" id="6_djwj0"]
@@ -31,12 +32,22 @@ theme_override_constants/separation = 0
 [node name="TopBar" parent="VBoxContainer" instance=ExtResource("2_topbar")]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+[node name="JobInfoMargin" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 20
 
-[node name="TaskPanel" parent="VBoxContainer/MarginContainer" instance=ExtResource("3_taskpanel")]
+[node name="JobInfo" parent="VBoxContainer/JobInfoMargin" instance=ExtResource("3_jobinfo")]
+layout_mode = 2
+
+[node name="TaskPanelMargin" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+
+[node name="TaskPanel" parent="VBoxContainer/TaskPanelMargin" instance=ExtResource("3_taskpanel")]
 layout_mode = 2
 
 [node name="ActionButtons" type="HBoxContainer" parent="."]

@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjob_info"]
+
+[ext_resource type="Script" path="res://scenes/job_info.gd" id="1_job_info"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_job_info"]
+bg_color = Color(0.1, 0.12, 0.1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2, 0.8, 0.2, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="JobInfo" type="PanelContainer"]
+custom_minimum_size = Vector2(0, 60)
+theme_override_styles/panel = SubResource("StyleBoxFlat_job_info")
+script = ExtResource("1_job_info")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 15
+
+[node name="JobContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="JobTitleLabel" type="Label" parent="MarginContainer/JobContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.2, 0.8, 0.2, 1)
+text = "Job Title: Junior Developer"
+
+[node name="SalaryLabel" type="Label" parent="MarginContainer/JobContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.8, 0.2, 1)
+text = "Salary: £100"
