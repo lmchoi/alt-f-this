@@ -5,6 +5,7 @@ extends Resource
 @export var complexity := 5  # 1-10 scale (affects work speed)
 @export var due_day := 5 # Day number (e.g., Day 3)
 @export var progress := 0
+@export var categories: Array[String] = []  # e.g., ["optics"], ["tech_debt", "critical"]
 
 func _init(today_date: int = 1, new_title: String = "Fix CEO's PowerPoint", allowed_time: int = 3, task_complexity: int = 5):
 	title = new_title

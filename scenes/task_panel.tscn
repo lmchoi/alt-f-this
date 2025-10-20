@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://ctask_panel"]
+[gd_scene load_steps=5 format=3 uid="uid://bgkcmaeachwe4"]
 
-[ext_resource type="Script" path="res://scenes/task_panel.gd" id="1_task_panel"]
+[ext_resource type="Script" uid="uid://d32w28r7nfax5" path="res://scenes/task_panel.gd" id="1_task_panel"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_task_panel"]
 bg_color = Color(0.1, 0.12, 0.1, 1)
@@ -66,6 +66,13 @@ theme_override_colors/font_color = Color(0.2, 0.8, 0.2, 1)
 theme_override_font_sizes/font_size = 18
 text = "TASK: Fix CEO's PowerPoint"
 autowrap_mode = 3
+
+[node name="CategoryLabel" type="Label" parent="MarginContainer/MainContainer/TaskHeaderContainer/TaskInfoContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.6, 0.2, 1)
+theme_override_font_sizes/font_size = 12
+text = "[OPTICS]"
 
 [node name="ComplexityLabel" type="Label" parent="MarginContainer/MainContainer/TaskHeaderContainer/TaskInfoContainer"]
 unique_name_in_owner = true

@@ -240,7 +240,56 @@ After accepting ticket, **each day** you choose one action. This is where the ga
 
 ---
 
-### 4. The Bugs System (Permanent Consequences)
+### 4. Task Categories (Risk Profiles)
+
+Different task types create different strategic pressures:
+
+**Optics** (`optics`) - Political/perception risk
+- Logo changes, blockchain features, CEO requests, fake AI
+- Ship poorly = CEO anger (PIP risk)
+- Ship at 50% = 30% chance CEO loves it anyway
+- Political risk over technical risk
+
+**Tech Debt** (`tech_debt`) - Long-term compounding consequences
+- Database migrations, refactors, optimization, deep bug fixes
+- Ship poorly = bugs × 1.5x (compounds badly)
+- Ship >85% = reduce bug impact 10% (rare reward)
+- Must be careful or suffer long-term
+
+**Critical** (`critical`) - Immediate high-stakes
+- Customer-facing features, payment bugs, email disasters, UI changes
+- Ship poorly = immediate outage risk (within 2 days)
+- Ship well = reputation boost
+- High immediate stakes
+
+**Why it works:** Same 3 actions, but SHIP IT decision varies by category. Mastery = learning which tasks can be rushed.
+
+**Implementation:**
+- Tasks have `categories` array: ["optics"], ["tech_debt", "critical"], etc.
+- Tasks have `flavor` field for display text: "Design Hell", "Buzzword Compliance", etc.
+- Multiple categories = stacked risk/reward (e.g., "optics" + "critical" = CEO might love it OR immediate outage)
+
+---
+
+### 5. Company Rulebook (Weekly Shifts)
+
+Rules change like Papers Please bulletin updates, invalidating previous strategies:
+
+- **Week 1-2:** Basic rules, learn the loop
+- **Week 3:** [CEO] tasks mandatory, can't negotiate
+- **Week 4:** Code review adds +1 day OR skip it (outage risk ×2)
+- **Week 5:** Overtime banned (but CEO deadlines still impossible)
+- **Week 6:** PIP after 2 outages (lose autonomy, manager approval needed)
+- **Week 7:** Stack ranking (coworkers become competitors)
+- **Week 8+:** Random weekly chaos (mandatory weekends, hiring freezes, etc.)
+
+**Display:** `📋 ACTIVE POLICIES` button shows current rules
+
+**Why it works:** Forces adaptation, mirrors corporate absurdity, creates memorable runs ("I was fine until PIP hit Week 6")
+
+---
+
+### 6. The Bugs System (Permanent Consequences)
 
 **How Bugs Accumulate:**
 ```gdscript
@@ -285,7 +334,7 @@ var progress_gain = 20 / (complexity * bug_multiplier)
 
 ---
 
-### 5. Production Outage Events (The Bomb Explodes)
+### 7. Production Outage Events (The Bomb Explodes)
 
 **Trigger:** 2-5 days after shipping at <50% quality
 
@@ -326,7 +375,7 @@ Low-quality shipping has DOUBLE penalty:
 
 ---
 
-### 6. Soft Deadlines (Duck Cost System)
+### 8. Soft Deadlines (Duck Cost System)
 
 **How it works:**
 - Tasks have deadlines (e.g., 5 days)
@@ -355,7 +404,7 @@ func hustle():
 - Add random PIP check (10% chance/day when overdue) for instant firing
 - Only add if duck system isn't punishing enough
 
-### 7. Payment System (Creates SHIP IT Urgency)
+### 9. Payment System (Creates SHIP IT Urgency)
 
 **Salary is only paid on:**
 1. **Task completion** (via SHIP IT) - immediate payment
@@ -368,7 +417,7 @@ func hustle():
 
 ---
 
-### 8. Stack Ranking Meeting System (Voting + Education)
+### 10. Stack Ranking Meeting System (Voting + Education)
 
 **NEW SYSTEM - Key engagement and trauma bonding mechanic**
 
@@ -465,7 +514,7 @@ You're not crazy. The system is broken.
 
 ---
 
-### 9. Escalating Pressure
+### 11. Escalating Pressure
 
 #### **Week 1-2 (Days 1-10): Onboarding**
 - Simple tasks (complexity 1-3)
@@ -509,7 +558,7 @@ You're not crazy. The system is broken.
 
 ---
 
-### 10. Event System
+### 12. Event System
 
 #### **Random Events (30% chance on Work)**
 
@@ -594,7 +643,7 @@ You're not crazy. Everyone feels this.
 
 ---
 
-### 11. Company Rulebook (Papers Please Rules)
+### 13. Company Rulebook (Legacy Section - See System 5 Above)
 
 **Updates every 5 days via company-wide email**
 

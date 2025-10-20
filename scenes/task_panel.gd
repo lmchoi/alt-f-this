@@ -2,6 +2,7 @@ extends PanelContainer
 
 @onready var task_label := $"%TaskLabel"
 @onready var complexity_label := $"%ComplexityLabel"
+@onready var category_label := $"%CategoryLabel"
 @onready var deadline_label := $"%DeadlineLabel"
 @onready var progress_bar := $"%ProgressBar"
 
@@ -18,6 +19,7 @@ func _ready():
 func _on_current_task_updated(current_task: Task):
 	task_label.text = current_task.title
 	_update_complexity_label(current_task.complexity)
+	_update_category_label(current_task.categories)
 
 func _on_next_day(nth_day: int):
 	var days_left = GameManager.current_task.due_day - nth_day
@@ -39,3 +41,15 @@ func _update_deadline_label(days_left: int):
 
 func _update_progress(progress: float):
 	progress_bar.value = progress
+
+func _update_category_label(categories: Array[String]):
+	if categories.is_empty():
+		category_label.text = ""
+		return
+
+	# Display categories as badges: [OPTICS] [CRITICAL]
+	var display_text = ""
+	for category in categories:
+		display_text += "[" + category.to_upper() + "] "
+
+	category_label.text = display_text.strip_edges()
