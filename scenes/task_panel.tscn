@@ -48,42 +48,31 @@ theme_override_constants/margin_bottom = 15
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="TaskHeaderContainer" type="HBoxContainer" parent="MarginContainer/MainContainer"]
-custom_minimum_size = Vector2(0, 40)
-layout_direction = 2
-layout_mode = 2
-size_flags_vertical = 2
-
-[node name="TaskInfoContainer" type="VBoxContainer" parent="MarginContainer/MainContainer/TaskHeaderContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 4
-
-[node name="TaskLabel" type="Label" parent="MarginContainer/MainContainer/TaskHeaderContainer/TaskInfoContainer"]
+[node name="TaskLabel" type="Label" parent="MarginContainer/MainContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Fix CEO's PowerPoint"
 autowrap_mode = 3
 
-[node name="DescriptionLabel" type="Label" parent="MarginContainer/MainContainer/TaskHeaderContainer/TaskInfoContainer"]
+[node name="DescriptionLabel" type="Label" parent="MarginContainer/MainContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Description goes here"
 autowrap_mode = 3
 
-[node name="FlavorLabel" type="Label" parent="MarginContainer/MainContainer/TaskHeaderContainer/TaskInfoContainer"]
+[node name="FlavorLabel" type="Label" parent="MarginContainer/MainContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Design Hell"
 
-[node name="CategoryLabel" type="Label" parent="MarginContainer/MainContainer/TaskHeaderContainer/TaskInfoContainer"]
+[node name="CategoryLabel" type="Label" parent="MarginContainer/MainContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "[OPTICS]"
 
-[node name="ComplexityLabel" type="Label" parent="MarginContainer/MainContainer/TaskHeaderContainer/TaskInfoContainer"]
+[node name="ComplexityLabel" type="Label" parent="MarginContainer/MainContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Complexity: 🍝"
