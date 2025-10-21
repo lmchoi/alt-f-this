@@ -7,16 +7,19 @@ extends PanelContainer
 @onready var category_label := $"%CategoryLabel"
 @onready var deadline_label := $"%DeadlineLabel"
 @onready var progress_bar := $"%ProgressBar"
+@onready var bug_impact_label := $"%BugImpactLabel"
 
 func _ready():
 	GameManager.current_task_updated.connect(_on_current_task_updated)
 	GameManager.next_day.connect(_on_next_day)
 	GameManager.task_progress_changed.connect(_update_progress)
+	GameManager.bugs_changed.connect(_update_bug_impact)
 
 	# Initialize with current values
 	if GameManager.current_task:
 		_on_current_task_updated(GameManager.current_task)
 		_on_next_day(GameManager.day)
+		_update_bug_impact(GameManager.bugs)
 
 func _on_current_task_updated(current_task: Task):
 	task_label.text = current_task.title
@@ -50,7 +53,6 @@ func _update_deadline_label(days_left: int):
 
 func _update_progress(progress: float):
 	progress_bar.value = progress
-	progress_bar.suffix = "%"
 
 func _update_category_label(categories: Array[String]):
 	if categories.is_empty():
@@ -63,3 +65,11 @@ func _update_category_label(categories: Array[String]):
 		display_text += "[" + category.to_upper() + "] "
 
 	category_label.text = display_text.strip_edges()
+
+func _update_bug_impact(_amount: int):
+	var bug_multiplier = GameManager.get_bug_multiplier()
+	if bug_multiplier > 1.0:
+		bug_impact_label.text = "Progress slowed by bugs: %.1fx" % bug_multiplier
+		bug_impact_label.visible = true
+	else:
+		bug_impact_label.visible = false
