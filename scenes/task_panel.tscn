@@ -47,6 +47,7 @@ theme_override_constants/margin_bottom = 15
 
 [node name="MainContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 8
 
 [node name="TaskHeaderContainer" type="HBoxContainer" parent="MarginContainer/MainContainer"]
 custom_minimum_size = Vector2(0, 40)
@@ -56,6 +57,7 @@ size_flags_vertical = 2
 
 [node name="TaskInfoContainer" type="VBoxContainer" parent="MarginContainer/MainContainer/TaskHeaderContainer"]
 layout_mode = 2
+theme_override_constants/separation = 4
 
 [node name="TaskLabel" type="Label" parent="MarginContainer/MainContainer/TaskHeaderContainer/TaskInfoContainer"]
 unique_name_in_owner = true
