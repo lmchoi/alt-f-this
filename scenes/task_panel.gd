@@ -100,6 +100,26 @@ func _update_progress(progress: float):
 	else:
 		ship_it_indicator.visible = false
 
+func _create_badge(category: String) -> Label:
+	var badge = Label.new()
+	badge.text = " " + category.to_upper() + " "
+	badge.add_theme_font_size_override("font_size", FONT_SIZE_GAMEPLAY)
+
+	# Create colored background style
+	var style = StyleBoxFlat.new()
+	var cat_lower = category.to_lower()
+	style.bg_color = CATEGORY_COLORS.get(cat_lower, COLOR_ORANGE)
+	style.set_corner_radius_all(4)
+	style.content_margin_left = 8
+	style.content_margin_right = 8
+	style.content_margin_top = 4
+	style.content_margin_bottom = 4
+
+	badge.add_theme_stylebox_override("normal", style)
+	badge.add_theme_color_override("font_color", Color(0, 0, 0, 1))  # Black text
+
+	return badge
+
 func _update_flavor_and_categories(flavor: String, categories: Array[String]):
 	# Set flavor text
 	flavor_label.text = flavor
@@ -108,26 +128,9 @@ func _update_flavor_and_categories(flavor: String, categories: Array[String]):
 	for child in badge_container.get_children():
 		child.queue_free()
 
-	# Create badge for each category
+	# Create new badges
 	for category in categories:
-		var badge = Label.new()
-		badge.text = " " + category.to_upper() + " "
-		badge.add_theme_font_size_override("font_size", FONT_SIZE_GAMEPLAY)
-
-		# Create colored background style
-		var style = StyleBoxFlat.new()
-		var cat_lower = category.to_lower()
-		style.bg_color = CATEGORY_COLORS.get(cat_lower, COLOR_ORANGE)
-		style.set_corner_radius_all(4)
-		style.content_margin_left = 8
-		style.content_margin_right = 8
-		style.content_margin_top = 4
-		style.content_margin_bottom = 4
-
-		badge.add_theme_stylebox_override("normal", style)
-		badge.add_theme_color_override("font_color", Color(0, 0, 0, 1))  # Black text
-
-		badge_container.add_child(badge)
+		badge_container.add_child(_create_badge(category))
 
 func _update_bug_impact(_amount: int):
 	var bug_multiplier = GameManager.get_bug_multiplier()
