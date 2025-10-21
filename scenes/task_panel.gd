@@ -10,8 +10,8 @@ const COLOR_BRIGHT_GREEN = Color(0.2, 0.8, 0.2, 1)    # Gameplay info (default)
 const COLOR_YELLOW = Color(0.8, 0.8, 0.2, 1)          # Warnings, urgency
 const COLOR_ORANGE = Color(0.8, 0.4, 0.2, 1)          # Bugs, problems
 const COLOR_RED = Color(0.8, 0.2, 0.2, 1)             # Critical, overdue
-const COLOR_DIM_GRAY = Color(0.6, 0.6, 0.6, 1)        # Flavor text
-const COLOR_VERY_DIM_GRAY = Color(0.5, 0.5, 0.5, 1)   # Less important flavor
+const COLOR_TEXT_STANDARD = Color(0.85, 0.85, 0.85, 1) # Standard readable text
+const COLOR_TEXT_SUBDUED = Color(0.7, 0.7, 0.7, 1)    # Less important but still readable
 
 @onready var task_label := $"%TaskLabel"
 @onready var description_label := $"%DescriptionLabel"
@@ -35,9 +35,9 @@ func _ready():
 	progress_bar.add_theme_font_size_override("font_size", FONT_SIZE_CRITICAL)
 
 	# Apply color palette
-	task_label.add_theme_color_override("font_color", COLOR_DIM_GRAY)
-	description_label.add_theme_color_override("font_color", COLOR_DIM_GRAY)
-	flavor_label.add_theme_color_override("font_color", COLOR_VERY_DIM_GRAY)
+	task_label.add_theme_color_override("font_color", COLOR_TEXT_STANDARD)
+	description_label.add_theme_color_override("font_color", COLOR_TEXT_STANDARD)
+	flavor_label.add_theme_color_override("font_color", COLOR_TEXT_SUBDUED)
 	complexity_label.add_theme_color_override("font_color", COLOR_BRIGHT_GREEN)
 	bug_impact_label.add_theme_color_override("font_color", COLOR_ORANGE)
 	ship_it_indicator.add_theme_color_override("font_color", COLOR_YELLOW)
