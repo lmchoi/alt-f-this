@@ -56,20 +56,20 @@ size_flags_vertical = 2
 
 [node name="TaskInfoContainer" type="VBoxContainer" parent="MarginContainer/MainContainer/TaskHeaderContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 4
 
 [node name="TaskLabel" type="Label" parent="MarginContainer/MainContainer/TaskHeaderContainer/TaskInfoContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(500, 60)
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 3
 text = "Fix CEO's PowerPoint"
 autowrap_mode = 3
 
 [node name="DescriptionLabel" type="Label" parent="MarginContainer/MainContainer/TaskHeaderContainer/TaskInfoContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Description goes here"
 autowrap_mode = 3
 
