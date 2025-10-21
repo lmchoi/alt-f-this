@@ -42,13 +42,44 @@ The game uses a reactive signal architecture where:
 3. State changes propagate automatically through signals
 4. **Never update UI directly** - always emit signals from GameManager
 
-### Incremental Implementation Workflow
+---
+
+## Godot UI Best Practices
+
+### Styling & Theming
+- **Use Theme resources** (`.tres` files) for visual styling, not inline code
+- Apply theme overrides in script `_ready()`, not in `.tscn` scene files
+- Example: `themes/badge_theme.tres` for category badges
+
+### UI Constants
+- Define font sizes and colors as constants at top of scripts
+- Makes theme adjustments trivial across the game
+- Example: `FONT_SIZE_CRITICAL = 24`, `COLOR_BRIGHT_GREEN = Color(...)`
+
+### Mobile UI Requirements
+- **Minimum font size: 18px** (readable on 720x1280 portrait)
+- Use size + color for visual hierarchy, never text smaller than 18px
+- Touch-friendly spacing and button sizes
+
+### Code Organization
+- Extract styling/creation into helper functions (e.g., `_create_badge()`)
+- Update functions should only handle data, not styling
+- Separate concerns: data updates vs. visual presentation
+
+---
+
+## Incremental Implementation Workflow
+
 **IMPORTANT:** Break features into small, testable commits (20-100 lines, 1-3 files each).
 
 Before implementing any feature:
 1. Plan 3-6 small commits
 2. Each commit should be immediately testable
 3. Implement → Test → Commit → Next
+
+### Commit Style
+- Single-line commit messages for small changes
+- Always include Claude Code footer for tracking AI contributions
 
 See [ideas/workflow-incremental-implementation.md](ideas/workflow-incremental-implementation.md) for details.
 
@@ -93,15 +124,6 @@ Daily decision: "Is this good enough to ship?"
 
 ### ⚠️ Death Spiral Is Intentional
 Bugs → slower work → can't meet deadlines → ship early → more bugs → repeat. This is **intentional game design**, not a bug to fix. The game is a race: earn $5K before bugs make it impossible.
-
----
-
-## Mobile Configuration
-
-- **Resolution**: 720x1280 portrait
-- **Touch emulation**: Enabled for testing
-- **UI**: Large touch-friendly buttons
-- **Performance**: Mobile rendering method
 
 ---
 
