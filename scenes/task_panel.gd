@@ -24,9 +24,8 @@ func _ready():
 func _on_current_task_updated(current_task: Task):
 	task_label.text = current_task.title
 	description_label.text = current_task.description
-	flavor_label.text = current_task.flavor
 	_update_complexity_label(current_task.complexity)
-	_update_category_label(current_task.categories)
+	_update_flavor_and_categories(current_task.flavor, current_task.categories)
 
 func _on_next_day(nth_day: int):
 	var days_left = GameManager.current_task.due_day - nth_day
@@ -54,17 +53,16 @@ func _update_deadline_label(days_left: int):
 func _update_progress(progress: float):
 	progress_bar.value = progress
 
-func _update_category_label(categories: Array[String]):
-	if categories.is_empty():
-		category_label.text = ""
-		return
+func _update_flavor_and_categories(flavor: String, categories: Array[String]):
+	var display_text = flavor
 
-	# Display categories as badges: [OPTICS] [CRITICAL]
-	var display_text = ""
-	for category in categories:
-		display_text += "[" + category.to_upper() + "] "
+	if not categories.is_empty():
+		display_text += " "
+		for category in categories:
+			display_text += "[" + category.to_upper() + "] "
 
-	category_label.text = display_text.strip_edges()
+	flavor_label.text = display_text.strip_edges()
+	category_label.visible = false
 
 func _update_bug_impact(_amount: int):
 	var bug_multiplier = GameManager.get_bug_multiplier()
