@@ -96,14 +96,12 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.2, 0.8, 0.2, 1)
 text = "Complexity: 🍝"
 
-[node name="DeadlineLabel" type="Label" parent="MarginContainer/MainContainer/TaskHeaderContainer"]
+[node name="DeadlineLabel" type="Label" parent="MarginContainer/MainContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
 theme_override_colors/font_color = Color(0.2, 0.8, 0.2, 1)
 text = "Due in 5 days"
-horizontal_alignment = 2
+horizontal_alignment = 1
 
 [node name="ProgressBar" type="ProgressBar" parent="MarginContainer/MainContainer"]
 unique_name_in_owner = true
