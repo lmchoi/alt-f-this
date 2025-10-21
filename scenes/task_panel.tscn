@@ -62,7 +62,6 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(500, 60)
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
 text = "Fix CEO's PowerPoint"
 autowrap_mode = 3
 
@@ -70,39 +69,33 @@ autowrap_mode = 3
 unique_name_in_owner = true
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
 text = "Description goes here"
 autowrap_mode = 3
 
 [node name="FlavorLabel" type="Label" parent="MarginContainer/MainContainer/TaskHeaderContainer/TaskInfoContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
 text = "Design Hell"
 
 [node name="CategoryLabel" type="Label" parent="MarginContainer/MainContainer/TaskHeaderContainer/TaskInfoContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.8, 0.6, 0.2, 1)
 text = "[OPTICS]"
 
 [node name="ComplexityLabel" type="Label" parent="MarginContainer/MainContainer/TaskHeaderContainer/TaskInfoContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.2, 0.8, 0.2, 1)
 text = "Complexity: 🍝"
 
 [node name="DeadlineLabel" type="Label" parent="MarginContainer/MainContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.2, 0.8, 0.2, 1)
 text = "Due in 5 days"
 horizontal_alignment = 1
 
 [node name="BugImpactLabel" type="Label" parent="MarginContainer/MainContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.8, 0.4, 0.2, 1)
 text = "Progress slowed by bugs: 1.4x"
 horizontal_alignment = 1
 visible = false
@@ -112,7 +105,6 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_vertical = 1
-theme_override_colors/font_color = Color(0.2, 0.8, 0.2, 1)
 theme_override_styles/background = SubResource("StyleBoxFlat_progress_bg")
 theme_override_styles/fill = SubResource("StyleBoxFlat_progress_fill")
 show_percentage = true
@@ -120,7 +112,6 @@ show_percentage = true
 [node name="ShipItIndicator" type="Label" parent="MarginContainer/MainContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.8, 0.8, 0.2, 1)
 text = "⚠ SHIP IT available (risky!)"
 horizontal_alignment = 1
 visible = false
