@@ -1,5 +1,10 @@
 extends PanelContainer
 
+# Font size hierarchy - adjust these to change UI scale
+const FONT_SIZE_CRITICAL = 24  # Progress percentage, deadline
+const FONT_SIZE_GAMEPLAY = 20  # Complexity, categories, bug impact
+const FONT_SIZE_STANDARD = 18  # Title, description, flavor, indicators
+
 @onready var task_label := $"%TaskLabel"
 @onready var description_label := $"%DescriptionLabel"
 @onready var flavor_label := $"%FlavorLabel"
@@ -11,6 +16,16 @@ extends PanelContainer
 @onready var ship_it_indicator := $"%ShipItIndicator"
 
 func _ready():
+	# Apply font size hierarchy
+	task_label.add_theme_font_size_override("font_size", FONT_SIZE_STANDARD)
+	description_label.add_theme_font_size_override("font_size", FONT_SIZE_STANDARD)
+	flavor_label.add_theme_font_size_override("font_size", FONT_SIZE_STANDARD)
+	complexity_label.add_theme_font_size_override("font_size", FONT_SIZE_GAMEPLAY)
+	deadline_label.add_theme_font_size_override("font_size", FONT_SIZE_CRITICAL)
+	bug_impact_label.add_theme_font_size_override("font_size", FONT_SIZE_GAMEPLAY)
+	ship_it_indicator.add_theme_font_size_override("font_size", FONT_SIZE_STANDARD)
+	progress_bar.add_theme_font_size_override("font_size", FONT_SIZE_CRITICAL)
+
 	GameManager.current_task_updated.connect(_on_current_task_updated)
 	GameManager.next_day.connect(_on_next_day)
 	GameManager.task_progress_changed.connect(_update_progress)
