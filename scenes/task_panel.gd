@@ -13,12 +13,13 @@ const COLOR_RED = Color(0.8, 0.2, 0.2, 1)             # Critical, overdue
 const COLOR_TEXT_STANDARD = Color(0.85, 0.85, 0.85, 1) # Standard readable text
 const COLOR_TEXT_SUBDUED = Color(0.7, 0.7, 0.7, 1)    # Less important but still readable
 
-# Category badge colors
-const CATEGORY_COLORS = {
-	"critical": Color(0.8, 0.2, 0.2, 1),     # Red
-	"optics": Color(0.9, 0.5, 0.9, 1),       # Pink
-	"technical": Color(0.4, 0.7, 1.0, 1),    # Blue
-	"urgent": Color(0.8, 0.8, 0.2, 1)        # Yellow
+# Category badge theme mapping
+const BADGE_THEME = preload("res://themes/badge_theme.tres")
+const CATEGORY_STYLES = {
+	"critical": "CriticalBadge",
+	"optics": "OpticsBadge",
+	"technical": "TechnicalBadge",
+	"urgent": "UrgentBadge"
 }
 
 @onready var task_label := $"%TaskLabel"
@@ -103,20 +104,16 @@ func _update_progress(progress: float):
 func _create_badge(category: String) -> Label:
 	var badge = Label.new()
 	badge.text = " " + category.to_upper() + " "
+	badge.theme = BADGE_THEME
 	badge.add_theme_font_size_override("font_size", FONT_SIZE_GAMEPLAY)
-
-	# Create colored background style
-	var style = StyleBoxFlat.new()
-	var cat_lower = category.to_lower()
-	style.bg_color = CATEGORY_COLORS.get(cat_lower, COLOR_ORANGE)
-	style.set_corner_radius_all(4)
-	style.content_margin_left = 8
-	style.content_margin_right = 8
-	style.content_margin_top = 4
-	style.content_margin_bottom = 4
-
-	badge.add_theme_stylebox_override("normal", style)
 	badge.add_theme_color_override("font_color", Color(0, 0, 0, 1))  # Black text
+
+	# Apply category-specific style from theme
+	var cat_lower = category.to_lower()
+	var style_name = CATEGORY_STYLES.get(cat_lower, "CriticalBadge")
+	var style = BADGE_THEME.get_stylebox(style_name, "Label")
+	if style:
+		badge.add_theme_stylebox_override("normal", style)
 
 	return badge
 
