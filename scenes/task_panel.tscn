@@ -67,10 +67,10 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Design Hell"
 
-[node name="CategoryLabel" type="Label" parent="MarginContainer/MainContainer"]
+[node name="BadgeContainer" type="HBoxContainer" parent="MarginContainer/MainContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "[OPTICS]"
+theme_override_constants/separation = 6
 
 [node name="ComplexityLabel" type="Label" parent="MarginContainer/MainContainer"]
 unique_name_in_owner = true
