@@ -5,6 +5,14 @@ const FONT_SIZE_CRITICAL = 24  # Progress percentage, deadline
 const FONT_SIZE_GAMEPLAY = 20  # Complexity, categories, bug impact
 const FONT_SIZE_STANDARD = 18  # Title, description, flavor, indicators
 
+# Color palette - adjust these to change UI theme
+const COLOR_BRIGHT_GREEN = Color(0.2, 0.8, 0.2, 1)    # Gameplay info (default)
+const COLOR_YELLOW = Color(0.8, 0.8, 0.2, 1)          # Warnings, urgency
+const COLOR_ORANGE = Color(0.8, 0.4, 0.2, 1)          # Bugs, problems
+const COLOR_RED = Color(0.8, 0.2, 0.2, 1)             # Critical, overdue
+const COLOR_DIM_GRAY = Color(0.6, 0.6, 0.6, 1)        # Flavor text
+const COLOR_VERY_DIM_GRAY = Color(0.5, 0.5, 0.5, 1)   # Less important flavor
+
 @onready var task_label := $"%TaskLabel"
 @onready var description_label := $"%DescriptionLabel"
 @onready var flavor_label := $"%FlavorLabel"
@@ -25,6 +33,15 @@ func _ready():
 	bug_impact_label.add_theme_font_size_override("font_size", FONT_SIZE_GAMEPLAY)
 	ship_it_indicator.add_theme_font_size_override("font_size", FONT_SIZE_STANDARD)
 	progress_bar.add_theme_font_size_override("font_size", FONT_SIZE_CRITICAL)
+
+	# Apply color palette
+	task_label.add_theme_color_override("font_color", COLOR_DIM_GRAY)
+	description_label.add_theme_color_override("font_color", COLOR_DIM_GRAY)
+	flavor_label.add_theme_color_override("font_color", COLOR_VERY_DIM_GRAY)
+	complexity_label.add_theme_color_override("font_color", COLOR_BRIGHT_GREEN)
+	bug_impact_label.add_theme_color_override("font_color", COLOR_ORANGE)
+	ship_it_indicator.add_theme_color_override("font_color", COLOR_YELLOW)
+	progress_bar.add_theme_color_override("font_color", COLOR_BRIGHT_GREEN)
 
 	GameManager.current_task_updated.connect(_on_current_task_updated)
 	GameManager.next_day.connect(_on_next_day)
@@ -58,13 +75,13 @@ func _update_complexity_label(complexity: int):
 func _update_deadline_label(days_left: int):
 	if days_left < 0:
 		deadline_label.text = str(abs(days_left)) + " days overdue"
-		deadline_label.add_theme_color_override("font_color", Color(0.8, 0.2, 0.2, 1))  # Red
+		deadline_label.add_theme_color_override("font_color", COLOR_RED)
 	elif days_left <= 1:
 		deadline_label.text = "Due in " + str(days_left) + " days"
-		deadline_label.add_theme_color_override("font_color", Color(0.8, 0.8, 0.2, 1))  # Yellow
+		deadline_label.add_theme_color_override("font_color", COLOR_YELLOW)
 	else:
 		deadline_label.text = "Due in " + str(days_left) + " days"
-		deadline_label.add_theme_color_override("font_color", Color(0.2, 0.8, 0.2, 1))  # Green
+		deadline_label.add_theme_color_override("font_color", COLOR_BRIGHT_GREEN)
 
 func _update_progress(progress: float):
 	progress_bar.value = progress
