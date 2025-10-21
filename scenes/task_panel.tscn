@@ -121,3 +121,12 @@ theme_override_colors/font_color = Color(0.2, 0.8, 0.2, 1)
 theme_override_styles/background = SubResource("StyleBoxFlat_progress_bg")
 theme_override_styles/fill = SubResource("StyleBoxFlat_progress_fill")
 show_percentage = true
+
+[node name="ShipItIndicator" type="Label" parent="MarginContainer/MainContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.2, 1)
+theme_override_font_sizes/font_size = 12
+text = "⚠ SHIP IT available (risky!)"
+horizontal_alignment = 1
+visible = false

@@ -8,6 +8,7 @@ extends PanelContainer
 @onready var deadline_label := $"%DeadlineLabel"
 @onready var progress_bar := $"%ProgressBar"
 @onready var bug_impact_label := $"%BugImpactLabel"
+@onready var ship_it_indicator := $"%ShipItIndicator"
 
 func _ready():
 	GameManager.current_task_updated.connect(_on_current_task_updated)
@@ -52,6 +53,12 @@ func _update_deadline_label(days_left: int):
 
 func _update_progress(progress: float):
 	progress_bar.value = progress
+
+	# Show SHIP IT indicator at 20%+ progress
+	if progress >= 20.0:
+		ship_it_indicator.visible = true
+	else:
+		ship_it_indicator.visible = false
 
 func _update_flavor_and_categories(flavor: String, categories: Array[String]):
 	var display_text = flavor
