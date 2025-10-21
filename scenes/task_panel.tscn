@@ -63,7 +63,6 @@ custom_minimum_size = Vector2(500, 60)
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
-theme_override_font_sizes/font_size = 14
 text = "Fix CEO's PowerPoint"
 autowrap_mode = 3
 
@@ -72,7 +71,6 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
-theme_override_font_sizes/font_size = 14
 text = "Description goes here"
 autowrap_mode = 3
 
@@ -80,14 +78,12 @@ autowrap_mode = 3
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
-theme_override_font_sizes/font_size = 11
 text = "Design Hell"
 
 [node name="CategoryLabel" type="Label" parent="MarginContainer/MainContainer/TaskHeaderContainer/TaskInfoContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.6, 0.2, 1)
-theme_override_font_sizes/font_size = 12
 text = "[OPTICS]"
 
 [node name="ComplexityLabel" type="Label" parent="MarginContainer/MainContainer/TaskHeaderContainer/TaskInfoContainer"]
@@ -107,7 +103,6 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.4, 0.2, 1)
-theme_override_font_sizes/font_size = 12
 text = "Progress slowed by bugs: 1.4x"
 horizontal_alignment = 1
 visible = false
@@ -126,7 +121,6 @@ show_percentage = true
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.8, 0.2, 1)
-theme_override_font_sizes/font_size = 12
 text = "⚠ SHIP IT available (risky!)"
 horizontal_alignment = 1
 visible = false
