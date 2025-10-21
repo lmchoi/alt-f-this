@@ -45,6 +45,7 @@ func _update_deadline_label(days_left: int):
 
 func _update_progress(progress: float):
 	progress_bar.value = progress
+	progress_bar.suffix = "%"
 
 func _update_category_label(categories: Array[String]):
 	if categories.is_empty():

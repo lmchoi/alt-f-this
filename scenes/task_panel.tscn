@@ -113,4 +113,4 @@ size_flags_vertical = 1
 theme_override_colors/font_color = Color(0.2, 0.8, 0.2, 1)
 theme_override_styles/background = SubResource("StyleBoxFlat_progress_bg")
 theme_override_styles/fill = SubResource("StyleBoxFlat_progress_fill")
-show_percentage = false
+show_percentage = true
