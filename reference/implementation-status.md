@@ -21,8 +21,8 @@ Quick reference for what's built vs what's next.
 - ✅ Salary (£500 every 5 days via payday system)
 - ✅ Days Until Payday (5-day cycle, tracked in GameManager)
 - ✅ Completed Tasks (tracked, shown in end game stats)
+- ✅ **Overdue Days** - Tracks days past deadline, fired at 3 days overdue
 - ❌ **MISSING:** Escape Progress (0-100%, for HUSTLE system)
-- ❌ **MISSING:** Overdue Days (tracking for firing at 3 days)
 
 ### Task System
 - ✅ Tasks from JSON with complexity (1-10)
@@ -43,15 +43,15 @@ Quick reference for what's built vs what's next.
 - ✅ Track production_outages, pip_warnings, total_blames
 
 ### Win/Lose Conditions
-- ✅ Victory at $5,000 (only path implemented)
-- ❌ **MISSING:** Victory at $3K + 75% escape
-- ❌ **MISSING:** Victory at $2K + 100% escape
+- ✅ Victory at £5,000 (only path implemented)
+- ❌ **MISSING:** Victory at £3K + 75% escape
+- ❌ **MISSING:** Victory at £2K + 100% escape
 - ✅ Game over at 0 ducks (burnout)
 - ✅ Game over at 100+ bugs (death spiral)
-- ✅ Game over at 3 PIP warnings (fired)
+- ✅ Game over at 3 PIP warnings (fired - production outages)
 - ✅ Game over at 3+ blames (company collapse - scapegoat)
 - ✅ Game over at 3+ systemic blames (company collapse - systemic)
-- ❌ **MISSING:** Game over at 3 days overdue (fired for missing deadline)
+- ✅ **Game over at 3 days overdue** (fired for missing deadline)
 
 ### UI Components
 - ✅ Top bar (money, ducks, bugs, day) - separate component

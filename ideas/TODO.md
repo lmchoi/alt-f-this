@@ -7,6 +7,6 @@ Priority order for complete game loop:
 2. ✅ ~~Task difficulty scaling by job level~~ - **DONE**
 3. ✅ ~~Completed tasks counter~~ - **DONE**
 4. ✅ ~~End game stats and structured endings~~ - **DONE**
-5. Escape progress (HUSTLE builds 0-100%, enables alternate victory)
-6. Overdue firing (3 days overdue = fired)
+5. ✅ ~~Overdue firing (3 days overdue = fired)~~ - **DONE**
+6. Escape progress (HUSTLE builds 0-100%, enables alternate victory)
 7. Post-ship choice screen (ACCEPT TASK vs HUSTLE)

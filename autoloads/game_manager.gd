@@ -12,6 +12,7 @@ const VICTORY_MONEY_GOAL = 5000
 const HUSTLE_PAY = 200
 const PAYDAY_SALARY = 500
 const PAYDAY_INTERVAL = 5
+const MAX_OVERDUE_DAYS = 3
 
 signal next_day(nth)
 signal money_changed(amount)
@@ -38,6 +39,7 @@ var day := 1:
 		next_day.emit(day)
 
 var days_until_payday := 5
+var overdue_days := 0  # Track how many days past deadline
 
 var job_level := 0  # Index into JOB_TITLES/JOB_SALARIES
 var completed_tasks := 0
@@ -207,12 +209,18 @@ func daily_updates():
 	if current_task.progress >= 100:
 		print("work completed")
 		completed_tasks += 1
+		overdue_days = 0  # Reset overdue counter on task completion
 		event_occurred.emit({"text": "Task complete! Nice work.\n\nPayment on payday (in %d days)" % days_until_payday, "money": 0, "ducks": 0})
 
 		current_task = TaskManager.get_random_task(day, job_level)
 
-	if current_task.due_day == day:
-		# check progress to calculate bugs chance
+	# Check if task is overdue and track days
+	if day > current_task.due_day:
+		overdue_days += 1
+		if overdue_days >= MAX_OVERDUE_DAYS:
+			game_over.emit("fired_deadline", get_game_stats())
+			return
+	elif day == current_task.due_day:
 		missed_deadline.emit()		
 
 func do_work():
@@ -305,6 +313,7 @@ func ship_it():
 	# Complete task
 	current_task.progress = 100
 	completed_tasks += 1
+	overdue_days = 0  # Reset overdue counter on ship
 
 	# Get new task
 	current_task = TaskManager.get_random_task(day, job_level)

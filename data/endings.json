@@ -11,6 +11,10 @@
     "title": "Fired",
     "message": "Too many performance improvement plans.\n\nYou took responsibility for production outages one too many times.\n\nHR escorts you out."
   },
+  "fired_deadline": {
+    "title": "Fired",
+    "message": "Three days past deadline.\n\nYour manager has had enough.\n\nSecurity escorts you out."
+  },
   "company_collapse_scapegoat": {
     "title": "Company Collapse",
     "message": "You blamed others too many times.\n\nThe team imploded.\n\nThe company shut down."
