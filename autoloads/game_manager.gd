@@ -10,6 +10,8 @@ const MIN_SHIP_PROGRESS = 20
 const MAX_BUGS_GAME_OVER = 100
 const VICTORY_MONEY_GOAL = 5000
 const HUSTLE_PAY = 200
+const PAYDAY_SALARY = 500
+const PAYDAY_INTERVAL = 5
 
 signal next_day(nth)
 signal money_changed(amount)
@@ -23,6 +25,7 @@ signal victory(message)
 signal production_outage_occurred(task_name)
 signal current_task_updated(task)
 signal task_progress_changed(progress)
+signal payday_occurred(amount)
 
 var current_task := Task.new(1):
 	set(value):
@@ -33,6 +36,8 @@ var day := 1:
 	set(value):
 		day = value
 		next_day.emit(day)
+
+var days_until_payday := 5
 
 var money := 0:
 	set(value):
@@ -168,14 +173,20 @@ func _trigger_random_work_event():
 		event_occurred.emit(event_result)
 
 func daily_updates():
+	# Check for payday
+	days_until_payday -= 1
+	if days_until_payday <= 0:
+		days_until_payday = PAYDAY_INTERVAL
+		money += PAYDAY_SALARY
+		payday_occurred.emit(PAYDAY_SALARY)
+		event_occurred.emit({"text": "PAYDAY!\n\n+$%d" % PAYDAY_SALARY, "money": 0, "ducks": 0})
+
 	# Check for production outages (time bombs)
 	check_time_bombs()
 
 	if current_task.progress >= 100:
 		print("work completed")
-		# Pay salary for completed task
-		money += salary
-		event_occurred.emit({"text": "Task complete! Nice work.\n\nPaid: $%d" % salary, "money": 0, "ducks": 0})
+		event_occurred.emit({"text": "Task complete! Nice work.\n\nPayment on payday (in %d days)" % days_until_payday, "money": 0, "ducks": 0})
 		current_task = TaskManager.get_random_task(day)
 
 	if current_task.due_day == day:
@@ -259,16 +270,13 @@ func ship_it():
 		poorly_shipped_tasks.append(current_task.title)
 		print("⚠️ Poor quality ship: '%s' added to outage risk pool" % current_task.title)
 
-	# Pay salary immediately on completion
-	money += salary
-
-	# Show shipped message
+	# Show shipped message (payment happens on payday)
 	var event_text = ""
 	if progress >= 100:
-		event_text = "Task complete! Nice work.\n\nPaid: $%d" % salary
+		event_text = "Task complete! Nice work.\n\nPayment on payday (in %d days)" % days_until_payday
 	else:
 		var quality_msg = get_ship_quality_message(progress)
-		event_text = "Shipped at %d%%\n\n%s\n\nBugs added: +%d\nPaid: $%d" % [progress, quality_msg, int(bugs_to_add), salary]
+		event_text = "Shipped at %d%%\n\n%s\n\nBugs added: +%d\nPayment on payday (in %d days)" % [progress, quality_msg, int(bugs_to_add), days_until_payday]
 
 	event_occurred.emit({"text": event_text, "money": 0, "ducks": 0})
 
