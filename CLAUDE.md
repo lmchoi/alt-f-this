@@ -33,18 +33,9 @@ Open project in Godot 4.5 and press F5. Main scene: [scenes/game_ui.tscn](scenes
 
 ---
 
-## Architecture
+## Architecture & Workflow
 
-### Signal-Driven Design
-The game uses a reactive signal architecture where:
-1. GameManager holds all state with property setters that emit signals
-2. UI components connect to signals in `_ready()`
-3. State changes propagate automatically through signals
-4. **Never update UI directly** - always emit signals from GameManager
-
----
-
-## Incremental Implementation Workflow
+### Incremental Implementation
 
 **IMPORTANT:** Break features into small, testable commits (20-100 lines, 1-3 files each).
 
@@ -55,19 +46,16 @@ Before implementing any feature:
 
 See [reference/workflow-incremental-implementation.md](reference/workflow-incremental-implementation.md) for details.
 
-### Autoloaded Singletons
+**Signal-Driven Design:**
+- GameManager holds all state with property setters that emit signals
+- UI components connect to signals in `_ready()`
+- Never update UI directly - always emit signals from GameManager
 
-**GameManager** ([autoloads/game_manager.gd](autoloads/game_manager.gd))
-- Central game state: `day`, `money`, `salary`, `ducks`, `bugs`, `strikes`, `current_task`
-- All properties use setters that emit signals (e.g., `money_changed`, `ducks_changed`, `bugs_changed`)
-- Game actions: `do_work()`, `hustle()`, `debug()`, `process_action()`
-- Bug system: `get_bug_multiplier()`, `add_bugs(amount)`
-- Events: `next_day`, `missed_deadline`, `event_occurred`, `game_over`, `production_outage`
+**Autoloaded Singletons:**
+- **GameManager** ([autoloads/game_manager.gd](autoloads/game_manager.gd)) - Central game state, all properties emit signals
+- **TaskManager** ([autoloads/task_manager.gd](autoloads/task_manager.gd)) - Loads tasks from JSON, handles difficulty scaling
 
-**TaskManager** ([autoloads/task_manager.gd](autoloads/task_manager.gd))
-- Loads tasks from [data/tasks.json](data/tasks.json)
-- Provides `get_random_task(today_date, min_complexity, max_complexity)` for difficulty scaling
-- Tasks have: title, description, complexity (1-10), allowed_time, category, completion_text
+See [reference/implementation-status.md](reference/implementation-status.md) for detailed API documentation.
 
 ---
 
@@ -76,23 +64,21 @@ See [reference/workflow-incremental-implementation.md](reference/workflow-increm
 ### ⚠️ Bugs Are PERMANENT
 **NEVER implement bug reduction.** No DEBUG action. Bugs never decrease. This is the core tension.
 
-### ⚠️ Task Complexity (NOT YET IMPLEMENTED)
-**ALWAYS use task complexity** when calculating progress:
+### ✅ Task Complexity (IMPLEMENTED)
+Task complexity properly affects work speed:
 ```gdscript
-# WRONG (current code)
-progress += 20
-
-# CORRECT (what it should be)
 var bug_multiplier = get_bug_multiplier()  # 1.0 + (bugs * 0.01)
-progress += 20 / (complexity * bug_multiplier)
+var work = 100.0 / (current_task.complexity * bug_multiplier)
+current_task.do_work(work)
 ```
+Result: 1 complexity = 1 day to complete (at 0 bugs)
 
 ### ⚠️ SHIP IT Is The Core Mechanic
 Daily decision: "Is this good enough to ship?"
 - Available at 20%+ progress
 - Bugs added: `(100 - progress) / 10`
 - Duck change based on quality (see game plan for details)
-- Immediate payment (creates urgency)
+- Payment on payday (every 5 days) - creates strategic timing decisions
 
 ### ⚠️ Death Spiral Is Intentional
 Bugs → slower work → can't meet deadlines → ship early → more bugs → repeat. This is **intentional game design**, not a bug to fix. The game is a race: earn $5K before bugs make it impossible.
@@ -111,25 +97,6 @@ Examples from [data/tasks.json](data/tasks.json):
 - "Make the Logo Bigger (Again)"
 - "Fix the 'Sent with Wrong Font' Email"
 - "CEO's 'Simple' Excel Macro"
-
----
-
-## Quick Reference
-
-### Target Actions (Final Design)
-- **WORK**: +progress (scaled by complexity + bugs), 30% event chance, paid on completion/payday
-- **HUSTLE**: +salary×2 (on payday), +1 duck, 50% event chance, no progress
-- **SHIP IT**: Complete task, add bugs `(100-progress)/10`, duck change by quality, immediate payment
-
-### Win/Lose Conditions
-- **Victory**: $5,000 → escape to Act 2
-- **Game Over**: 0 ducks (burnout) OR 100+ bugs (death spiral) OR salary trap ($2,500/5 days)
-
-### Balance Targets
-- Complexity 5 task: ~5 days (0 bugs), ~7 days (40 bugs), ~9 days (80 bugs)
-- Escape: 30-50 days depending on choices
-- Ducks: Start with 3, rarely gain back
-- Most players: ship 80-90% early, 40-60% later
 
 ---
 
