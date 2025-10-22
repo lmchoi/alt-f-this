@@ -12,7 +12,6 @@ func _ready():
 	ship_it_button.pressed.connect(_on_ship_it_button_pressed)
 	GameManager.event_occurred.connect(_on_event_occurred)
 	GameManager.missed_deadline.connect(_on_deadline_due)
-	GameManager.next_day.connect(_on_next_day)
 	GameManager.game_over.connect(_on_game_over)
 	GameManager.victory.connect(_on_victory)
 	GameManager.production_outage_occurred.connect(_on_production_outage)
@@ -30,8 +29,6 @@ func _ready():
 	# Debug: Load test scenario in debug builds
 	if OS.is_debug_build():
 		_setup_test_scenario()
-
-	_on_next_day(GameManager.day)
 
 func _on_work_button_pressed():
 	GameManager.do_work()
@@ -59,9 +56,6 @@ func _on_game_over(ending_type: String, stats: Dictionary):
 
 func _on_victory(stats: Dictionary):
 	end_game_panel.show_victory(stats)
-
-func _on_next_day(_nth_day: int):
-	GameManager.daily_updates()
 
 func _on_deadline_action(action: String):
 	GameManager.process_action(action)

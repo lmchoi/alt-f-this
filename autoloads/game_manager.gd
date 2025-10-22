@@ -37,6 +37,7 @@ var day := 1:
 	set(value):
 		day = value
 		next_day.emit(day)
+		daily_updates()
 
 var days_until_payday := 5
 var overdue_days := 0  # Track how many days past deadline
