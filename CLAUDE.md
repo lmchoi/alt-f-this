@@ -113,4 +113,6 @@ Examples from [data/tasks.json](data/tasks.json):
 - **Project structure**: [reference/project-structure.md](reference/project-structure.md)
 - **Incremental workflow**: [reference/workflow-incremental-implementation.md](reference/workflow-incremental-implementation.md)
 
-**Note to Claude:** When creating reference documentation for yourself (not tutorials for the user), save files in `reference/`. Keep them concise, focused on what you need to know, not explanatory prose.
+**Notes to Claude:**
+- When creating reference docs for yourself (not tutorials for the user), save in `reference/`. Keep them concise.
+- **When implementing features:** After completing implementation, update [ideas/TODO.md](ideas/TODO.md) and [reference/implementation-status.md](reference/implementation-status.md) to reflect what's been built. Update [CLAUDE.md](CLAUDE.md) only if there are new critical warnings or architectural changes.
