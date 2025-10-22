@@ -58,14 +58,16 @@ var ducks := 3:
 		ducks = value
 		ducks_changed.emit(ducks)
 		if ducks <= 0:
-			game_over.emit("Ran out of ducks to give...")
+			var stats = get_game_stats()
+			game_over.emit("Ran out of ducks to give...\n\n%s\n\n[Ending: Burnout]" % stats)
 
 var bugs := 0:
 	set(value):
 		bugs = value
 		bugs_changed.emit(bugs)
 		if bugs >= MAX_BUGS_GAME_OVER:
-			game_over.emit("The bugs have won.\n\nYour code is so broken that work is impossible.\n\nYou can't ship fast enough to escape.\n\n[Ending: Death Spiral]")
+			var stats = get_game_stats()
+			game_over.emit("The bugs have won.\n\nYour code is so broken that work is impossible.\n\n%s\n\n[Ending: Death Spiral]" % stats)
 
 var production_outages := 0  # Track total outages for firing (3 = fired)
 var poorly_shipped_tasks := []  # Tasks shipped at <50% (can trigger outages)
@@ -149,14 +151,16 @@ func handle_outage_choice(choice: String):
 		"responsibility":
 			pip_warnings += 1
 			if pip_warnings >= MAX_PIP_WARNINGS:
-				game_over.emit(outage_messages["responsibility"]["fired"])
+				var stats = get_game_stats()
+				game_over.emit("%s\n\n%s" % [outage_messages["responsibility"]["fired"], stats])
 			else:
 				event_occurred.emit({"text": outage_messages["responsibility"]["first_pip"], "money": 0, "ducks": 0})
 
 		"scapegoat", "systemic":
 			total_blames += 1
 			if total_blames >= MAX_BLAMES:
-				game_over.emit(outage_messages[choice]["company_collapse"])
+				var stats = get_game_stats()
+				game_over.emit("%s\n\n%s" % [outage_messages[choice]["company_collapse"], stats])
 			else:
 				var message_key = "first" if total_blames == 1 else "second"
 				event_occurred.emit({"text": outage_messages[choice][message_key], "money": 0, "ducks": 0})
@@ -164,7 +168,12 @@ func handle_outage_choice(choice: String):
 func check_victory():
 	"""Check if player has reached victory money goal."""
 	if money >= VICTORY_MONEY_GOAL:
-		victory.emit("You saved $5,000!\n\nYou quit with a dramatic email and escape to start your own company.\n\nVICTORY!")
+		var stats = get_game_stats()
+		victory.emit("You saved £5,000!\n\n%s\n\nVICTORY!" % stats)
+
+func get_game_stats() -> String:
+	"""Generate stats summary for game over/victory screens."""
+	return "Tasks completed: %d\nDays survived: %d\nBugs accumulated: %d\nDucks remaining: %d" % [completed_tasks, day, bugs, ducks]
 
 func _trigger_random_work_event():
 	var event_result := {"text": "", "money": 0, "ducks": 0}
