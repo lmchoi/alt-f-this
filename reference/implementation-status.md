@@ -8,14 +8,14 @@ Quick reference for what's built vs what's next.
 
 ### Core Actions
 - ✅ **WORK** - Makes progress, complexity + bugs affect speed
-- ⚠️ **HUSTLE** - Currently gives $200 + duck, NEEDS UPDATE to escape progress system
-- ⚠️ **SHIP IT** - Currently pays immediately, NEEDS UPDATE to payday system
+- ⚠️ **HUSTLE** - Gives $200 immediately, +1 duck (or -1 if overdue). NEEDS UPDATE: escape progress system + payday
+- ⚠️ **SHIP IT** - Pays salary immediately. NEEDS UPDATE: payday system (pay every 5 days)
 - ✅ **20% minimum** - Can't ship below 20% (cheeky messages)
-- ✅ **Deadline duck cost** - Hustle while overdue: -1 duck (prevents exploit)
+- ✅ **Deadline duck cost** - Hustle while overdue: -1 duck instead of +1 (prevents exploit)
 
 ### Resources
 - ✅ Money (tracks escape fund)
-- ✅ Ducks (mental health, 0 = game over)
+- ⚠️ **Ducks** - Mental health, 0 = game over. CODE: starts at 2 | DESIGN: should start at 3
 - ✅ Bugs (slow work, 100+ = game over)
 - ✅ Day counter
 - ✅ Salary (fixed per task)
@@ -25,11 +25,12 @@ Quick reference for what's built vs what's next.
 
 ### Task System
 - ✅ Tasks from JSON with complexity (1-10)
-- ✅ Complexity affects work speed: `20 / (complexity × bug_multiplier)`
+- ✅ Complexity affects work speed: `100 / (complexity × bug_multiplier)` → 1 complexity = 1 day
 - ✅ Deadlines (affects hustle duck cost)
 - ✅ Progress bar (updates in real-time)
 - ✅ Quality messages on ship (rock_bottom → excellent)
 - ✅ "Too early to ship" messages
+- ⚠️ **Task categories** - Loaded from JSON but not used for game logic yet
 
 ### Production Outages
 - ✅ Ship <50% → time bomb (poorly_shipped_tasks array)

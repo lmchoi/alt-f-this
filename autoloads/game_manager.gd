@@ -45,7 +45,7 @@ var salary := 100:
 		salary = value
 		salary_changed.emit(salary)
 
-var ducks := 2:
+var ducks := 3:
 	set(value):
 		ducks = value
 		ducks_changed.emit(ducks)

@@ -8,14 +8,14 @@ Quick reference for exact math and balance numbers.
 
 ### Work Progress
 ```gdscript
-progress += 20 / (complexity × bug_multiplier)
+progress += 100 / (complexity × bug_multiplier)
 bug_multiplier = 1 + (bugs × 0.01)
 ```
 
 **Examples:**
-- Complexity 5, 0 bugs: 20 / (5 × 1.0) = 4% per day → ~25 days
-- Complexity 5, 40 bugs: 20 / (5 × 1.4) = 2.86% per day → ~35 days
-- Complexity 5, 80 bugs: 20 / (5 × 1.8) = 2.22% per day → ~45 days
+- Complexity 5, 0 bugs: 100 / (5 × 1.0) = 20% per day → 5 days
+- Complexity 5, 40 bugs: 100 / (5 × 1.4) = 14.3% per day → 7 days
+- Complexity 5, 80 bugs: 100 / (5 × 1.8) = 11.1% per day → 9 days
 
 ### Bugs from Shipping
 ```gdscript
@@ -23,7 +23,7 @@ bugs_added = (100 - progress) / 10
 ```
 
 **Examples:**
-- Ship at 95%: +0.5 bugs (rounds to 1)
+- Ship at 90%: +1 bug
 - Ship at 70%: +3 bugs
 - Ship at 40%: +6 bugs
 - Ship at 20%: +8 bugs
