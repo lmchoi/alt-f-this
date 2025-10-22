@@ -10,11 +10,11 @@ func _ready():
 	_update_payday(GameManager.day)
 
 func _update_payday(_day: int):
-	var days = GameManager.days_until_payday
+	var days = GameManager.days_until_payday - 1
 	if days == 1:
 		salary_label.text = "Payday: Tomorrow (£500)"
 	else:
 		salary_label.text = "Payday: %d days (£500)" % days
 
 func _on_payday(_amount: int):
-	_update_payday(GameManager.day)
+	salary_label.text = "Payday: Today!!! (£500)"
