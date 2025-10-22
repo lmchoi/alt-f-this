@@ -201,7 +201,6 @@ func daily_updates():
 		days_until_payday = PAYDAY_INTERVAL
 		money += PAYDAY_SALARY
 		payday_occurred.emit(PAYDAY_SALARY)
-		event_occurred.emit({"text": "PAYDAY!\n\n+$%d" % PAYDAY_SALARY, "money": 0, "ducks": 0})
 
 	# Check for production outages (time bombs)
 	check_time_bombs()
