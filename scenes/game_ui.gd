@@ -4,6 +4,8 @@ extends Node
 @onready var slack_button := $"%SlackButton" as ActionButton
 @onready var ship_it_button := $"%ShipItButton" as ActionButton
 
+var end_game_panel: Panel
+
 func _ready():
 	work_button.pressed.connect(_on_work_button_pressed)
 	slack_button.pressed.connect(_on_slack_button_pressed)
@@ -17,6 +19,12 @@ func _ready():
 
 	$DeadlineDialog.custom_action.connect(_on_deadline_action)
 	$OutageDialog.outage_choice.connect(_on_outage_choice)
+
+	# Load end game panel
+	var EndGamePanelScene = load("res://scenes/end_game_panel.tscn")
+	end_game_panel = EndGamePanelScene.instantiate()
+	add_child(end_game_panel)
+
 	GameManager.start_game()
 
 	# Debug: Load test scenario in debug builds
@@ -46,19 +54,11 @@ func _on_event_occurred(event: Dictionary):
 func _on_deadline_due():
 	$DeadlineDialog.popup()
 
-func _on_game_over(message):
-	$GameOverDialog.dialog_text = message
-	$GameOverDialog.title = "GAME OVER"
-	$GameOverDialog.ok_button_text = "Rage Quit"
-	$GameOverDialog.get_cancel_button().hide()
-	$GameOverDialog.popup()
+func _on_game_over(ending_type: String, stats: Dictionary):
+	end_game_panel.show_game_over(ending_type, stats)
 
-func _on_victory(message):
-	$GameOverDialog.dialog_text = message
-	$GameOverDialog.title = "VICTORY!"
-	$GameOverDialog.ok_button_text = "I'm Free!"
-	$GameOverDialog.get_cancel_button().hide()
-	$GameOverDialog.popup()
+func _on_victory(stats: Dictionary):
+	end_game_panel.show_victory(stats)
 
 func _on_next_day(_nth_day: int):
 	GameManager.daily_updates()

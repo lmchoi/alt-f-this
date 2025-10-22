@@ -1,0 +1,26 @@
+{
+  "burnout": {
+    "title": "Burnout",
+    "message": "Ran out of ducks to give..."
+  },
+  "death_spiral": {
+    "title": "Death Spiral",
+    "message": "The bugs have won.\n\nYour code is so broken that work is impossible.\n\nYou can't ship fast enough to escape."
+  },
+  "fired_pip": {
+    "title": "Fired",
+    "message": "Too many performance improvement plans.\n\nYou took responsibility for production outages one too many times.\n\nHR escorts you out."
+  },
+  "company_collapse_scapegoat": {
+    "title": "Company Collapse",
+    "message": "You blamed others too many times.\n\nThe team imploded.\n\nThe company shut down."
+  },
+  "company_collapse_systemic": {
+    "title": "Company Collapse",
+    "message": "You blamed the system too many times.\n\nNothing changed.\n\nThe company collapsed under technical debt."
+  },
+  "victory": {
+    "title": "VICTORY!",
+    "message": "You saved £5,000!\n\nYou quit with a dramatic email and escape to start your own company."
+  }
+}

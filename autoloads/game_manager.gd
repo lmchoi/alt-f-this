@@ -20,8 +20,8 @@ signal ducks_changed(amount)
 signal bugs_changed(amount)
 signal event_occurred(event_data)
 signal missed_deadline()
-signal game_over(message)
-signal victory(message)
+signal game_over(ending_type: String, stats: Dictionary)
+signal victory(stats: Dictionary)
 signal production_outage_occurred(task_name)
 signal current_task_updated(task)
 signal task_progress_changed(progress)
@@ -58,16 +58,14 @@ var ducks := 3:
 		ducks = value
 		ducks_changed.emit(ducks)
 		if ducks <= 0:
-			var stats = get_game_stats()
-			game_over.emit("Ran out of ducks to give...\n\n%s\n\n[Ending: Burnout]" % stats)
+			game_over.emit("burnout", get_game_stats())
 
 var bugs := 0:
 	set(value):
 		bugs = value
 		bugs_changed.emit(bugs)
 		if bugs >= MAX_BUGS_GAME_OVER:
-			var stats = get_game_stats()
-			game_over.emit("The bugs have won.\n\nYour code is so broken that work is impossible.\n\n%s\n\n[Ending: Death Spiral]" % stats)
+			game_over.emit("death_spiral", get_game_stats())
 
 var production_outages := 0  # Track total outages for firing (3 = fired)
 var poorly_shipped_tasks := []  # Tasks shipped at <50% (can trigger outages)
@@ -151,16 +149,22 @@ func handle_outage_choice(choice: String):
 		"responsibility":
 			pip_warnings += 1
 			if pip_warnings >= MAX_PIP_WARNINGS:
-				var stats = get_game_stats()
-				game_over.emit("%s\n\n%s" % [outage_messages["responsibility"]["fired"], stats])
+				game_over.emit("fired_pip", get_game_stats())
 			else:
 				event_occurred.emit({"text": outage_messages["responsibility"]["first_pip"], "money": 0, "ducks": 0})
 
-		"scapegoat", "systemic":
+		"scapegoat":
 			total_blames += 1
 			if total_blames >= MAX_BLAMES:
-				var stats = get_game_stats()
-				game_over.emit("%s\n\n%s" % [outage_messages[choice]["company_collapse"], stats])
+				game_over.emit("company_collapse_scapegoat", get_game_stats())
+			else:
+				var message_key = "first" if total_blames == 1 else "second"
+				event_occurred.emit({"text": outage_messages[choice][message_key], "money": 0, "ducks": 0})
+
+		"systemic":
+			total_blames += 1
+			if total_blames >= MAX_BLAMES:
+				game_over.emit("company_collapse_systemic", get_game_stats())
 			else:
 				var message_key = "first" if total_blames == 1 else "second"
 				event_occurred.emit({"text": outage_messages[choice][message_key], "money": 0, "ducks": 0})
@@ -168,12 +172,16 @@ func handle_outage_choice(choice: String):
 func check_victory():
 	"""Check if player has reached victory money goal."""
 	if money >= VICTORY_MONEY_GOAL:
-		var stats = get_game_stats()
-		victory.emit("You saved £5,000!\n\n%s\n\nVICTORY!" % stats)
+		victory.emit(get_game_stats())
 
-func get_game_stats() -> String:
-	"""Generate stats summary for game over/victory screens."""
-	return "Tasks completed: %d\nDays survived: %d\nBugs accumulated: %d\nDucks remaining: %d" % [completed_tasks, day, bugs, ducks]
+func get_game_stats() -> Dictionary:
+	"""Generate stats dictionary for game over/victory screens."""
+	return {
+		"tasks_completed": completed_tasks,
+		"days_survived": day,
+		"bugs": bugs,
+		"ducks": ducks
+	}
 
 func _trigger_random_work_event():
 	var event_result := {"text": "", "money": 0, "ducks": 0}
