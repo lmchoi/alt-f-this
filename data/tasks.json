@@ -1,94 +1,247 @@
 {
   "tasks": [
-	{
-	  "title": "Make the Logo Bigger (Again)",
-	  "description": "The CEO's nephew said the logo looks 'weak.' Make it 10% bigger… for the 5th time this week.",
-	  "allowed_time": 2,
-	  "complexity": 1,
-	  "flavor": "Design Hell",
-	  "categories": ["optics"],
-	  "completion_text": "Logo now occupies 30% of the screen. Marketing weeps quietly in the break room."
-	},
-	{
-	  "title": "Fix the 'Sent with Wrong Font' Email",
-	  "description": "Marketing sent 50K emails in Comic Sans. 'Undo' the send before customers notice.",
-	  "allowed_time": 1,
-	  "complexity": 3,
-	  "flavor": "Marketing Disaster",
-	  "categories": ["critical"],
-	  "completion_text": "Emails 'recalled.' 12 customers still replied with 'lol nice font'."
-	},
-	{
-	  "title": "Add Blockchain (For Some Reason)",
-	  "description": "The board read a buzzword-heavy article. Now your to-do app 'needs blockchain integration.'",
-	  "allowed_time": 4,
-	  "complexity": 5,
-	  "flavor": "Buzzword Compliance",
-	  "categories": ["optics"],
-	  "completion_text": "Added a button that says 'Blockchain Enabled!' It just plays mining sounds."
-	},
-	{
-	  "title": "The Printer is 'Hacking Us'",
-	  "description": "Office printer randomly prints cat memes. CFO insists it's a cyberattack. 'Investigate.'",
-	  "allowed_time": 3,
-	  "complexity": 2,
-	  "flavor": "IT Nightmares",
-	  "categories": ["optics"],
-	  "completion_text": "Found Jim from Accounting feeding the printer memes. He got a promotion for 'security awareness.'"
-	},
-	{
-	  "title": "Make It Pop (But Don't Change Anything)",
-	  "description": "Designer says the UI needs to 'pop more,' but rejects every color/font/animation you try.",
-	  "allowed_time": 3,
-	  "complexity": 4,
-	  "flavor": "Design Hell",
-	  "categories": ["optics"],
-	  "completion_text": "Added a single 1-pixel glow. Designer calls it 'revolutionary.' You need a drink."
-	},
-	{
-	  "title": "CEO's 'Simple' Excel Macro",
-	  "description": "'Just automate this 200-step spreadsheet! How hard could it be?' *(Spoiler: Very.)*",
-	  "allowed_time": 5,
-	  "complexity": 5,
-	  "flavor": "Spreadsheet Suffering",
-	  "categories": ["optics"],
-	  "completion_text": "Macro works. CEO now wants it to also brew coffee. Your soul leaves your body."
-	},
-	{
-	  "title": "Optimize the 'Like' Button (For 0.0001s Gain)",
-	  "description": "VP wants the button 0.0001s faster to 'beat competitors.' Rewrite the entire stack.",
-	  "allowed_time": 6,
-	  "complexity": 4,
-	  "flavor": "Micro-Optimization",
-	  "categories": ["tech_debt"],
-	  "completion_text": "Speed improved by 0.0001s. VP claims credit. The backend is now held together by duct tape."
-	},
-	{
-	  "title": "Fix the 'Ghost Bug' in Production",
-	  "description": "'Sometimes the app crashes, but only on Tuesdays when it rains.' No logs. Good luck.",
-	  "allowed_time": 7,
-	  "complexity": 5,
-	  "flavor": "Debugging Purgatory",
-	  "categories": ["tech_debt"],
-	  "completion_text": "Turns out it was a timezone bug in a dependency from 2008. You get a stress ball as a reward."
-	},
-	{
-	  "title": "Add Dark Mode (But Keep the Old One)",
-	  "description": "Half the team wants dark mode, the other half hates change. Support both… forever.",
-	  "allowed_time": 4,
-	  "complexity": 3,
-	  "flavor": "UI Chaos",
-	  "categories": ["critical"],
-	  "completion_text": "Now maintaining two UIs. The team argues about which one is 'canon.'"
-	},
-	{
-	  "title": "The 'AI' Sticker Feature",
-	  "description": "Sales promised 'AI-powered stickers' to a client. You have 3 days to fake it.",
-	  "allowed_time": 3,
-	  "complexity": 4,
-	  "flavor": "Fake AI",
-	  "categories": ["optics"],
-	  "completion_text": "Stickers now 'magically' appear when clicked. Client is thrilled. You feel dirty."
-	}
+    {
+      "title": "Make the Logo Bigger (Again)",
+      "description": "The CEO's nephew said the logo looks 'weak.' Make it 10% bigger… for the 5th time this week.",
+      "allowed_time": 5,
+      "complexity": 1,
+      "flavor": "Design Hell",
+      "categories": ["optics"],
+      "completion_text": "Logo now occupies 30% of the screen. Marketing weeps quietly in the break room."
+    },
+    {
+      "title": "Update the Office Wifi Password",
+      "description": "Someone wrote 'password123' on the bathroom wall. IT says you need to change it.",
+      "allowed_time": 4,
+      "complexity": 1,
+      "flavor": "Trivial Busywork",
+      "categories": ["optics"],
+      "completion_text": "New password is 'password124'. You have achieved security."
+    },
+    {
+      "title": "Fix Typo in Footer",
+      "description": "The footer says 'Copyrite 2019'. Legal noticed. Fix it before the lawyers get involved.",
+      "allowed_time": 3,
+      "complexity": 1,
+      "flavor": "Pedantic Corrections",
+      "categories": ["optics"],
+      "completion_text": "Footer now says 'Copyright 2024'. Legal sends a thumbs-up emoji."
+    },
+    {
+      "title": "Center the Logo on Mobile",
+      "description": "The logo is 2 pixels off-center on iPhone 6. Designer cannot sleep until it's fixed.",
+      "allowed_time": 4,
+      "complexity": 2,
+      "flavor": "Pixel-Perfect Hell",
+      "categories": ["optics"],
+      "completion_text": "Logo centered. Designer sleeps. You wonder if this is what your CS degree was for."
+    },
+    {
+      "title": "Add a Cookie Banner (EU Compliance)",
+      "description": "Legal says we need a cookie banner. Make it annoying enough that people click Accept.",
+      "allowed_time": 5,
+      "complexity": 2,
+      "flavor": "Legal Busywork",
+      "categories": ["optics"],
+      "completion_text": "Banner covers 40% of screen. 100% of users click Accept without reading. Mission accomplished."
+    },
+    {
+      "title": "The Printer is 'Hacking Us'",
+      "description": "Office printer randomly prints cat memes. CFO insists it's a cyberattack. 'Investigate.'",
+      "allowed_time": 6,
+      "complexity": 2,
+      "flavor": "IT Nightmares",
+      "categories": ["optics"],
+      "completion_text": "Found Jim from Accounting feeding the printer memes. He got a promotion for 'security awareness.'"
+    },
+    {
+      "title": "Rename 'Submit' to 'Go'",
+      "description": "Product manager read a UX blog. Now every button needs 'action-oriented microcopy.'",
+      "allowed_time": 3,
+      "complexity": 1,
+      "flavor": "Buzzword Compliance",
+      "categories": ["optics"],
+      "completion_text": "Button now says 'Go'. Conversion rate unchanged. PM claims victory anyway."
+    },
+    {
+      "title": "Add Loading Spinner",
+      "description": "Users complain the app 'feels slow.' Add a spinner. Don't actually optimize anything.",
+      "allowed_time": 4,
+      "complexity": 2,
+      "flavor": "UX Theater",
+      "categories": ["optics"],
+      "completion_text": "Spinner added. Users now watch a spinny circle instead of a blank screen. Problem solved."
+    },
+    {
+      "title": "Remove Comic Sans (Emergency)",
+      "description": "Junior dev used Comic Sans in production. Client noticed. Revert before anyone else sees.",
+      "allowed_time": 3,
+      "complexity": 1,
+      "flavor": "Font Crimes",
+      "categories": ["critical"],
+      "completion_text": "Comic Sans purged. Junior dev learns a valuable lesson about font choices."
+    },
+    {
+      "title": "Add 'Powered by AI' Badge",
+      "description": "Marketing wants an AI badge on the homepage. There is no AI. Add it anyway.",
+      "allowed_time": 5,
+      "complexity": 1,
+      "flavor": "Marketing Lies",
+      "categories": ["optics"],
+      "completion_text": "Badge added. It's a PNG. Marketing sends champagne to the office."
+    },
+    {
+      "title": "Fix the LinkedIn Integration",
+      "description": "Users can't share to LinkedIn. Turns out we never built that feature. Build it now.",
+      "allowed_time": 6,
+      "complexity": 3,
+      "flavor": "Feature Archeology",
+      "categories": ["critical"],
+      "completion_text": "LinkedIn share button works. Three people use it. You question your life choices."
+    },
+    {
+      "title": "Fix the 'Sent with Wrong Font' Email",
+      "description": "Marketing sent 50K emails in Comic Sans. 'Undo' the send before customers notice.",
+      "allowed_time": 2,
+      "complexity": 3,
+      "flavor": "Marketing Disaster",
+      "categories": ["critical"],
+      "completion_text": "Emails 'recalled.' 12 customers still replied with 'lol nice font'."
+    },
+    {
+      "title": "Add Dark Mode (But Keep the Old One)",
+      "description": "Half the team wants dark mode, the other half hates change. Support both… forever.",
+      "allowed_time": 6,
+      "complexity": 3,
+      "flavor": "UI Chaos",
+      "categories": ["critical"],
+      "completion_text": "Now maintaining two UIs. The team argues about which one is 'canon.'"
+    },
+    {
+      "title": "Migrate to New API (Breaking Changes)",
+      "description": "Third-party API deprecated v1. Migrate to v2. Everything changed. Good luck.",
+      "allowed_time": 7,
+      "complexity": 4,
+      "flavor": "API Roulette",
+      "categories": ["tech_debt"],
+      "completion_text": "Migration complete. Only broke 3 features. Calls it a win."
+    },
+    {
+      "title": "Make It Pop (But Don't Change Anything)",
+      "description": "Designer says the UI needs to 'pop more,' but rejects every color/font/animation you try.",
+      "allowed_time": 5,
+      "complexity": 4,
+      "flavor": "Design Hell",
+      "categories": ["optics"],
+      "completion_text": "Added a single 1-pixel glow. Designer calls it 'revolutionary.' You need a drink."
+    },
+    {
+      "title": "The 'AI' Sticker Feature",
+      "description": "Sales promised 'AI-powered stickers' to a client. You have 3 days to fake it.",
+      "allowed_time": 4,
+      "complexity": 4,
+      "flavor": "Fake AI",
+      "categories": ["optics"],
+      "completion_text": "Stickers now 'magically' appear when clicked. Client is thrilled. You feel dirty."
+    },
+    {
+      "title": "Optimize the 'Like' Button (For 0.0001s Gain)",
+      "description": "VP wants the button 0.0001s faster to 'beat competitors.' Rewrite the entire stack.",
+      "allowed_time": 7,
+      "complexity": 4,
+      "flavor": "Micro-Optimization",
+      "categories": ["tech_debt"],
+      "completion_text": "Speed improved by 0.0001s. VP claims credit. The backend is now held together by duct tape."
+    },
+    {
+      "title": "Add Blockchain (For Some Reason)",
+      "description": "The board read a buzzword-heavy article. Now your to-do app 'needs blockchain integration.'",
+      "allowed_time": 6,
+      "complexity": 5,
+      "flavor": "Buzzword Compliance",
+      "categories": ["optics"],
+      "completion_text": "Added a button that says 'Blockchain Enabled!' It just plays mining sounds."
+    },
+    {
+      "title": "CEO's 'Simple' Excel Macro",
+      "description": "'Just automate this 200-step spreadsheet! How hard could it be?' *(Spoiler: Very.)*",
+      "allowed_time": 6,
+      "complexity": 5,
+      "flavor": "Spreadsheet Suffering",
+      "categories": ["optics"],
+      "completion_text": "Macro works. CEO now wants it to also brew coffee. Your soul leaves your body."
+    },
+    {
+      "title": "Fix the 'Ghost Bug' in Production",
+      "description": "'Sometimes the app crashes, but only on Tuesdays when it rains.' No logs. Good luck.",
+      "allowed_time": 7,
+      "complexity": 5,
+      "flavor": "Debugging Purgatory",
+      "categories": ["tech_debt"],
+      "completion_text": "Turns out it was a timezone bug in a dependency from 2008. You get a stress ball as a reward."
+    },
+    {
+      "title": "Implement Real-Time Notifications (Websockets)",
+      "description": "Users want instant notifications. Build a websocket system from scratch. Budget: $0.",
+      "allowed_time": 5,
+      "complexity": 6,
+      "flavor": "Infrastructure Nightmare",
+      "categories": ["tech_debt"],
+      "completion_text": "Websockets work. Server costs triple. Finance is not happy."
+    },
+    {
+      "title": "Refactor the Monolith (While It's Running)",
+      "description": "CTO wants microservices. Can't shut down production. Refactor while users are active.",
+      "allowed_time": 4,
+      "complexity": 6,
+      "flavor": "Architectural Chaos",
+      "categories": ["tech_debt"],
+      "completion_text": "Half monolith, half microservices. Nobody understands how it works anymore. It's fine."
+    },
+    {
+      "title": "Build an Admin Dashboard (Yesterday)",
+      "description": "Sales sold a client an admin dashboard that doesn't exist. Demo is tomorrow. Go.",
+      "allowed_time": 2,
+      "complexity": 6,
+      "flavor": "Sales Overpromise",
+      "categories": ["critical"],
+      "completion_text": "Dashboard exists. It's held together by prayers and setTimeouts. Client signs contract."
+    },
+    {
+      "title": "Fix Legacy Code (No Documentation)",
+      "description": "Critical bug in code written by someone who quit 5 years ago. No comments. No tests.",
+      "allowed_time": 3,
+      "complexity": 7,
+      "flavor": "Code Archeology",
+      "categories": ["tech_debt"],
+      "completion_text": "Bug fixed. You now understand ancient PHP. This knowledge will haunt you."
+    },
+    {
+      "title": "Migrate Database (Zero Downtime)",
+      "description": "Postgres to MongoDB. No downtime allowed. Schema is a nightmare. CEO is watching.",
+      "allowed_time": 3,
+      "complexity": 7,
+      "flavor": "Database Roulette",
+      "categories": ["critical"],
+      "completion_text": "Migration successful. Downtime: 0.2 seconds. CEO didn't notice. You aged 10 years."
+    },
+    {
+      "title": "Implement SSO (5 Different Providers)",
+      "description": "Enterprise client demands SSO with Google, Microsoft, Okta, SAML, and 'whatever Amazon uses.'",
+      "allowed_time": 4,
+      "complexity": 7,
+      "flavor": "Auth Hell",
+      "categories": ["critical"],
+      "completion_text": "SSO works. OAuth flow is a maze of redirects. You dream in JWT tokens."
+    },
+    {
+      "title": "Scale to 1M Users (Budget: One VM)",
+      "description": "App went viral. Traffic is 100x normal. Servers are on fire. Budget unchanged.",
+      "allowed_time": 1,
+      "complexity": 7,
+      "flavor": "Firefighting",
+      "categories": ["critical"],
+      "completion_text": "Added caching, CDN, and aggressive rate limiting. Site survives. Your hairline does not."
+    }
   ]
 }

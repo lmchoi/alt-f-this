@@ -39,6 +39,8 @@ var day := 1:
 
 var days_until_payday := 5
 
+var job_level := 0  # Index into JOB_TITLES/JOB_SALARIES
+
 var money := 0:
 	set(value):
 		money = value
@@ -109,7 +111,7 @@ func add_bugs(amount: int) -> void:
 	print("Bugs added: +%d (total: %d)" % [amount, bugs])
 
 func start_game():
-	current_task = TaskManager.get_random_task()
+	current_task = TaskManager.get_random_task(day, job_level)
 
 func check_time_bombs():
 	"""Check for production outages based on bugs and poorly shipped tasks."""
@@ -187,7 +189,8 @@ func daily_updates():
 	if current_task.progress >= 100:
 		print("work completed")
 		event_occurred.emit({"text": "Task complete! Nice work.\n\nPayment on payday (in %d days)" % days_until_payday, "money": 0, "ducks": 0})
-		current_task = TaskManager.get_random_task(day)
+
+		current_task = TaskManager.get_random_task(day, job_level)
 
 	if current_task.due_day == day:
 		# check progress to calculate bugs chance
@@ -284,7 +287,7 @@ func ship_it():
 	current_task.progress = 100
 
 	# Get new task
-	current_task = TaskManager.get_random_task(day)
+	current_task = TaskManager.get_random_task(day, job_level)
 
 	# Advance day
 	day += 1
