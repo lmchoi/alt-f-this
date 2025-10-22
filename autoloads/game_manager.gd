@@ -173,7 +173,9 @@ func daily_updates():
 
 	if current_task.progress >= 100:
 		print("work completed")
-		event_occurred.emit({"text": "Task complete! Nice work.", "money": 0, "ducks": 0})
+		# Pay salary for completed task
+		money += salary
+		event_occurred.emit({"text": "Task complete! Nice work.\n\nPaid: $%d" % salary, "money": 0, "ducks": 0})
 		current_task = TaskManager.get_random_task(day)
 
 	if current_task.due_day == day:
