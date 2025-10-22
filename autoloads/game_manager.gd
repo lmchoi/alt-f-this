@@ -186,7 +186,8 @@ func do_work():
 	# wait response to work_event
 
 	var bug_multiplier = get_bug_multiplier()
-	var work = 20.0 / (current_task.complexity * bug_multiplier)
+	# 100 / complexity = days to complete (1 complexity = 1 day)
+	var work = 100.0 / (current_task.complexity * bug_multiplier)
 	current_task.do_work(work)
 	task_progress_changed.emit(current_task.progress)
 	print("Progress: +%.1f%% (complexity: %d, bugs: %d)" % [work, current_task.complexity, bugs])

@@ -97,21 +97,22 @@ Save $5,000 to escape before bugs accumulate to unworkable levels (or burn out t
    - [NEGOTIATE] Extension/help/scope (costs resources upfront)
    ↓
 4. Work phase (daily choice - THIS IS THE CORE LOOP)
-   - WORK: +progress, earn salary (on completion/payday)
-   - HUSTLE: +ducks, +salary×2 (payday), no progress
-   - SHIP IT: Complete task NOW, earn payment, gain/lose ducks based on quality
+   - WORK: +progress (scaled by complexity + bugs), paid on payday
+   - HUSTLE: +escape progress, +ducks (or -ducks if overdue), no corporate progress
+   - SHIP IT: Complete task NOW, payment pending until payday, choose what's next
    ↓
 5. Daily decision: "Is this good enough to ship?"
-   - Ship at 95%? +1 bug, immediate payment
-   - Ship at 60%? +4 bugs, immediate payment
-   - Ship at 25%? +7.5 bugs, immediate payment
-   - Keep working? Risk deadline penalties, but cleaner code
+   - Ship at 95%? +0.5 bugs, payment on payday
+   - Ship at 60%? +4 bugs, payment on payday
+   - Ship at 25%? +7.5 bugs, payment on payday
+   - Keep working? Risk going overdue (3 days = fired)
    ↓
 6. Deadline consequences
    - Before deadline: No penalty, work freely
-   - After deadline (overdue): -$100/day + CEO anger builds
-   - CEO anger → future tasks harder, risk of firing
-   - Choose: ship early (bugs) vs go overdue (money penalty)
+   - 1 day overdue: Warning from manager
+   - 2 days overdue: Urgent warning
+   - 3 days overdue: FIRED
+   - Choose: ship early (bugs) vs go overdue (risk firing)
    ↓
 7. Consequences unfold
    - Task complete when shipped
@@ -209,24 +210,26 @@ After accepting ticket, **each day** you choose one action. This is where the ga
 - Progress gain: 20 / (5 × 1.4) = 2.86% per day
 - Takes ~35 days to complete without shipping early
 
-#### **HUSTLE** (sanity recovery)
-- Progress += 0 (no work done on main task)
-- Money += salary × 2 (on payday only)
-- **Ducks += 1** (side project gives autonomy/relief)
-- Higher event chance (50% - you're distracted)
+#### **HUSTLE** (build your escape)
+- Progress += 0 (no work done on corporate task)
+- Escape Progress += 8-12% (building side project/network/skills)
+- **Ducks += 1** (autonomy feels good), or **-1 if overdue** (guilt/stress)
+- No immediate money (investing in YOUR future, not company's)
+- **Risk:** Corporate work sits undone, deadline approaches
 
-**Reframed as positive:**
-- "I need a mental health day"
-- Side hustle fantasy (working on YOUR thing, not company's)
-- Tension: gain sanity but lose time on deadline
+**The tension:**
+- "Do I build my escape now, or focus on corporate work?"
+- Hustle while overdue = risky (could get fired)
+- Multiple escape paths: $5K pure grind, $3K + 75% escape, $2K + 100% escape
+- Unlocks at thresholds: 25% = freelance gigs, 50% = passive income, 75% = job offers, 100% = viable startup
 
 #### **SHIP IT** (available at 20%+ progress)
 **The daily temptation. This is the game.**
 
 - Complete task immediately at current progress
 - Add bugs: `(100 - progress) / 10`
-- Receive payment immediately
-- Get new task
+- Task marked complete, **payment pending until payday**
+- Get new task OR hustle until payday (player choice)
 - Advance to next day
 
 **Quality flavor text** (from [data/ship_messages.json](../data/ship_messages.json)):
@@ -237,6 +240,35 @@ After accepting ticket, **each day** you choose one action. This is where the ga
 - 20-29%: "You shipped TODO comments as features."
 
 **Every day you ask:** "Is this good enough? Do I need the money NOW? Can I afford more bugs? Should I risk going overdue?"
+
+**After SHIP IT - Post-Completion Choice:**
+```
+✅ TASK COMPLETED
+
+"Add Blockchain to Todo App" shipped at 62%
+
++5.8 bugs added to codebase
+Payment pending until payday (Day 15, in 2 days)
+
+────────────────────────────────
+What now?
+
+[📋 ACCEPT NEW TASK]
+Jump into next work ticket
+
+[🔨 HUSTLE]
+Work on your escape plan (2 days until payday)
+
+────────────────────────────────
+
+Tip: You finished early! You could hustle and
+     still get paid this cycle.
+```
+
+**Makes it clear:**
+- "You finished early, you have free time"
+- "You can hustle now without losing money"
+- "Or be a corporate tryhard and do more tasks"
 
 ---
 
@@ -292,26 +324,18 @@ Rules change like Papers Please bulletin updates, invalidating previous strategi
 ### 6. The Bugs System (Permanent Consequences)
 
 **How Bugs Accumulate:**
-```gdscript
-# When shipping incomplete task
-var bugs_added = (100 - progress) / 10
-
-# Ship at 95%? +0.5 bugs (rounds to 1)
-# Ship at 70%? +3 bugs
-# Ship at 40%? +6 bugs
-# Ship at 22%? +7.8 bugs
-```
+- Shipping incomplete tasks adds bugs
+- Ship at 95%? +0.5 bugs (rounds to 1)
+- Ship at 70%? +3 bugs
+- Ship at 40%? +6 bugs
+- Ship at 22%? +7.8 bugs
 
 **How Bugs Hurt You:**
-```gdscript
-# Bugs slow ALL future work
-var bug_multiplier = 1 + (bugs * 0.01)
-# 20 bugs = 1.2x slower (20% penalty)
-# 50 bugs = 1.5x slower (50% penalty)
-# 100 bugs = 2.0x slower (work takes TWICE as long)
-
-var progress_gain = 20 / (complexity * bug_multiplier)
-```
+- Bugs slow ALL future work
+- 20 bugs = 1.2x slower (20% penalty)
+- 50 bugs = 1.5x slower (50% penalty)
+- 100 bugs = 2.0x slower (work takes TWICE as long)
+- Work progress affected by: complexity × bug multiplier
 
 **Bugs NEVER Reduce:**
 - No DEBUG action
@@ -338,18 +362,9 @@ var progress_gain = 20 / (complexity * bug_multiplier)
 
 **Trigger:** 2-5 days after shipping at <50% quality
 
-```gdscript
-var time_bombs := []
-
-func ship_task(progress: int):
-    if progress < 50:
-        var severity = (100 - progress) / 10
-        time_bombs.append({
-            "trigger_day": day + randi_range(2, 5),
-            "severity": severity,
-            "task_name": current_task.title
-        })
-```
+- Creates "time bomb" that explodes later
+- Severity based on how badly you shipped
+- Random delay creates uncertainty
 
 **When It Explodes:**
 ```
@@ -375,45 +390,49 @@ Low-quality shipping has DOUBLE penalty:
 
 ---
 
-### 8. Soft Deadlines (Duck Cost System)
+### 8. Deadlines & Firing (Overdue System)
 
 **How it works:**
 - Tasks have deadlines (e.g., 5 days)
 - **Before deadline:** Work freely, no penalties
-- **After deadline (overdue):** HUSTLE costs ducks instead of gaining them
+- **After deadline (overdue):** Warning escalation → firing
 
-**HUSTLE mechanics:**
-```gdscript
-func hustle():
-    money += 200  # Always pays
+**Overdue consequences:**
+- **Day 1 overdue:** Warning - "Your task is overdue. Manager is asking questions."
+- **Day 2 overdue:** Urgent warning - "Task 2 days overdue. Manager is very unhappy. One more day..."
+- **Day 3 overdue:** FIRED - "Failure to complete assigned work"
 
-    if day > current_task.due_day:
-        ducks -= 1  # Guilt/stress (net 0 ducks, normally would gain +1)
-        event_occurred.emit("Side hustling while work is overdue...\n\nStress mounting.")
-    else:
-        ducks += 1  # Normal gain when not overdue
-```
+**HUSTLE while overdue:**
+- Normally: HUSTLE gives +1 duck
+- While overdue: HUSTLE gives -1 duck (guilt/stress)
+- Creates tension: "Do I hustle and risk burnout, or work and risk getting fired?"
 
-**Effect:**
-- Prevents "hustle spam to win" exploit
-- Self-balancing: hustle while overdue → duck drain → 0 ducks → game over
-- Player choice preserved: CAN hustle when desperate, but costs sanity
-- Thematic: guilt from ignoring your job for side gigs
+**Why this works:**
+- Simple rule: 3 days overdue = fired
+- Makes HUSTLE risky (work sits undone while you build escape)
+- Core tension: "Can I build my escape before they fire me?"
+- Prevents "never ship, just hustle" exploit
 
-**Optional future enhancement (post-playtesting):**
-- Add random PIP check (10% chance/day when overdue) for instant firing
-- Only add if duck system isn't punishing enough
+### 9. Payment System (Payday Cycles)
 
-### 9. Payment System (Creates SHIP IT Urgency)
+**Payday every 5 days** - get paid for all completed tasks that cycle
 
-**Salary is only paid on:**
-1. **Task completion** (via SHIP IT) - immediate payment
-2. **Payday** (every 5 days) - for accumulated work
+**How it works:**
+- Complete tasks during 5-day cycle (Days 1-5, 6-10, 11-15, etc.)
+- On payday (Day 5, 10, 15...), receive payment for all completed tasks
+- Salary is fixed per task (~$300-500), regardless of complexity
+- Complexity = pure suffering (same pay whether easy or hard)
+
+**Strategic depth:**
+- Finish task early? **Choice:** Start new task OR hustle until payday
+- Efficient workers "hustle on company time" (finish in 2 days, hustle 3 days)
+- Can ship multiple tasks per cycle for more money
+- Or ship one task + hustle for escape progress
 
 **Creates pressure:**
-- "I need money NOW to escape"
-- "But shipping early = more bugs = harder future"
-- "But going overdue = lose money + CEO gets angry"
+- "Should I ship fast at 60% to maximize hustle time this cycle?"
+- "Or ship carefully at 90% but have no time to hustle?"
+- "Can I squeeze in 2 tasks before payday, or focus on quality?"
 
 ---
 

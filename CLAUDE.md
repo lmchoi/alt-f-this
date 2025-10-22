@@ -14,16 +14,16 @@ A darkly comedic inspection/management game built in Godot 4.5 where you're a te
 
 ## Game Design Vision
 
-**See [ideas/game-plan.md](ideas/game-plan.md) for complete design, mechanics, and systems.**
+**See [ideas/game-design.md](ideas/game-design.md) for complete design philosophy and principles.**
 
 ### Core Concept
-Papers Please meets Office Space with duck-based emotional damage. Save $5K before bugs make work impossible.
+Papers Please meets Office Space with duck-based emotional damage. Build $5K (or escape via side project) before bugs make work impossible.
 
 ### Key Design Rules
-1. **Bugs NEVER decrease** - No DEBUG action, permanent consequences
+1. **Bugs NEVER decrease** - No DEBUG action, permanent consequences (death spiral is the game)
 2. **3 actions only** - WORK, HUSTLE, SHIP IT (daily choice is the core loop)
 3. **SHIP IT is the game** - Daily temptation to ship incomplete work, creates bugs
-4. **Payment on completion only** - Creates urgency to ship early vs. ship clean
+4. **Payment on payday** - Every 5 days, creates strategic cycles (finish early = time to hustle)
 
 ---
 
@@ -44,30 +44,6 @@ The game uses a reactive signal architecture where:
 
 ---
 
-## Godot UI Best Practices
-
-### Styling & Theming
-- **Use Theme resources** (`.tres` files) for visual styling, not inline code
-- Apply theme overrides in script `_ready()`, not in `.tscn` scene files
-- Example: `themes/badge_theme.tres` for category badges
-
-### UI Constants
-- Define font sizes and colors as constants at top of scripts
-- Makes theme adjustments trivial across the game
-- Example: `FONT_SIZE_CRITICAL = 24`, `COLOR_BRIGHT_GREEN = Color(...)`
-
-### Mobile UI Requirements
-- **Minimum font size: 18px** (readable on 720x1280 portrait)
-- Use size + color for visual hierarchy, never text smaller than 18px
-- Touch-friendly spacing and button sizes
-
-### Code Organization
-- Extract styling/creation into helper functions (e.g., `_create_badge()`)
-- Update functions should only handle data, not styling
-- Separate concerns: data updates vs. visual presentation
-
----
-
 ## Incremental Implementation Workflow
 
 **IMPORTANT:** Break features into small, testable commits (20-100 lines, 1-3 files each).
@@ -77,11 +53,7 @@ Before implementing any feature:
 2. Each commit should be immediately testable
 3. Implement → Test → Commit → Next
 
-### Commit Style
-- Single-line commit messages for small changes
-- Always include Claude Code footer for tracking AI contributions
-
-See [ideas/workflow-incremental-implementation.md](ideas/workflow-incremental-implementation.md) for details.
+See [reference/workflow-incremental-implementation.md](reference/workflow-incremental-implementation.md) for details.
 
 ### Autoloaded Singletons
 
@@ -163,6 +135,15 @@ Examples from [data/tasks.json](data/tasks.json):
 
 ## Key Files
 
-- **Game plan & design**: [ideas/game-plan.md](ideas/game-plan.md)
-- **Godot best practices**: [ideas/godot-best-practices.md](ideas/godot-best-practices.md)
-- **Incremental workflow**: [ideas/workflow-incremental-implementation.md](ideas/workflow-incremental-implementation.md)
+### Design Docs (for user)
+- **Game design philosophy**: [ideas/game-design.md](ideas/game-design.md)
+- **TODO list**: [ideas/todo.md](ideas/todo.md)
+- **Roadmap & future ideas**: [ideas/roadmap.md](ideas/roadmap.md)
+
+### AI Reference (for Claude)
+- **Implementation status**: [reference/implementation-status.md](reference/implementation-status.md) - What's built, what's next, formulas
+- **Godot best practices**: [reference/godot-best-practices.md](reference/godot-best-practices.md)
+- **Project structure**: [reference/project-structure.md](reference/project-structure.md)
+- **Incremental workflow**: [reference/workflow-incremental-implementation.md](reference/workflow-incremental-implementation.md)
+
+**Note to Claude:** When creating reference documentation for yourself (not tutorials for the user), save files in `reference/`. Keep them concise, focused on what you need to know, not explanatory prose.
