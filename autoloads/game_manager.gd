@@ -40,6 +40,7 @@ var day := 1:
 var days_until_payday := 5
 
 var job_level := 0  # Index into JOB_TITLES/JOB_SALARIES
+var completed_tasks := 0
 
 var money := 0:
 	set(value):
@@ -188,6 +189,7 @@ func daily_updates():
 
 	if current_task.progress >= 100:
 		print("work completed")
+		completed_tasks += 1
 		event_occurred.emit({"text": "Task complete! Nice work.\n\nPayment on payday (in %d days)" % days_until_payday, "money": 0, "ducks": 0})
 
 		current_task = TaskManager.get_random_task(day, job_level)
@@ -285,6 +287,7 @@ func ship_it():
 
 	# Complete task
 	current_task.progress = 100
+	completed_tasks += 1
 
 	# Get new task
 	current_task = TaskManager.get_random_task(day, job_level)
