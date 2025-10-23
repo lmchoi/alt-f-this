@@ -48,7 +48,6 @@ var money := 0:
 	set(value):
 		money = value
 		money_changed.emit(money)
-		check_victory()
 
 var salary := 100:
 	set(value):
@@ -225,6 +224,9 @@ func advance_turn():
 			return
 	elif day == current_task.due_day:
 		missed_deadline.emit()
+
+	# Check victory condition once per turn
+	check_victory()
 
 func process_turn(action: String):
 	"""Complete turn cycle: execute action, advance day, check events."""
