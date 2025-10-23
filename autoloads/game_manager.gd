@@ -28,10 +28,11 @@ signal current_task_updated(task)
 signal task_progress_changed(progress)
 signal payday_occurred(amount)
 
-var current_task := Task.new(1):
+var current_task: Task:
 	set(value):
 		current_task = value
-		current_task_updated.emit(current_task)
+		if current_task:
+			current_task_updated.emit(current_task)
 
 var day := 1:
 	set(value):

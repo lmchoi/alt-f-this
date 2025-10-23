@@ -57,17 +57,17 @@ func _ready():
 	GameManager.task_progress_changed.connect(_update_progress)
 	GameManager.bugs_changed.connect(_update_bug_impact)
 
-	# Initialize with current values
-	if GameManager.current_task:
-		_on_current_task_updated(GameManager.current_task)
-		_on_next_day(GameManager.day)
-		_update_bug_impact(GameManager.bugs)
-
 func _on_current_task_updated(current_task: Task):
 	task_label.text = current_task.title
 	description_label.text = current_task.description
 	_update_complexity_label(current_task.complexity)
 	_update_flavor_and_categories(current_task.flavor, current_task.categories)
+
+	# Update deadline and progress for new task
+	var days_left = current_task.due_day - GameManager.day
+	_update_deadline_label(days_left)
+	progress_bar.value = current_task.progress
+	_update_bug_impact(GameManager.bugs)
 
 func _on_next_day(nth_day: int):
 	var days_left = GameManager.current_task.due_day - nth_day
