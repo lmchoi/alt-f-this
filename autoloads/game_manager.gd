@@ -58,15 +58,11 @@ var ducks := 3:
 	set(value):
 		ducks = value
 		ducks_changed.emit(ducks)
-		if ducks <= 0:
-			game_over.emit("burnout", get_game_stats())
 
 var bugs := 0:
 	set(value):
 		bugs = value
 		bugs_changed.emit(bugs)
-		if bugs >= MAX_BUGS_GAME_OVER:
-			game_over.emit("death_spiral", get_game_stats())
 
 var production_outages := 0  # Track total outages for firing (3 = fired)
 var poorly_shipped_tasks := []  # Tasks shipped at <50% (can trigger outages)
@@ -225,7 +221,15 @@ func advance_turn():
 	elif day == current_task.due_day:
 		missed_deadline.emit()
 
-	# Check victory condition once per turn
+	# Check end game conditions once per turn
+	if ducks <= 0:
+		game_over.emit("burnout", get_game_stats())
+		return
+
+	if bugs >= MAX_BUGS_GAME_OVER:
+		game_over.emit("death_spiral", get_game_stats())
+		return
+
 	check_victory()
 
 func process_turn(action: String):
