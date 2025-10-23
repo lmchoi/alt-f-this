@@ -1,5 +1,11 @@
 extends Node
 
+# Action outcome types
+enum ActionOutcome {
+	NORMAL,              # Advance turn normally
+	DO_NOTHING,
+}
+
 # Game balance constants
 const MAX_PIP_WARNINGS = 2
 const MAX_BLAMES = 3
@@ -27,6 +33,7 @@ signal production_outage_occurred(task_name)
 signal current_task_updated(task)
 signal task_progress_changed(progress)
 signal payday_occurred(amount)
+signal task_completed_awaiting_choice()
 
 var current_task: Task:
 	set(value):
@@ -205,14 +212,6 @@ func advance_turn():
 	# Check for production outages (time bombs)
 	check_time_bombs()
 
-	if current_task.progress >= 100:
-		print("work completed")
-		completed_tasks += 1
-		overdue_days = 0  # Reset overdue counter on task completion
-		event_occurred.emit({"text": "Task complete! Nice work.\n\nPayment on payday (in %d days)" % days_until_payday, "money": 0, "ducks": 0})
-
-		current_task = TaskManager.get_random_task(day, job_level)
-
 	# Check if task is overdue and track days
 	if day > current_task.due_day:
 		overdue_days += 1
@@ -235,20 +234,28 @@ func advance_turn():
 
 func process_turn(action: String):
 	"""Complete turn cycle: execute action, advance day, check events."""
-	# 1. Execute player action
+	# 1. Execute player action (returns outcome)
+	var outcome = ActionOutcome.NORMAL
 	match action:
 		"work":
-			do_work()
+			outcome = do_work()
 		"hustle":
-			hustle()
+			outcome = hustle()
 		"ship":
-			ship_it()
+			outcome = ship_it()
 
-	# 2. Advance day and check events
-	advance_turn()
+	# 2. Advance day and check events (only for normal outcomes)
+	if outcome == ActionOutcome.NORMAL:
+		advance_turn()
 
-func do_work():
+func do_work() -> ActionOutcome:
 	print('work')
+
+	# Cheeky punishment for gold-plating
+	if current_task.progress >= 100:
+		task_completed_awaiting_choice.emit()
+		return ActionOutcome.DO_NOTHING
+
 	# _trigger_random_work_event():
 	# wait response to work_event
 
@@ -259,9 +266,14 @@ func do_work():
 	task_progress_changed.emit(current_task.progress)
 	print("Progress: +%.1f%% (complexity: %d, bugs: %d)" % [work, current_task.complexity, bugs])
 
-	# No immediate payment - only on completion or payday
+	return ActionOutcome.NORMAL
 
-func hustle():
+func pick_up_new_task():
+	completed_tasks += 1
+	overdue_days = 0
+	current_task = TaskManager.get_random_task(day, job_level)
+
+func hustle() -> ActionOutcome:
 	print('hustle')
 
 	# Side hustle pays immediately (freelance work, not company payroll)
@@ -275,6 +287,8 @@ func hustle():
 	else:
 		# Normal duck gain when not overdue
 		ducks += 1
+
+	return ActionOutcome.NORMAL
 
 func get_ship_quality_message(progress: int) -> String:
 	"""Get random quality flavor text based on progress percentage."""
@@ -301,7 +315,7 @@ func get_too_early_message() -> String:
 	var messages = ship_messages["too_early"]
 	return messages[randi() % messages.size()]
 
-func ship_it():
+func ship_it() -> ActionOutcome:
 	"""Complete task early at current progress. Adds bugs based on incompleteness."""
 	print('ship it at %d%%' % current_task.progress)
 
@@ -326,13 +340,9 @@ func ship_it():
 
 	event_occurred.emit({"text": event_text, "money": 0, "ducks": 0})
 
-	# Complete task
-	current_task.progress = 100
-	completed_tasks += 1
-	overdue_days = 0  # Reset overdue counter on ship
+	pick_up_new_task()
 
-	# Get new task
-	current_task = TaskManager.get_random_task(day, job_level)
+	return ActionOutcome.NORMAL
 
 func process_action(action: String):
 	"""Handle deadline dialog actions (mercy/duck_it). Advances day after action."""

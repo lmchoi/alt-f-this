@@ -12,11 +12,13 @@ func _ready():
 	ship_it_button.pressed.connect(_on_ship_it_button_pressed)
 	GameManager.event_occurred.connect(_on_event_occurred)
 	GameManager.missed_deadline.connect(_on_deadline_due)
+	GameManager.task_completed_awaiting_choice.connect(_on_task_completed)
 	GameManager.game_over.connect(_on_game_over)
 	GameManager.victory.connect(_on_victory)
 	GameManager.production_outage_occurred.connect(_on_production_outage)
 
 	$DeadlineDialog.custom_action.connect(_on_deadline_action)
+	$CompletionDialog.completion_choice.connect(_on_completion_choice)
 	$OutageDialog.outage_choice.connect(_on_outage_choice)
 
 	# Load end game panel
@@ -67,6 +69,13 @@ func _on_production_outage(task_name: String):
 func _on_outage_choice(choice: String):
 	GameManager.handle_outage_choice(choice)
 	$OutageDialog.hide()
+
+func _on_task_completed():
+	$CompletionDialog.show_completion()
+
+func _on_completion_choice(action: String):
+	GameManager.process_turn(action)
+	$CompletionDialog.hide()
 
 func _setup_test_scenario():
 	"""Debug: Setup test scenario for production outage testing"""

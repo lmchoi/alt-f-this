@@ -8,10 +8,12 @@ Quick reference for what's built vs what's next.
 
 ### Core Actions
 - ✅ **WORK** - Makes progress, complexity + bugs affect speed
+  - ✅ **Gold-plating protection** - Working at 100% shows cheeky message ("Stop gold-plating. Ship it.")
 - ⚠️ **HUSTLE** - Gives $200 immediately, +1 duck (or -1 if overdue). NEEDS UPDATE: escape progress system
 - ✅ **SHIP IT** - Completes task, payment on payday (every 5 days)
 - ✅ **20% minimum** - Can't ship below 20% (cheeky messages)
 - ✅ **Deadline duck cost** - Hustle while overdue: -1 duck instead of +1 (prevents exploit)
+- ✅ **ActionOutcome system** - Actions return outcome enum to control turn flow (prevents bugs like double day advance)
 
 ### Resources
 - ✅ Money (tracks escape fund)

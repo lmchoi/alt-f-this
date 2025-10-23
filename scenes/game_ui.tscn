@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bkcqc3g6mk6ky"]
+[gd_scene load_steps=8 format=3 uid="uid://bkcqc3g6mk6ky"]
 
 [ext_resource type="Script" uid="uid://ccibd5kcuisnk" path="res://scenes/game_ui.gd" id="1_yubou"]
 [ext_resource type="Script" uid="uid://o4uecgfegpr2" path="res://scripts/ui/action_button.gd" id="2_rns2u"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" path="res://scenes/task_panel.tscn" id="3_taskpanel"]
 [ext_resource type="PackedScene" uid="uid://b5nqygpy3h33x" path="res://scenes/event_popup.tscn" id="4_u2dgd"]
 [ext_resource type="Script" uid="uid://c6kb37pd6cpiu" path="res://scenes/deadline_dialog.gd" id="6_djwj0"]
+[ext_resource type="Script" uid="uid://c21qcpvp6sbak" path="res://scenes/completion_dialog.gd" id="7_completion"]
 [ext_resource type="Script" uid="uid://57tvoy16rd5j" path="res://scenes/outage_dialog.gd" id="7_e0pfi"]
 
 [node name="GameUI" type="CanvasLayer"]
@@ -95,6 +96,10 @@ visible = false
 [node name="DeadlineDialog" type="AcceptDialog" parent="."]
 initial_position = 1
 script = ExtResource("6_djwj0")
+
+[node name="CompletionDialog" type="AcceptDialog" parent="."]
+initial_position = 1
+script = ExtResource("7_completion")
 
 [node name="GameOverDialog" type="ConfirmationDialog" parent="."]
 initial_position = 1
