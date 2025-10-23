@@ -144,9 +144,6 @@ func handle_outage_choice(choice: String):
 	# Track blame statistics
 	blame_stats[choice] += 1
 
-	# No progress for a day as consequence
-	day += 1
-
 	match choice:
 		"responsibility":
 			pip_warnings += 1
@@ -198,6 +195,10 @@ func _trigger_random_work_event():
 		event_occurred.emit(event_result)
 
 func daily_updates():
+	"""Advance day and check all daily events."""
+	# Advance to next day
+	day += 1
+
 	# Check for payday
 	days_until_payday -= 1
 	if days_until_payday <= 0:
@@ -236,10 +237,7 @@ func process_turn(action: String):
 		"ship":
 			ship_it()
 
-	# 2. Advance day
-	day += 1
-
-	# 3. Check daily events (explicit call, not automatic from setter)
+	# 2. Advance day and check events
 	daily_updates()
 
 func do_work():
@@ -345,5 +343,5 @@ func process_action(action: String):
 				ship_it()
 				print("duck it")
 
-	day += 1
+	# Deadline actions consume a day
 	daily_updates()
