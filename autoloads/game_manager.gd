@@ -169,7 +169,7 @@ func handle_outage_choice(choice: String):
 				event_occurred.emit({"text": outage_messages[choice][message_key], "money": 0, "ducks": 0})
 
 	# Check daily events after day advance
-	daily_updates()
+	advance_turn()
 
 func check_victory():
 	"""Check if player has reached victory money goal."""
@@ -194,7 +194,7 @@ func _trigger_random_work_event():
 		ducks += event_result.ducks
 		event_occurred.emit(event_result)
 
-func daily_updates():
+func advance_turn():
 	"""Advance day and check all daily events."""
 	# Advance to next day
 	day += 1
@@ -238,7 +238,7 @@ func process_turn(action: String):
 			ship_it()
 
 	# 2. Advance day and check events
-	daily_updates()
+	advance_turn()
 
 func do_work():
 	print('work')
@@ -344,4 +344,4 @@ func process_action(action: String):
 				print("duck it")
 
 	# Deadline actions consume a day
-	daily_updates()
+	advance_turn()
