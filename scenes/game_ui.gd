@@ -31,10 +31,10 @@ func _ready():
 		_setup_test_scenario()
 
 func _on_work_button_pressed():
-	GameManager.do_work()
+	GameManager.process_turn("work")
 
 func _on_slack_button_pressed():
-	GameManager.hustle()
+	GameManager.process_turn("hustle")
 
 func _on_ship_it_button_pressed():
 	if GameManager.current_task.progress < GameManager.MIN_SHIP_PROGRESS:
@@ -42,7 +42,7 @@ func _on_ship_it_button_pressed():
 		var cheeky_message = GameManager.get_too_early_message()
 		$EventPopup.show_event(cheeky_message)
 	else:
-		GameManager.ship_it()
+		GameManager.process_turn("ship")
 
 func _on_event_occurred(event: Dictionary):
 	if event.text != "":

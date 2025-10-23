@@ -221,7 +221,20 @@ func daily_updates():
 			game_over.emit("fired_deadline", get_game_stats())
 			return
 	elif day == current_task.due_day:
-		missed_deadline.emit()		
+		missed_deadline.emit()
+
+func process_turn(action: String):
+	"""Single entry point for all player actions. Executes action then advances day."""
+	match action:
+		"work":
+			do_work()
+		"hustle":
+			hustle()
+		"ship":
+			ship_it()
+
+	# Single place where day advances (for normal player actions)
+	day += 1
 
 func do_work():
 	print('work')
@@ -237,10 +250,6 @@ func do_work():
 
 	# No immediate payment - only on completion or payday
 
-	# do this at the end
-	# emit outcome
-	day += 1
-
 func hustle():
 	print('hustle')
 
@@ -255,10 +264,6 @@ func hustle():
 	else:
 		# Normal duck gain when not overdue
 		ducks += 1
-
-	# do this at the end
-	# emit outcome
-	day += 1
 
 func get_ship_quality_message(progress: int) -> String:
 	"""Get random quality flavor text based on progress percentage."""
@@ -318,11 +323,8 @@ func ship_it():
 	# Get new task
 	current_task = TaskManager.get_random_task(day, job_level)
 
-	# Advance day
-	day += 1
-
 func process_action(action: String):
-	# Handle button press and forward signal
+	"""Handle deadline dialog actions (mercy/duck_it). Advances day after action."""
 	match action:
 		"mercy":
 			salary -= 10
