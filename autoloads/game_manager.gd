@@ -37,7 +37,6 @@ var day := 1:
 	set(value):
 		day = value
 		next_day.emit(day)
-		daily_updates()
 
 var days_until_payday := 5
 var overdue_days := 0  # Track how many days past deadline
@@ -172,6 +171,9 @@ func handle_outage_choice(choice: String):
 				var message_key = "first" if total_blames == 1 else "second"
 				event_occurred.emit({"text": outage_messages[choice][message_key], "money": 0, "ducks": 0})
 
+	# Check daily events after day advance
+	daily_updates()
+
 func check_victory():
 	"""Check if player has reached victory money goal."""
 	if money >= VICTORY_MONEY_GOAL:
@@ -224,7 +226,8 @@ func daily_updates():
 		missed_deadline.emit()
 
 func process_turn(action: String):
-	"""Single entry point for all player actions. Executes action then advances day."""
+	"""Complete turn cycle: execute action, advance day, check events."""
+	# 1. Execute player action
 	match action:
 		"work":
 			do_work()
@@ -233,8 +236,11 @@ func process_turn(action: String):
 		"ship":
 			ship_it()
 
-	# Single place where day advances (for normal player actions)
+	# 2. Advance day
 	day += 1
+
+	# 3. Check daily events (explicit call, not automatic from setter)
+	daily_updates()
 
 func do_work():
 	print('work')
@@ -338,3 +344,6 @@ func process_action(action: String):
 				ducks -= 1
 				ship_it()
 				print("duck it")
+
+	day += 1
+	daily_updates()
