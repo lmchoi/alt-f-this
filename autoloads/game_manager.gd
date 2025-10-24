@@ -324,6 +324,12 @@ func get_too_early_message() -> String:
 
 func ship_it() -> ActionOutcome:
 	"""Complete task early at current progress. Adds bugs based on incompleteness."""
+	if GameManager.current_task.progress < GameManager.MIN_SHIP_PROGRESS:
+		# Cheeky punishment for trying to ship nothing
+		var cheeky_message = get_too_early_message()
+		event_occurred.emit({"text": cheeky_message, "money": 0, "ducks": 0})
+		return ActionOutcome.DO_NOTHING
+
 	print('ship it at %d%%' % current_task.progress)
 
 	var progress = current_task.progress
@@ -351,21 +357,13 @@ func ship_it() -> ActionOutcome:
 
 	return ActionOutcome.NORMAL
 
-func process_action(action: String):
+func process_deadline_action(action: String):
 	"""Handle deadline dialog actions (mercy/duck_it). Advances day after action."""
 	match action:
 		"mercy":
-			salary -= 10
-			print("mercy")
+			# todo - reduce salary - move deadline? random outcome?
+			# salary -= 10
+			print("mercy - does nothing")
 		"duck_it":
-			if current_task.progress < MIN_SHIP_PROGRESS:
-				# Same cheeky message as trying to ship early
-				var cheeky_message = get_too_early_message()
-				event_occurred.emit({"text": cheeky_message, "money": 0, "ducks": 0})
-			else:
-				ducks -= 1
-				ship_it()
-				print("duck it")
-
-	# Deadline actions consume a day
-	advance_turn()
+			print("duck it")
+			process_turn("ship")

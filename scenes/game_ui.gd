@@ -39,12 +39,7 @@ func _on_slack_button_pressed():
 	GameManager.process_turn("hustle")
 
 func _on_ship_it_button_pressed():
-	if GameManager.current_task.progress < GameManager.MIN_SHIP_PROGRESS:
-		# Cheeky punishment for trying to ship nothing
-		var cheeky_message = GameManager.get_too_early_message()
-		$EventPopup.show_event(cheeky_message)
-	else:
-		GameManager.process_turn("ship")
+	GameManager.process_turn("ship")
 
 func _on_event_occurred(event: Dictionary):
 	if event.text != "":
@@ -60,7 +55,7 @@ func _on_victory(stats: Dictionary):
 	end_game_panel.show_victory(stats)
 
 func _on_deadline_action(action: String):
-	GameManager.process_action(action)
+	GameManager.process_deadline_action(action)
 	$DeadlineDialog.hide()
 
 func _on_production_outage(task_name: String):
