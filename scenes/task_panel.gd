@@ -1,10 +1,5 @@
 extends PanelContainer
 
-# Font size hierarchy - adjust these to change UI scale
-const FONT_SIZE_CRITICAL = 24  # Progress percentage, deadline
-const FONT_SIZE_GAMEPLAY = 20  # Complexity, categories, bug impact
-const FONT_SIZE_STANDARD = 18  # Title, description, flavor, indicators
-
 # Color palette - adjust these to change UI theme
 const COLOR_BRIGHT_GREEN = Color(0.2, 0.8, 0.2, 1)    # Gameplay info (default)
 const COLOR_YELLOW = Color(0.8, 0.8, 0.2, 1)          # Warnings, urgency
@@ -49,16 +44,6 @@ func _load_progress_indicators():
 
 func _ready():
 	_load_progress_indicators()
-	# Apply font size hierarchy
-	task_label.add_theme_font_size_override("font_size", FONT_SIZE_STANDARD)
-	description_label.add_theme_font_size_override("font_size", FONT_SIZE_STANDARD)
-	flavor_label.add_theme_font_size_override("font_size", FONT_SIZE_STANDARD)
-	complexity_label.add_theme_font_size_override("font_size", FONT_SIZE_GAMEPLAY)
-	deadline_label.add_theme_font_size_override("font_size", FONT_SIZE_CRITICAL)
-	bug_impact_label.add_theme_font_size_override("font_size", FONT_SIZE_GAMEPLAY)
-	ship_it_indicator.add_theme_font_size_override("font_size", FONT_SIZE_STANDARD)
-	progress_bar.add_theme_font_size_override("font_size", FONT_SIZE_CRITICAL)
-
 	# Apply color palette
 	task_label.add_theme_color_override("font_color", COLOR_TEXT_STANDARD)
 	description_label.add_theme_color_override("font_color", COLOR_TEXT_STANDARD)
@@ -141,7 +126,6 @@ func _create_badge(category: String) -> Label:
 	var badge = Label.new()
 	badge.text = " " + category.to_upper() + " "
 	badge.theme = BADGE_THEME
-	badge.add_theme_font_size_override("font_size", FONT_SIZE_GAMEPLAY)
 	badge.add_theme_color_override("font_color", Color(0, 0, 0, 1))  # Black text
 
 	# Apply category-specific style from theme

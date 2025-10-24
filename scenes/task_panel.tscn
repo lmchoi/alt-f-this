@@ -38,6 +38,7 @@ theme_override_constants/separation = 8
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 28
 text = "Fix CEO's PowerPoint"
 autowrap_mode = 3
 
@@ -45,12 +46,14 @@ autowrap_mode = 3
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 22
 text = "Description goes here"
 autowrap_mode = 3
 
 [node name="FlavorLabel" type="Label" parent="MarginContainer/MainContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "Design Hell"
 
 [node name="BadgeContainer" type="HBoxContainer" parent="MarginContainer/MainContainer"]
@@ -61,17 +64,20 @@ theme_override_constants/separation = 6
 [node name="ComplexityLabel" type="Label" parent="MarginContainer/MainContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "Complexity: 🍝"
 
 [node name="DeadlineLabel" type="Label" parent="MarginContainer/MainContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "Due in 5 days"
 horizontal_alignment = 1
 
 [node name="BugImpactLabel" type="Label" parent="MarginContainer/MainContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "Progress slowed by bugs: 1.4x"
 horizontal_alignment = 1
 visible = false
