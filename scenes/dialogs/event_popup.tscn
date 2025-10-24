@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b5nqygpy3h33x"]
 
-[ext_resource type="Script" uid="uid://cfgmagjgs0vvn" path="res://scenes/event_popup.gd" id="1_fu0u0"]
+[ext_resource type="Script" uid="uid://cfgmagjgs0vvn" path="res://scenes/dialogs/event_popup.gd" id="1_fu0u0"]
 
 [node name="EventPopup" type="PopupPanel"]
 transparent_bg = false

@@ -5,10 +5,10 @@
 [ext_resource type="PackedScene" path="res://scenes/top_bar.tscn" id="2_topbar"]
 [ext_resource type="PackedScene" path="res://scenes/job_info.tscn" id="3_jobinfo"]
 [ext_resource type="PackedScene" path="res://scenes/task_panel.tscn" id="3_taskpanel"]
-[ext_resource type="PackedScene" uid="uid://b5nqygpy3h33x" path="res://scenes/event_popup.tscn" id="4_u2dgd"]
-[ext_resource type="Script" uid="uid://c6kb37pd6cpiu" path="res://scenes/deadline_dialog.gd" id="6_djwj0"]
-[ext_resource type="Script" uid="uid://c21qcpvp6sbak" path="res://scenes/completion_dialog.gd" id="7_completion"]
-[ext_resource type="Script" uid="uid://57tvoy16rd5j" path="res://scenes/outage_dialog.gd" id="7_e0pfi"]
+[ext_resource type="PackedScene" uid="uid://b5nqygpy3h33x" path="res://scenes/dialogs/event_popup.tscn" id="4_u2dgd"]
+[ext_resource type="Script" uid="uid://c6kb37pd6cpiu" path="res://scenes/dialogs/deadline_dialog.gd" id="6_djwj0"]
+[ext_resource type="Script" uid="uid://c21qcpvp6sbak" path="res://scenes/dialogs/completion_dialog.gd" id="7_completion"]
+[ext_resource type="Script" uid="uid://57tvoy16rd5j" path="res://scenes/dialogs/outage_dialog.gd" id="7_e0pfi"]
 
 [node name="GameUI" type="CanvasLayer"]
 script = ExtResource("1_yubou")
