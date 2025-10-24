@@ -8,7 +8,7 @@ border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.2, 0.8, 0.2, 1)
+border_color = Color(0.1, 0.45, 0.1, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
@@ -32,11 +32,11 @@ layout_mode = 2
 [node name="JobTitleLabel" type="Label" parent="MarginContainer/JobContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.2, 0.8, 0.2, 1)
+theme_override_colors/font_color = Color(0.1, 0.45, 0.1, 1)
 text = "Job Title: Junior Developer"
 
 [node name="SalaryLabel" type="Label" parent="MarginContainer/JobContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.2, 0.8, 0.2, 1)
+theme_override_colors/font_color = Color(0.1, 0.45, 0.1, 1)
 text = "Salary: £100"
