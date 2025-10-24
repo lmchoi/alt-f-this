@@ -1,21 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://cnj3yw8h7b1kt"]
 
 [ext_resource type="Script" path="res://scenes/end_game_panel.gd" id="1_end_game"]
+[ext_resource type="Theme" path="res://themes/main_theme.tres" id="2_main_theme"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_bg"]
 bg_color = Color(0.05, 0.08, 0.05, 0.95)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inner_panel"]
-bg_color = Color(0.1, 0.12, 0.1, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.1, 0.45, 0.1, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
 
 [node name="EndGamePanel" type="Panel"]
 visible = false
@@ -24,6 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_main_theme")
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel_bg")
 script = ExtResource("1_end_game")
 
@@ -39,7 +29,6 @@ offset_right = 300.0
 offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_inner_panel")
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2
@@ -55,7 +44,6 @@ theme_override_constants/separation = 20
 [node name="TitleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.1, 0.45, 0.1, 1)
 theme_override_font_sizes/font_size = 36
 text = "GAME OVER"
 horizontal_alignment = 1
@@ -64,7 +52,6 @@ vertical_alignment = 1
 [node name="MessageLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.1, 0.45, 0.1, 1)
 theme_override_font_sizes/font_size = 18
 text = "Message goes here"
 horizontal_alignment = 1
@@ -74,7 +61,6 @@ autowrap_mode = 3
 [node name="StatsLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.1, 0.45, 0.1, 1)
 theme_override_font_sizes/font_size = 14
 text = "Tasks completed: 10
 Days survived: 25
@@ -88,6 +74,5 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_colors/font_color = Color(0.1, 0.45, 0.1, 1)
 theme_override_font_sizes/font_size = 18
 text = "Rage Quit"

@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bvq8yh3xqw7ej"]
+[gd_scene load_steps=4 format=3 uid="uid://bvq8yh3xqw7ej"]
 
 [ext_resource type="Script" path="res://scenes/top_bar.gd" id="1_topbar"]
+[ext_resource type="Theme" path="res://themes/main_theme.tres" id="2_main_theme"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_top_bar"]
 bg_color = Color(0.1, 0.12, 0.1, 1)
@@ -15,6 +16,7 @@ content_margin_bottom = 12.0
 custom_minimum_size = Vector2(0, 80)
 offset_right = 720.0
 offset_bottom = 80.0
+theme = ExtResource("2_main_theme")
 theme_override_styles/panel = SubResource("StyleBoxFlat_top_bar")
 script = ExtResource("1_topbar")
 
@@ -28,14 +30,12 @@ theme_override_constants/separation = 8
 
 [node name="MoneyIcon" type="Label" parent="HBoxContainer/MoneyContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.1, 0.45, 0.1, 1)
 theme_override_font_sizes/font_size = 32
 text = "💰"
 
 [node name="MoneyValue" type="Label" parent="HBoxContainer/MoneyContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.1, 0.45, 0.1, 1)
 theme_override_font_sizes/font_size = 32
 text = "$0"
 
@@ -45,14 +45,12 @@ theme_override_constants/separation = 8
 
 [node name="DucksIcon" type="Label" parent="HBoxContainer/DucksContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.1, 0.45, 0.1, 1)
 theme_override_font_sizes/font_size = 32
 text = "🦆"
 
 [node name="DucksValue" type="Label" parent="HBoxContainer/DucksContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.1, 0.45, 0.1, 1)
 theme_override_font_sizes/font_size = 32
 text = "2"
 
@@ -62,14 +60,12 @@ theme_override_constants/separation = 8
 
 [node name="BugsIcon" type="Label" parent="HBoxContainer/BugsContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.1, 0.45, 0.1, 1)
 theme_override_font_sizes/font_size = 32
 text = "🐛"
 
 [node name="BugsValue" type="Label" parent="HBoxContainer/BugsContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.1, 0.45, 0.1, 1)
 theme_override_font_sizes/font_size = 32
 text = "0"
 
@@ -83,13 +79,11 @@ theme_override_constants/separation = 8
 
 [node name="DayIcon" type="Label" parent="HBoxContainer/DayContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.1, 0.45, 0.1, 1)
 theme_override_font_sizes/font_size = 28
 text = "📅"
 
 [node name="DayValue" type="Label" parent="HBoxContainer/DayContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.1, 0.45, 0.1, 1)
 theme_override_font_sizes/font_size = 28
 text = "Day 1"
