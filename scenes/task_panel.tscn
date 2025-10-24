@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bgkcmaeachwe4"]
+[gd_scene load_steps=3 format=3 uid="uid://bgkcmaeachwe4"]
 
 [ext_resource type="Script" uid="uid://d32w28r7nfax5" path="res://scenes/task_panel.gd" id="1_task_panel"]
+[ext_resource type="Theme" path="res://themes/main_theme.tres" id="2_main_theme"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_task_panel"]
 bg_color = Color(0.1, 0.12, 0.1, 1)
@@ -17,23 +18,8 @@ shadow_color = Color(0.1, 0.45, 0.1, 0.3)
 shadow_size = 4
 shadow_offset = Vector2(0, 2)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_progress_bg"]
-bg_color = Color(0.05, 0.08, 0.05, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.1, 0.45, 0.1, 0.6)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_progress_fill"]
-bg_color = Color(0.1, 0.45, 0.1, 0.8)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.1, 0.45, 0.1, 1)
-
 [node name="TaskPanel" type="PanelContainer"]
+theme = ExtResource("2_main_theme")
 theme_override_styles/panel = SubResource("StyleBoxFlat_task_panel")
 script = ExtResource("1_task_panel")
 
@@ -95,8 +81,6 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_vertical = 1
-theme_override_styles/background = SubResource("StyleBoxFlat_progress_bg")
-theme_override_styles/fill = SubResource("StyleBoxFlat_progress_fill")
 show_percentage = true
 
 [node name="ShipItIndicator" type="Label" parent="MarginContainer/MainContainer"]
