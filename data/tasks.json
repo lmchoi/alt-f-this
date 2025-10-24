@@ -3,7 +3,7 @@
     {
       "title": "Make the Logo Bigger (Again)",
       "description": "The CEO's nephew said the logo looks 'weak.' Make it 10% bigger… for the 5th time this week.",
-      "allowed_time": 5,
+      "allowed_time": 2,
       "complexity": 1,
       "flavor": "Design Hell",
       "categories": ["optics"],
@@ -12,7 +12,7 @@
     {
       "title": "Update the Office Wifi Password",
       "description": "Someone wrote 'password123' on the bathroom wall. IT says you need to change it.",
-      "allowed_time": 4,
+      "allowed_time": 2,
       "complexity": 1,
       "flavor": "Trivial Busywork",
       "categories": ["optics"],
@@ -21,7 +21,7 @@
     {
       "title": "Fix Typo in Footer",
       "description": "The footer says 'Copyrite 2019'. Legal noticed. Fix it before the lawyers get involved.",
-      "allowed_time": 3,
+      "allowed_time": 2,
       "complexity": 1,
       "flavor": "Pedantic Corrections",
       "categories": ["optics"],
@@ -39,7 +39,7 @@
     {
       "title": "Add a Cookie Banner (EU Compliance)",
       "description": "Legal says we need a cookie banner. Make it annoying enough that people click Accept.",
-      "allowed_time": 5,
+      "allowed_time": 4,
       "complexity": 2,
       "flavor": "Legal Busywork",
       "categories": ["optics"],
@@ -48,7 +48,7 @@
     {
       "title": "The Printer is 'Hacking Us'",
       "description": "Office printer randomly prints cat memes. CFO insists it's a cyberattack. 'Investigate.'",
-      "allowed_time": 6,
+      "allowed_time": 4,
       "complexity": 2,
       "flavor": "IT Nightmares",
       "categories": ["optics"],
@@ -57,7 +57,7 @@
     {
       "title": "Rename 'Submit' to 'Go'",
       "description": "Product manager read a UX blog. Now every button needs 'action-oriented microcopy.'",
-      "allowed_time": 3,
+      "allowed_time": 2,
       "complexity": 1,
       "flavor": "Buzzword Compliance",
       "categories": ["optics"],
@@ -75,7 +75,7 @@
     {
       "title": "Remove Comic Sans (Emergency)",
       "description": "Junior dev used Comic Sans in production. Client noticed. Revert before anyone else sees.",
-      "allowed_time": 3,
+      "allowed_time": 2,
       "complexity": 1,
       "flavor": "Font Crimes",
       "categories": ["critical"],
@@ -84,7 +84,7 @@
     {
       "title": "Add 'Powered by AI' Badge",
       "description": "Marketing wants an AI badge on the homepage. There is no AI. Add it anyway.",
-      "allowed_time": 5,
+      "allowed_time": 2,
       "complexity": 1,
       "flavor": "Marketing Lies",
       "categories": ["optics"],

@@ -33,10 +33,8 @@ func get_random_task(today_date: int = 1, job_level: int = 0) -> Task:
 	new_task.flavor = task_data["flavor"]
 	new_task.complexity = task_data["complexity"]
 
-	# Scale deadline by job level: Junior (5-7d), Mid (4-6d), Senior (3-5d)
 	var base_deadline = task_data["allowed_time"]
-	var deadline_modifier = 2 - job_level  # +2, +1, +0
-	new_task.due_day = today_date + base_deadline + deadline_modifier
+	new_task.due_day = today_date + base_deadline
 	new_task.progress = 0
 
 	# Convert JSON array to typed Array[String]
