@@ -13,6 +13,15 @@ const COLOR_RED = Color(0.8, 0.2, 0.2, 1)             # Critical, overdue
 const COLOR_TEXT_STANDARD = Color(0.85, 0.85, 0.85, 1) # Standard readable text
 const COLOR_TEXT_SUBDUED = Color(0.7, 0.7, 0.7, 1)    # Less important but still readable
 
+# Color name mapping for JSON data
+const COLOR_MAP = {
+	"green": COLOR_BRIGHT_GREEN,
+	"yellow": COLOR_YELLOW,
+	"orange": COLOR_ORANGE,
+	"red": COLOR_RED,
+	"subdued": COLOR_TEXT_SUBDUED
+}
+
 # Category badge theme mapping
 const BADGE_THEME = preload("res://themes/badge_theme.tres")
 const CATEGORY_STYLES = {
@@ -32,7 +41,14 @@ const CATEGORY_STYLES = {
 @onready var bug_impact_label := $"%BugImpactLabel"
 @onready var ship_it_indicator := $"%ShipItIndicator"
 
+var progress_indicators: Dictionary = {}
+
+func _load_progress_indicators():
+	var json_text = FileAccess.get_file_as_string("res://data/progress_indicators.json")
+	progress_indicators = JSON.parse_string(json_text)
+
 func _ready():
+	_load_progress_indicators()
 	# Apply font size hierarchy
 	task_label.add_theme_font_size_override("font_size", FONT_SIZE_STANDARD)
 	description_label.add_theme_font_size_override("font_size", FONT_SIZE_STANDARD)
@@ -66,7 +82,7 @@ func _on_current_task_updated(current_task: Task):
 	# Update deadline and progress for new task
 	var days_left = current_task.due_day - GameManager.day
 	_update_deadline_label(days_left)
-	progress_bar.value = current_task.progress
+	_update_progress(current_task.progress)
 	_update_bug_impact(GameManager.bugs)
 
 func _on_next_day(nth_day: int):
@@ -95,11 +111,25 @@ func _update_deadline_label(days_left: int):
 func _update_progress(progress: float):
 	progress_bar.value = progress
 
-	# Show SHIP IT indicator at 20%+ progress
-	if progress >= 20.0:
+	# Update SHIP IT indicator from JSON data
+	var thresholds = progress_indicators["progress_thresholds"]
+	var indicator_data = null
+
+	# Find the appropriate threshold (check in descending order)
+	for key in ["complete", "almost_done", "acceptable", "half_baked", "very_risky", "incomplete", "not_started"]:
+		var threshold = thresholds[key]
+		if progress >= threshold["min"]:
+			indicator_data = threshold
+			break
+
+	if indicator_data:
+		ship_it_indicator.text = indicator_data["text"]
+
+		# Map color name to actual color
+		var color = COLOR_MAP.get(indicator_data["color"], COLOR_TEXT_STANDARD)
+		ship_it_indicator.add_theme_color_override("font_color", color)
+
 		ship_it_indicator.visible = true
-	else:
-		ship_it_indicator.visible = false
 
 func _create_badge(category: String) -> Label:
 	var badge = Label.new()

@@ -1,0 +1,39 @@
+{
+  "progress_thresholds": {
+    "complete": {
+      "min": 100,
+      "text": "✓ Ready to ship!",
+      "color": "green"
+    },
+    "almost_done": {
+      "min": 90,
+      "text": "⚠ Almost done (safe to ship)",
+      "color": "yellow"
+    },
+    "acceptable": {
+      "min": 70,
+      "text": "⚠ Could be better (shippable)",
+      "color": "yellow"
+    },
+    "half_baked": {
+      "min": 50,
+      "text": "⚠ Half-baked (adds bugs!)",
+      "color": "orange"
+    },
+    "very_risky": {
+      "min": 20,
+      "text": "⚠ VERY RISKY (many bugs!)",
+      "color": "red"
+    },
+    "incomplete": {
+      "min": 1,
+      "text": "Need 20% progress to ship",
+      "color": "subdued"
+    },
+    "not_started": {
+      "min": 0,
+      "text": "Get to work!",
+      "color": "subdued"
+    }
+  }
+}
