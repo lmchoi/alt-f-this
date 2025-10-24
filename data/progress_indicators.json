@@ -2,7 +2,13 @@
   "progress_thresholds": {
     "complete": {
       "min": 100,
-      "text": "✓ Ready to ship!",
+      "messages_by_days": {
+        "0": "✓ Ready to ship!",
+        "1": "✓ Ready to ship!",
+        "2": "✓ Ready to ship! (or keep slacking off)",
+        "3": "Task complete. HUSTLE pays better than WORK.",
+        "4": "Milking the completed task, smart."
+      },
       "color": "green"
     },
     "almost_done": {

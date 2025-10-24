@@ -41,6 +41,8 @@ var current_task: Task:
 		if current_task:
 			current_task_updated.emit(current_task)
 
+var days_at_100_percent := 0  # Track how long task has been sitting at 100%
+
 var day := 1:
 	set(value):
 		day = value
@@ -199,6 +201,10 @@ func _trigger_random_work_event():
 
 func advance_turn():
 	"""Advance day and check all daily events."""
+	# Track days sitting at 100%
+	if current_task.progress >= 100:
+		days_at_100_percent += 1
+
 	# Advance to next day
 	day += 1
 
@@ -271,6 +277,7 @@ func do_work() -> ActionOutcome:
 func pick_up_new_task():
 	completed_tasks += 1
 	overdue_days = 0
+	days_at_100_percent = 0
 	current_task = TaskManager.get_random_task(day, job_level)
 
 func hustle() -> ActionOutcome:

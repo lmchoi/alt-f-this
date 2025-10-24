@@ -88,7 +88,7 @@ func _on_current_task_updated(current_task: Task):
 func _on_next_day(nth_day: int):
 	var days_left = GameManager.current_task.due_day - nth_day
 	_update_deadline_label(days_left)
-	progress_bar.value = GameManager.current_task.progress
+	_update_progress(GameManager.current_task.progress)
 
 func _update_complexity_label(complexity: int):
 	# Spaghetti code indicator (more spaghetti = more complex)
@@ -123,7 +123,13 @@ func _update_progress(progress: float):
 			break
 
 	if indicator_data:
-		ship_it_indicator.text = indicator_data["text"]
+		# Special handling for 100% completion - show message based on days sitting
+		if progress >= 100 and indicator_data.has("messages_by_days"):
+			var messages = indicator_data["messages_by_days"]
+			var days = min(GameManager.days_at_100_percent, len(messages) - 1)
+			ship_it_indicator.text = messages[str(days)]
+		else:
+			ship_it_indicator.text = indicator_data["text"]
 
 		# Map color name to actual color
 		var color = COLOR_MAP.get(indicator_data["color"], COLOR_TEXT_STANDARD)
