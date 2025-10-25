@@ -26,10 +26,11 @@ const CATEGORY_STYLES = {
 	"urgent": "UrgentBadge"
 }
 
+@onready var task_id_label := $"%TaskIdLabel"
 @onready var task_label := $"%TaskLabel"
 @onready var description_label := $"%DescriptionLabel"
 @onready var complexity_label := $"%ComplexityLabel"
-@onready var badge_container := $"%BadgeContainer"
+@onready var badge_container := $"%HeaderBadgeContainer"
 @onready var deadline_label := $"%DeadlineLabel"
 @onready var progress_bar := $"%ProgressBar"
 @onready var bug_impact_label := $"%BugImpactLabel"
@@ -57,6 +58,7 @@ func _ready():
 	GameManager.bugs_changed.connect(_update_bug_impact)
 
 func _on_current_task_updated(current_task: Task):
+	task_id_label.text = current_task.task_id
 	task_label.text = current_task.title
 	description_label.text = current_task.description
 	_update_complexity_label(current_task.complexity)
