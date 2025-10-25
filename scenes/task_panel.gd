@@ -33,7 +33,6 @@ const CATEGORY_STYLES = {
 @onready var badge_container := $"%HeaderBadgeContainer"
 @onready var deadline_label := $"%DeadlineLabel"
 @onready var progress_bar := $"%ProgressBar"
-@onready var bug_impact_label := $"%BugImpactLabel"
 @onready var ship_it_indicator := $"%ShipItIndicator"
 
 var progress_indicators: Dictionary = {}
@@ -49,14 +48,12 @@ func _ready():
 	task_label.add_theme_color_override("font_color", COLOR_TEXT_STANDARD)
 	description_label.add_theme_color_override("font_color", COLOR_TEXT_STANDARD)
 	complexity_label.add_theme_color_override("font_color", COLOR_BRIGHT_GREEN)
-	bug_impact_label.add_theme_color_override("font_color", COLOR_ORANGE)
 	ship_it_indicator.add_theme_color_override("font_color", COLOR_YELLOW)
 	progress_bar.add_theme_color_override("font_color", COLOR_BRIGHT_GREEN)
 
 	GameManager.current_task_updated.connect(_on_current_task_updated)
 	GameManager.next_day.connect(_on_next_day)
 	GameManager.task_progress_changed.connect(_update_progress)
-	GameManager.bugs_changed.connect(_update_bug_impact)
 
 func _on_current_task_updated(current_task: Task):
 	task_id_label.text = current_task.task_id
@@ -69,7 +66,6 @@ func _on_current_task_updated(current_task: Task):
 	var days_left = current_task.due_day - GameManager.day
 	_update_deadline_label(days_left)
 	_update_progress(current_task.progress)
-	_update_bug_impact(GameManager.bugs)
 
 func _on_next_day(nth_day: int):
 	var days_left = GameManager.current_task.due_day - nth_day
@@ -146,11 +142,3 @@ func _update_flavor_and_categories(_flavor: String, categories: Array[String]):
 	# Create new badges
 	for category in categories:
 		badge_container.add_child(_create_badge(category))
-
-func _update_bug_impact(_amount: int):
-	var bug_multiplier = GameManager.get_bug_multiplier()
-	if bug_multiplier > 1.0:
-		bug_impact_label.text = "Progress slowed by bugs: %.1fx" % bug_multiplier
-		bug_impact_label.visible = true
-	else:
-		bug_impact_label.visible = false
