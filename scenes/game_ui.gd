@@ -87,8 +87,8 @@ func _on_completion_choice(action: String):
 
 func _setup_test_scenario():
 	"""Debug: Setup test scenario for production outage testing"""
-	GameManager.bugs = 60  # High bugs = high outage chance (60 × 0.5% × 3 = 90% daily)
-	GameManager.poorly_shipped_tasks = ["Blockchain", "Logo Fix", "Printer Bug"]
+	# GameManager.bugs = 60  # High bugs = high outage chance (60 × 0.5% × 3 = 90% daily)
+	# GameManager.poorly_shipped_tasks = ["Blockchain", "Logo Fix", "Printer Bug"]
 	# GameManager.money = 2000
 	# GameManager.ducks = 2
 	# GameManager.side_project.progress = 100
