@@ -28,7 +28,6 @@ const CATEGORY_STYLES = {
 
 @onready var task_label := $"%TaskLabel"
 @onready var description_label := $"%DescriptionLabel"
-@onready var flavor_label := $"%FlavorLabel"
 @onready var complexity_label := $"%ComplexityLabel"
 @onready var badge_container := $"%BadgeContainer"
 @onready var deadline_label := $"%DeadlineLabel"
@@ -47,7 +46,6 @@ func _ready():
 	# Apply color palette
 	task_label.add_theme_color_override("font_color", COLOR_TEXT_STANDARD)
 	description_label.add_theme_color_override("font_color", COLOR_TEXT_STANDARD)
-	flavor_label.add_theme_color_override("font_color", COLOR_TEXT_SUBDUED)
 	complexity_label.add_theme_color_override("font_color", COLOR_BRIGHT_GREEN)
 	bug_impact_label.add_theme_color_override("font_color", COLOR_ORANGE)
 	ship_it_indicator.add_theme_color_override("font_color", COLOR_YELLOW)
@@ -137,10 +135,7 @@ func _create_badge(category: String) -> Label:
 
 	return badge
 
-func _update_flavor_and_categories(flavor: String, categories: Array[String]):
-	# Set flavor text
-	flavor_label.text = flavor
-
+func _update_flavor_and_categories(_flavor: String, categories: Array[String]):
 	# Clear existing badges
 	for child in badge_container.get_children():
 		child.queue_free()

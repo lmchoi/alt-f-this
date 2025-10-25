@@ -32,15 +32,25 @@ theme_override_constants/margin_bottom = 15
 
 [node name="MainContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 12
 
-[node name="TaskLabel" type="Label" parent="MarginContainer/MainContainer"]
+[node name="TitleRow" type="HBoxContainer" parent="MarginContainer/MainContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+size_flags_horizontal = 3
+
+[node name="TaskLabel" type="Label" parent="MarginContainer/MainContainer/TitleRow"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 28
 text = "Fix CEO's PowerPoint"
 autowrap_mode = 3
+
+[node name="BadgeContainer" type="HBoxContainer" parent="MarginContainer/MainContainer/TitleRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6
 
 [node name="DescriptionLabel" type="Label" parent="MarginContainer/MainContainer"]
 unique_name_in_owner = true
@@ -49,17 +59,6 @@ size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 22
 text = "Description goes here"
 autowrap_mode = 3
-
-[node name="FlavorLabel" type="Label" parent="MarginContainer/MainContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "Design Hell"
-
-[node name="BadgeContainer" type="HBoxContainer" parent="MarginContainer/MainContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_constants/separation = 6
 
 [node name="ComplexityLabel" type="Label" parent="MarginContainer/MainContainer"]
 unique_name_in_owner = true
