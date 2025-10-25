@@ -23,7 +23,6 @@ border_color = Color(0.1, 0.45, 0.1, 1)
 
 [resource]
 AcceptDialog/colors/title_color = Color(0.1, 0.45, 0.1, 1)
-AcceptDialog/constants/title_height = 48
 AcceptDialog/font_sizes/title_font_size = 28
 AcceptDialog/styles/panel = SubResource("StyleBoxFlat_dialog_panel")
 AcceptDialog/styles/title_panel = SubResource("StyleBoxFlat_title_panel")
