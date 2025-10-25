@@ -1,20 +1,4 @@
-[gd_resource type="Theme" load_steps=7 format=3]
-
-;; FONT SIZE HIERARCHY
-;; This theme defines base defaults. Scene files (.tscn) override specific elements as needed.
-;;
-;; Design System:
-;; - 48px: End game title (dramatic impact)
-;; - 32px: Top bar stats (always visible, critical info)
-;; - 28px: Task titles, dialog titles (primary headings)
-;; - 24px: Progress percentage, deadline (high visibility metrics)
-;; - 22px: Task description, action buttons (important actions)
-;; - 20px: Base labels, metadata, badges (minimum readable size - theme default)
-;;
-;; To change font sizes:
-;; 1. Update scene-specific overrides in .tscn files (e.g., scenes/task_panel.tscn)
-;; 2. Update theme defaults below (Label/Button font_sizes)
-;; 3. Keep this comment in sync with actual usage
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://buaicsh0r3xyc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_standard"]
 bg_color = Color(0.1, 0.12, 0.1, 1)
@@ -27,30 +11,6 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_with_shadow"]
-bg_color = Color(0.1, 0.12, 0.1, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.1, 0.45, 0.1, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-shadow_color = Color(0.1, 0.45, 0.1, 0.3)
-shadow_size = 4
-shadow_offset = Vector2(0, 2)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_top_bar"]
-bg_color = Color(0.1, 0.12, 0.1, 1)
-border_width_bottom = 2
-border_color = Color(0.1, 0.45, 0.1, 1)
-content_margin_left = 15.0
-content_margin_top = 12.0
-content_margin_right = 15.0
-content_margin_bottom = 12.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_progress_bg"]
 bg_color = Color(0.05, 0.08, 0.05, 1)
@@ -68,15 +28,12 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.1, 0.45, 0.1, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_overlay_bg"]
-bg_color = Color(0.05, 0.08, 0.05, 0.95)
-
 [resource]
+Button/colors/font_color = Color(0.1, 0.45, 0.1, 1)
+Button/font_sizes/font_size = 22
+Label/colors/font_color = Color(0.1, 0.45, 0.1, 1)
+Label/font_sizes/font_size = 20
 Panel/styles/panel = SubResource("StyleBoxFlat_panel_standard")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_panel_standard")
 ProgressBar/styles/background = SubResource("StyleBoxFlat_progress_bg")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_progress_fill")
-Label/colors/font_color = Color(0.1, 0.45, 0.1, 1)
-Label/font_sizes/font_size = 20
-Button/colors/font_color = Color(0.1, 0.45, 0.1, 1)
-Button/font_sizes/font_size = 22
