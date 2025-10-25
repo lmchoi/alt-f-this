@@ -350,15 +350,11 @@ func ship_it() -> ActionOutcome:
 		poorly_shipped_tasks.append(current_task.title)
 		print("⚠️ Poor quality ship: '%s' added to outage risk pool" % current_task.title)
 
-	# Show shipped message (payment happens on payday)
-	var event_text = ""
-	if progress >= 100:
-		event_text = "Task complete! Nice work.\n\nPayment on payday (in %d days)" % days_until_payday
-	else:
+	# Show shipped message only for rushed ships (< 100%)
+	if progress < 100:
 		var quality_msg = get_ship_quality_message(progress)
-		event_text = "Shipped at %d%%\n\n%s\n\nBugs added: +%d\nPayment on payday (in %d days)" % [progress, quality_msg, int(bugs_to_add), days_until_payday]
-
-	event_occurred.emit({"text": event_text, "money": 0, "ducks": 0})
+		var event_text = "Shipped at %d%%\n\n%s\n\nBugs added: +%d\nPayment on payday (in %d days)" % [progress, quality_msg, int(bugs_to_add), days_until_payday]
+		event_occurred.emit({"text": event_text, "money": 0, "ducks": 0})
 
 	pick_up_new_task()
 
