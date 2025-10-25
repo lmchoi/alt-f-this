@@ -300,8 +300,6 @@ func hustle() -> ActionOutcome:
 	side_project.progress = min(100, side_project.progress + progress_gain)
 	side_project_updated.emit(side_project)
 
-	event_occurred.emit({"text": "Built features for your side project.\n\nProgress: +%d%%" % progress_gain, "money": 0, "ducks": 0})
-
 	return ActionOutcome.NORMAL
 
 func get_ship_quality_message(progress: int) -> String:
