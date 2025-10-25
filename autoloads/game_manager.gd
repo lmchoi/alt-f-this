@@ -26,7 +26,6 @@ signal salary_changed(amount)
 signal ducks_changed(amount)
 signal bugs_changed(amount)
 signal event_occurred(event_data)
-signal missed_deadline()
 signal game_over(ending_type: String, stats: Dictionary)
 signal victory(stats: Dictionary)
 signal production_outage_occurred(task_name)
@@ -243,8 +242,6 @@ func advance_turn():
 		if overdue_days >= MAX_OVERDUE_DAYS:
 			game_over.emit("fired_deadline", get_game_stats())
 			return
-	elif day == current_task.due_day:
-		missed_deadline.emit()
 
 	# Check end game conditions once per turn
 	if ducks <= 0:
@@ -369,14 +366,3 @@ func ship_it() -> ActionOutcome:
 	pick_up_new_task()
 
 	return ActionOutcome.NORMAL
-
-func process_deadline_action(action: String):
-	"""Handle deadline dialog actions (mercy/duck_it). Advances day after action."""
-	match action:
-		"mercy":
-			# todo - reduce salary - move deadline? random outcome?
-			# salary -= 10
-			print("mercy - does nothing")
-		"duck_it":
-			print("duck it")
-			process_turn("ship")

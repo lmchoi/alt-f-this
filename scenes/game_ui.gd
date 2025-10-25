@@ -11,14 +11,12 @@ func _ready():
 	slack_button.pressed.connect(_on_slack_button_pressed)
 	ship_it_button.pressed.connect(_on_ship_it_button_pressed)
 	GameManager.event_occurred.connect(_on_event_occurred)
-	GameManager.missed_deadline.connect(_on_deadline_due)
 	GameManager.task_completed_awaiting_choice.connect(_on_task_completed)
 	GameManager.game_over.connect(_on_game_over)
 	GameManager.victory.connect(_on_victory)
 	GameManager.production_outage_occurred.connect(_on_production_outage)
 	GameManager.outage_consequence.connect(_on_outage_consequence)
 
-	$DeadlineDialog.custom_action.connect(_on_deadline_action)
 	$CompletionDialog.completion_choice.connect(_on_completion_choice)
 	$OutageDialog.outage_choice.connect(_on_outage_choice)
 	$"%OutageConsequencePopup".consequence_dismissed.connect(_on_outage_consequence_dismissed)
@@ -56,18 +54,11 @@ func _on_outage_consequence_dismissed():
 	$"%OutageRedOverlay".visible = false
 	GameManager.finish_outage_turn()
 
-func _on_deadline_due():
-	$DeadlineDialog.popup()
-
 func _on_game_over(ending_type: String, stats: Dictionary):
 	end_game_panel.show_game_over(ending_type, stats)
 
 func _on_victory(stats: Dictionary):
 	end_game_panel.show_victory(stats)
-
-func _on_deadline_action(action: String):
-	GameManager.process_deadline_action(action)
-	$DeadlineDialog.hide()
 
 func _on_production_outage(task_name: String):
 	$"%OutageRedOverlay".visible = true

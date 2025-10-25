@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://bijgv5paiw5qt"]
+
+[ext_resource type="Script" path="res://scenes/dialogs/deadline_dialog.gd" id="1_deadline"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button"]
+bg_color = Color(0.15, 0.15, 0.18, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.4, 0.45, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="DeadlineDialog" type="AcceptDialog"]
+oversampling_override = 1.0
+initial_position = 1
+size = Vector2i(400, 200)
+visible = true
+script = ExtResource("1_deadline")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 392.0
+offset_bottom = 151.0
+
+[node name="MessageLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Message will appear here"
+
+[node name="ExtensionButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+text = "Ask for Extension"
+
+[node name="ShipButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+text = "Ship It Now"
