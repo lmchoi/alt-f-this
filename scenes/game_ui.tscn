@@ -28,7 +28,6 @@ color = Color(0.05, 0.08, 0.05, 1)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -70.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
@@ -41,44 +40,38 @@ layout_mode = 2
 
 [node name="TaskPanelMargin" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
 
 [node name="TaskPanel" parent="VBoxContainer/TaskPanelMargin" instance=ExtResource("3_taskpanel")]
 layout_mode = 2
 
-[node name="Spacer" type="Control" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 20)
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.5
-
 [node name="SideProjectMargin" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 10
+theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 5
+theme_override_constants/margin_bottom = 0
 
 [node name="SideProjectPanel" parent="VBoxContainer/SideProjectMargin" instance=ExtResource("4_sideproject")]
 layout_mode = 2
 
-[node name="ActionButtons" type="HBoxContainer" parent="."]
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = -60.0
-offset_right = -20.0
-offset_bottom = -20.0
-grow_horizontal = 2
-grow_vertical = 0
+[node name="ActionButtonsMargin" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ActionButtons" type="HBoxContainer" parent="VBoxContainer/ActionButtonsMargin"]
+layout_mode = 2
 theme_override_constants/separation = 15
 alignment = 0
 
-[node name="WorkButton" type="Button" parent="ActionButtons"]
+[node name="WorkButton" type="Button" parent="VBoxContainer/ActionButtonsMargin/ActionButtons"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 40)
 layout_mode = 2
@@ -87,7 +80,7 @@ text = "Work
 script = ExtResource("2_rns2u")
 metadata/_custom_type_script = "uid://o4uecgfegpr2"
 
-[node name="SlackButton" type="Button" parent="ActionButtons"]
+[node name="SlackButton" type="Button" parent="VBoxContainer/ActionButtonsMargin/ActionButtons"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 40)
 layout_mode = 2
@@ -96,11 +89,11 @@ text = "HUSTLE
 script = ExtResource("2_rns2u")
 metadata/_custom_type_script = "uid://o4uecgfegpr2"
 
-[node name="Spacer" type="Control" parent="ActionButtons"]
+[node name="Spacer" type="Control" parent="VBoxContainer/ActionButtonsMargin/ActionButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ShipItButton" type="Button" parent="ActionButtons"]
+[node name="ShipItButton" type="Button" parent="VBoxContainer/ActionButtonsMargin/ActionButtons"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(160, 40)
 layout_mode = 2
