@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" path="res://scenes/top_bar.tscn" id="2_topbar"]
 [ext_resource type="PackedScene" path="res://scenes/job_info.tscn" id="3_jobinfo"]
 [ext_resource type="PackedScene" path="res://scenes/task_panel.tscn" id="3_taskpanel"]
+[ext_resource type="PackedScene" path="res://scenes/side_project_panel.tscn" id="4_sideproject"]
 [ext_resource type="PackedScene" uid="uid://b5nqygpy3h33x" path="res://scenes/dialogs/event_popup.tscn" id="4_u2dgd"]
 [ext_resource type="Theme" path="res://themes/dialog_theme.tres" id="5_dialog_theme"]
 [ext_resource type="Script" uid="uid://c6kb37pd6cpiu" path="res://scenes/dialogs/deadline_dialog.gd" id="6_djwj0"]
@@ -50,6 +51,15 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 20
 
 [node name="TaskPanel" parent="VBoxContainer/TaskPanelMargin" instance=ExtResource("3_taskpanel")]
+layout_mode = 2
+
+[node name="SideProjectMargin" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+
+[node name="SideProjectPanel" parent="VBoxContainer/SideProjectMargin" instance=ExtResource("4_sideproject")]
 layout_mode = 2
 
 [node name="ActionButtons" type="HBoxContainer" parent="."]

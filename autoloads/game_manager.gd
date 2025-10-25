@@ -34,6 +34,7 @@ signal current_task_updated(task)
 signal task_progress_changed(progress)
 signal payday_occurred(amount)
 signal task_completed_awaiting_choice()
+signal side_project_updated(side_project_data)
 
 var current_task: Task:
 	set(value):
@@ -73,6 +74,15 @@ var bugs := 0:
 	set(value):
 		bugs = value
 		bugs_changed.emit(bugs)
+
+# Side project state
+var side_project := {
+	"product_name": "Project Banana",
+	"progress": 0  # 0-100, escape progress
+}:
+	set(value):
+		side_project = value
+		side_project_updated.emit(side_project)
 
 var production_outages := 0  # Track total outages for firing (3 = fired)
 var poorly_shipped_tasks := []  # Tasks shipped at <50% (can trigger outages)
