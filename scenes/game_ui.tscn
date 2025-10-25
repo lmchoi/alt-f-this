@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://bkcqc3g6mk6ky"]
+[gd_scene load_steps=14 format=3 uid="uid://bkcqc3g6mk6ky"]
 
 [ext_resource type="Script" uid="uid://ccibd5kcuisnk" path="res://scenes/game_ui.gd" id="1_yubou"]
+[ext_resource type="Theme" uid="uid://buaicsh0r3xyc" path="res://themes/main_theme.tres" id="2_main_theme"]
 [ext_resource type="Script" uid="uid://o4uecgfegpr2" path="res://scripts/ui/action_button.gd" id="2_rns2u"]
 [ext_resource type="PackedScene" uid="uid://bvq8yh3xqw7ej" path="res://scenes/top_bar.tscn" id="2_topbar"]
 [ext_resource type="PackedScene" path="res://scenes/job_info.tscn" id="3_jobinfo"]
@@ -16,7 +17,17 @@
 [node name="GameUI" type="CanvasLayer"]
 script = ExtResource("1_yubou")
 
-[node name="Screen" type="ColorRect" parent="."]
+[node name="MainThemeContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_main_theme")
+
+[node name="Screen" type="ColorRect" parent="MainThemeContainer"]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -24,7 +35,8 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.05, 0.08, 0.05, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainThemeContainer"]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -32,20 +44,20 @@ offset_top = 10.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TopBar" parent="VBoxContainer" instance=ExtResource("2_topbar")]
+[node name="TopBar" parent="MainThemeContainer/VBoxContainer" instance=ExtResource("2_topbar")]
 layout_mode = 2
 
-[node name="TopSpacer" type="Control" parent="VBoxContainer"]
+[node name="TopSpacer" type="Control" parent="MainThemeContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 
-[node name="BoxContainer" type="BoxContainer" parent="VBoxContainer"]
+[node name="BoxContainer" type="BoxContainer" parent="MainThemeContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
 size_flags_stretch_ratio = 0.4
 
-[node name="SideProjectMargin" type="MarginContainer" parent="VBoxContainer/BoxContainer"]
+[node name="SideProjectMargin" type="MarginContainer" parent="MainThemeContainer/VBoxContainer/BoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 20
@@ -53,10 +65,10 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 10
 
-[node name="SideProjectPanel" parent="VBoxContainer/BoxContainer/SideProjectMargin" instance=ExtResource("4_sideproject")]
+[node name="SideProjectPanel" parent="MainThemeContainer/VBoxContainer/BoxContainer/SideProjectMargin" instance=ExtResource("4_sideproject")]
 layout_mode = 2
 
-[node name="JobMarginContainer" type="MarginContainer" parent="VBoxContainer"]
+[node name="JobMarginContainer" type="MarginContainer" parent="MainThemeContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
 size_flags_stretch_ratio = 2.0
@@ -65,27 +77,27 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/JobMarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainThemeContainer/VBoxContainer/JobMarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="JobInfoMargin" type="MarginContainer" parent="VBoxContainer/JobMarginContainer/VBoxContainer"]
+[node name="JobInfoMargin" type="MarginContainer" parent="MainThemeContainer/VBoxContainer/JobMarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="JobInfo" parent="VBoxContainer/JobMarginContainer/VBoxContainer/JobInfoMargin" instance=ExtResource("3_jobinfo")]
+[node name="JobInfo" parent="MainThemeContainer/VBoxContainer/JobMarginContainer/VBoxContainer/JobInfoMargin" instance=ExtResource("3_jobinfo")]
 layout_mode = 2
 
-[node name="TaskPanelMargin" type="MarginContainer" parent="VBoxContainer/JobMarginContainer/VBoxContainer"]
+[node name="TaskPanelMargin" type="MarginContainer" parent="MainThemeContainer/VBoxContainer/JobMarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="TaskPanel" parent="VBoxContainer/JobMarginContainer/VBoxContainer/TaskPanelMargin" instance=ExtResource("3_taskpanel")]
+[node name="TaskPanel" parent="MainThemeContainer/VBoxContainer/JobMarginContainer/VBoxContainer/TaskPanelMargin" instance=ExtResource("3_taskpanel")]
 layout_mode = 2
 
-[node name="BottomSpacer" type="Control" parent="VBoxContainer"]
+[node name="BottomSpacer" type="Control" parent="MainThemeContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ActionPanelMargin" type="MarginContainer" parent="VBoxContainer"]
+[node name="ActionPanelMargin" type="MarginContainer" parent="MainThemeContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.2
@@ -94,36 +106,36 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 10
 
-[node name="ActionButtons" type="HBoxContainer" parent="VBoxContainer/ActionPanelMargin"]
+[node name="ActionButtons" type="HBoxContainer" parent="MainThemeContainer/VBoxContainer/ActionPanelMargin"]
 layout_mode = 2
 size_flags_vertical = 4
-theme_override_constants/separation = 15
+theme_override_constants/separation = 20
 
-[node name="WorkButton" type="Button" parent="VBoxContainer/ActionPanelMargin/ActionButtons"]
+[node name="WorkButton" type="Button" parent="MainThemeContainer/VBoxContainer/ActionPanelMargin/ActionButtons"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(120, 40)
+custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 text = "Work
 £100"
 script = ExtResource("2_rns2u")
 metadata/_custom_type_script = "uid://o4uecgfegpr2"
 
-[node name="SlackButton" type="Button" parent="VBoxContainer/ActionPanelMargin/ActionButtons"]
+[node name="SlackButton" type="Button" parent="MainThemeContainer/VBoxContainer/ActionPanelMargin/ActionButtons"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(120, 40)
+custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 text = "HUSTLE
 (Side Project)"
 script = ExtResource("2_rns2u")
 metadata/_custom_type_script = "uid://o4uecgfegpr2"
 
-[node name="Spacer" type="Control" parent="VBoxContainer/ActionPanelMargin/ActionButtons"]
+[node name="Spacer" type="Control" parent="MainThemeContainer/VBoxContainer/ActionPanelMargin/ActionButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ShipItButton" type="Button" parent="VBoxContainer/ActionPanelMargin/ActionButtons"]
+[node name="ShipItButton" type="Button" parent="MainThemeContainer/VBoxContainer/ActionPanelMargin/ActionButtons"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(160, 40)
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 text = "🚨 SHIP IT
 (Complete Now)"
