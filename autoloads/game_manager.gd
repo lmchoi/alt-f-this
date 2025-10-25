@@ -293,17 +293,12 @@ func pick_up_new_task():
 func hustle() -> ActionOutcome:
 	print('hustle')
 
-	# Side hustle pays immediately (freelance work, not company payroll)
-	money += HUSTLE_PAY
+	# Progress side project (10% per hustle)
+	var progress_gain = 10
+	side_project.progress = min(100, side_project.progress + progress_gain)
+	side_project_updated.emit(side_project)
 
-	# Check if task is overdue
-	if day > current_task.due_day:
-		# Guilt/stress from ignoring work - costs a duck instead of gaining
-		ducks -= 1  # Net -1 (normally would gain +1)
-		event_occurred.emit({"text": "Side hustling while work is overdue...\n\nYou're ignoring the deadline.\n\nStress mounting.\n\n-1 duck", "money": 0, "ducks": 0})
-	else:
-		# Normal duck gain when not overdue
-		ducks += 1
+	event_occurred.emit({"text": "Built features for your side project.\n\nProgress: +%d%%" % progress_gain, "money": 0, "ducks": 0})
 
 	return ActionOutcome.NORMAL
 

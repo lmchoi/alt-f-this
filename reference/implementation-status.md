@@ -9,10 +9,9 @@ Quick reference for what's built vs what's next.
 ### Core Actions
 - ✅ **WORK** - Makes progress, complexity + bugs affect speed
   - ✅ **Gold-plating protection** - Working at 100% shows cheeky message ("Stop gold-plating. Ship it.")
-- ⚠️ **HUSTLE** - Gives $200 immediately, +1 duck (or -1 if overdue). NEEDS UPDATE: escape progress system
+- ✅ **HUSTLE** - Builds side project progress (+10% per action), no duck effects
 - ✅ **SHIP IT** - Completes task, payment on payday (every 5 days)
 - ✅ **20% minimum** - Can't ship below 20% (cheeky messages)
-- ✅ **Deadline duck cost** - Hustle while overdue: -1 duck instead of +1 (prevents exploit)
 - ✅ **ActionOutcome system** - Actions return outcome enum to control turn flow (prevents bugs like double day advance)
 
 ### Resources
@@ -24,7 +23,8 @@ Quick reference for what's built vs what's next.
 - ✅ Days Until Payday (5-day cycle, tracked in GameManager)
 - ✅ Completed Tasks (tracked, shown in end game stats)
 - ✅ **Overdue Days** - Tracks days past deadline, fired at 3 days overdue
-- ❌ **MISSING:** Escape Progress (0-100%, for HUSTLE system)
+- ✅ **Side Project** - Progress (0-100%), product name, tracked in GameManager
+- ✅ **Side Project UI** - Panel showing project name and progress percentage
 
 ### Task System
 - ✅ Tasks from JSON with complexity (1-10)
@@ -45,9 +45,8 @@ Quick reference for what's built vs what's next.
 - ✅ Track production_outages, pip_warnings, total_blames
 
 ### Win/Lose Conditions
-- ✅ Victory at £5,000 (only path implemented)
-- ❌ **MISSING:** Victory at £3K + 75% escape
-- ❌ **MISSING:** Victory at £2K + 100% escape
+- ✅ Victory at £5,000 (corporate grind path)
+- ❌ **MISSING:** Victory at 100% side project (escape path)
 - ✅ Game over at 0 ducks (burnout)
 - ✅ Game over at 100+ bugs (death spiral)
 - ✅ Game over at 3 PIP warnings (fired - production outages)
@@ -59,6 +58,7 @@ Quick reference for what's built vs what's next.
 - ✅ Top bar (money, ducks, bugs, day) - separate component
 - ✅ Job info panel (job title, salary) - separate component
 - ✅ Task panel (title, complexity, deadline, progress) - separate component
+- ✅ **Side project panel** - Shows product name and progress percentage
 - ✅ **End game panel** - Shows ending type, message, and stats (from [data/endings.json](../data/endings.json))
 - ✅ Retro CRT terminal styling (dark grey/green)
 - ✅ Signal-driven updates (no direct UI modification)
