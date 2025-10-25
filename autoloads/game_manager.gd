@@ -295,6 +295,11 @@ func pick_up_new_task():
 func hustle() -> ActionOutcome:
 	print('hustle')
 
+	# Check if already complete
+	if side_project.progress >= 100:
+		event_occurred.emit({"text": "Side project is complete!\n\nNow you just need the money to escape...", "money": 0, "ducks": 0})
+		return ActionOutcome.DO_NOTHING
+
 	# Progress side project (10% per hustle)
 	var progress_gain = 10
 	side_project.progress = min(100, side_project.progress + progress_gain)

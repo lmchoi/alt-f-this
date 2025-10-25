@@ -78,6 +78,7 @@ func _setup_test_scenario():
 	# GameManager.poorly_shipped_tasks = ["Blockchain", "Logo Fix", "Printer Bug"]
 	# GameManager.money = 2000
 	# GameManager.ducks = 2
+	# GameManager.side_project.progress = 100
 	# GameManager.day = 10
 	# print("🔧 DEBUG TEST SCENARIO LOADED:")
 	# # print("  - Bugs: 60 (high outage chance)")
