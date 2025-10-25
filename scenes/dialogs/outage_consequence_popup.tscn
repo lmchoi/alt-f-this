@@ -1,23 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cbvx8j3k2m5qr"]
+[gd_scene load_steps=2 format=3 uid="uid://cbvx8j3k2m5qr"]
 
 [ext_resource type="Script" path="res://scenes/dialogs/outage_consequence_popup.gd" id="1_consequence"]
-[ext_resource type="Theme" path="res://themes/dialog_theme.tres" id="2_dialog_theme"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_outage_panel"]
-bg_color = Color(0.15, 0.05, 0.05, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.8, 0.1, 0.1, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-content_margin_left = 16.0
-content_margin_top = 16.0
-content_margin_right = 16.0
-content_margin_bottom = 16.0
+[ext_resource type="Theme" path="res://themes/outage_theme.tres" id="2_outage_theme"]
 
 [node name="OutageConsequencePopup" type="PopupPanel"]
 initial_position = 1
@@ -25,8 +9,7 @@ size = Vector2i(400, 150)
 transparent_bg = false
 visible = true
 transparent = false
-theme = ExtResource("2_dialog_theme")
-theme_override_styles/panel = SubResource("StyleBoxFlat_outage_panel")
+theme = ExtResource("2_outage_theme")
 script = ExtResource("1_consequence")
 
 [node name="ConsequenceMessage" type="Label" parent="."]
