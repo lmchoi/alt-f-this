@@ -4,16 +4,16 @@
 [ext_resource type="Theme" path="res://themes/main_theme.tres" id="2_main_theme"]
 
 [node name="JobInfo" type="PanelContainer"]
-custom_minimum_size = Vector2(0, 60)
+custom_minimum_size = Vector2(0, 32)
 theme = ExtResource("2_main_theme")
 script = ExtResource("1_job_info")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
 theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 15
+theme_override_constants/margin_top = 6
 theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 15
+theme_override_constants/margin_bottom = 6
 
 [node name="JobContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -21,9 +21,11 @@ layout_mode = 2
 [node name="JobTitleLabel" type="Label" parent="MarginContainer/JobContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Job Title: Junior Developer"
+theme_override_font_sizes/font_size = 14
+text = "JUNIOR DEVELOPER"
 
 [node name="SalaryLabel" type="Label" parent="MarginContainer/JobContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Salary: £100"
+theme_override_font_sizes/font_size = 14
+text = "Salary: $500/task"

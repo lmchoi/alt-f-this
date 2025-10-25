@@ -73,11 +73,6 @@ text = "0"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="JobLabel" type="Label" parent="HBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "Junior Developer"
-
 [node name="DayContainer" type="HBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 8
