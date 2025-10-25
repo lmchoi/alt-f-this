@@ -5,14 +5,12 @@ signal completion_choice(choice: String)
 func get_gold_plating_message() -> String:
 	"""Get random message for trying to work at 100% progress."""
 	var messages = [
-		"Stop gold-plating.\n\nIt's done. Ship it.",
-		"Perfectionism is procrastination.\n\nShip it already.",
-		"You're bikeshedding.\n\nIt works. Move on.",
-		"'Done' beats 'perfect'.\n\nShip it.",
-		"This is scope creep, but you're doing it to yourself.\n\nShip it.",
-		"The CEO doesn't care about your refactoring.\n\nShip it.",
-		"You're not paid to polish.\n\nShip it.",
-		"'Just one more thing' is how projects die.\n\nShip it."
+		"Task is at 100%.\n\nShip it or work on your side project.\nYou're burning daylight.",
+		"It's done. What are you doing?\n\nShip it and move on, or hustle.\nThe clock is ticking.",
+		"Stop gold-plating.\n\nIt's complete. Ship it or hustle.\nYou're wasting time.",
+		"Perfectionism is procrastination.\n\nShip this or build your escape.\nBoth pay better than this.",
+		"You're bikeshedding a completed task.\n\nShip it or hustle.\nYour deadline doesn't care.",
+		"The CEO won't notice your refactoring.\n\nShip it or work on your side project.\nTime is money.",
 	]
 	return messages[randi() % messages.size()]
 
@@ -25,7 +23,7 @@ func _ready():
 	add_button("HUSTLE", false, "hustle")
 
 func show_completion():
-	title = "Huh?"
+	title = "Task Complete (100%)"
 	dialog_text = get_gold_plating_message()
 
 	popup_centered()
