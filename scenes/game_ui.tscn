@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bkcqc3g6mk6ky"]
+[gd_scene load_steps=10 format=3 uid="uid://bkcqc3g6mk6ky"]
 
 [ext_resource type="Script" uid="uid://ccibd5kcuisnk" path="res://scenes/game_ui.gd" id="1_yubou"]
 [ext_resource type="Script" uid="uid://o4uecgfegpr2" path="res://scripts/ui/action_button.gd" id="2_rns2u"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" path="res://scenes/task_panel.tscn" id="3_taskpanel"]
 [ext_resource type="PackedScene" path="res://scenes/side_project_panel.tscn" id="4_sideproject"]
 [ext_resource type="PackedScene" uid="uid://b5nqygpy3h33x" path="res://scenes/dialogs/event_popup.tscn" id="4_u2dgd"]
+[ext_resource type="PackedScene" uid="uid://cbvx8j3k2m5qr" path="res://scenes/dialogs/outage_consequence_popup.tscn" id="5_outage_consequence"]
 [ext_resource type="Theme" path="res://themes/dialog_theme.tres" id="5_dialog_theme"]
 [ext_resource type="Script" uid="uid://c6kb37pd6cpiu" path="res://scenes/dialogs/deadline_dialog.gd" id="6_djwj0"]
 [ext_resource type="Script" uid="uid://c21qcpvp6sbak" path="res://scenes/dialogs/completion_dialog.gd" id="7_completion"]
@@ -104,6 +105,10 @@ metadata/_custom_type_script = "uid://o4uecgfegpr2"
 initial_position = 1
 visible = false
 
+[node name="OutageConsequencePopup" parent="." instance=ExtResource("5_outage_consequence")]
+unique_name_in_owner = true
+visible = false
+
 [node name="DeadlineDialog" type="AcceptDialog" parent="."]
 initial_position = 1
 size = Vector2i(500, 200)
@@ -120,6 +125,17 @@ script = ExtResource("7_completion")
 initial_position = 1
 size = Vector2i(500, 200)
 theme = ExtResource("5_dialog_theme")
+
+[node name="OutageRedOverlay" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0, 0, 0.3)
 
 [node name="OutageDialog" type="AcceptDialog" parent="."]
 initial_position = 1

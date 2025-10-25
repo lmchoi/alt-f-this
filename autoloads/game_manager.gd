@@ -30,6 +30,7 @@ signal missed_deadline()
 signal game_over(ending_type: String, stats: Dictionary)
 signal victory(stats: Dictionary)
 signal production_outage_occurred(task_name)
+signal outage_consequence(text)
 signal current_task_updated(task)
 signal task_progress_changed(progress)
 signal payday_occurred(amount)
@@ -86,6 +87,7 @@ var side_project := {
 
 var production_outages := 0  # Track total outages for firing (3 = fired)
 var poorly_shipped_tasks := []  # Tasks shipped at <50% (can trigger outages)
+var outage_in_progress := false  # Track if outage consequence is being shown
 
 # PIP and blame tracking
 var pip_warnings := 0  # 2 warnings = fired
@@ -150,6 +152,7 @@ func check_time_bombs():
 func trigger_production_outage(task_name: String):
 	"""Handle a production outage - the Papers Please 'terrorist exploded' moment."""
 	production_outages += 1
+	outage_in_progress = true
 
 	# Emit signal for UI to show outage dialog with choices
 	production_outage_occurred.emit(task_name)
@@ -165,7 +168,7 @@ func handle_outage_choice(choice: String):
 			if pip_warnings >= MAX_PIP_WARNINGS:
 				game_over.emit("fired_pip", get_game_stats())
 			else:
-				event_occurred.emit({"text": outage_messages["responsibility"]["first_pip"], "money": 0, "ducks": 0})
+				outage_consequence.emit(outage_messages["responsibility"]["first_pip"])
 
 		"scapegoat":
 			total_blames += 1
@@ -173,7 +176,7 @@ func handle_outage_choice(choice: String):
 				game_over.emit("company_collapse_scapegoat", get_game_stats())
 			else:
 				var message_key = "first" if total_blames == 1 else "second"
-				event_occurred.emit({"text": outage_messages[choice][message_key], "money": 0, "ducks": 0})
+				outage_consequence.emit(outage_messages[choice][message_key])
 
 		"systemic":
 			total_blames += 1
@@ -181,9 +184,13 @@ func handle_outage_choice(choice: String):
 				game_over.emit("company_collapse_systemic", get_game_stats())
 			else:
 				var message_key = "first" if total_blames == 1 else "second"
-				event_occurred.emit({"text": outage_messages[choice][message_key], "money": 0, "ducks": 0})
+				outage_consequence.emit(outage_messages[choice][message_key])
 
-	# Check daily events after day advance
+	# Day advance happens in UI after consequence popup dismissed (see game_ui.gd)
+
+func finish_outage_turn():
+	"""Called after outage consequence popup is dismissed to advance the day."""
+	outage_in_progress = false
 	advance_turn()
 
 func check_victory():

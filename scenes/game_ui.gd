@@ -16,10 +16,12 @@ func _ready():
 	GameManager.game_over.connect(_on_game_over)
 	GameManager.victory.connect(_on_victory)
 	GameManager.production_outage_occurred.connect(_on_production_outage)
+	GameManager.outage_consequence.connect(_on_outage_consequence)
 
 	$DeadlineDialog.custom_action.connect(_on_deadline_action)
 	$CompletionDialog.completion_choice.connect(_on_completion_choice)
 	$OutageDialog.outage_choice.connect(_on_outage_choice)
+	$"%OutageConsequencePopup".consequence_dismissed.connect(_on_outage_consequence_dismissed)
 
 	# Load end game panel
 	var EndGamePanelScene = load("res://scenes/end_game_panel.tscn")
@@ -45,6 +47,15 @@ func _on_event_occurred(event: Dictionary):
 	if event.text != "":
 		$EventPopup.show_event(event.text)
 
+func _on_outage_consequence(text: String):
+	# Show outage-specific consequence popup (with red styling)
+	$"%OutageConsequencePopup".show_consequence(text)
+
+func _on_outage_consequence_dismissed():
+	# Clean up outage UI and advance the day
+	$"%OutageRedOverlay".visible = false
+	GameManager.finish_outage_turn()
+
 func _on_deadline_due():
 	$DeadlineDialog.popup()
 
@@ -59,9 +70,11 @@ func _on_deadline_action(action: String):
 	$DeadlineDialog.hide()
 
 func _on_production_outage(task_name: String):
+	$"%OutageRedOverlay".visible = true
 	$OutageDialog.show_outage(task_name)
 
 func _on_outage_choice(choice: String):
+	# Keep red overlay visible - will hide after consequence popup dismissed
 	GameManager.handle_outage_choice(choice)
 	$OutageDialog.hide()
 
@@ -74,8 +87,8 @@ func _on_completion_choice(action: String):
 
 func _setup_test_scenario():
 	"""Debug: Setup test scenario for production outage testing"""
-	# # GameManager.bugs = 60  # High bugs = high outage chance (60 × 0.5% × 3 = 90% daily)
-	# GameManager.poorly_shipped_tasks = ["Blockchain", "Logo Fix", "Printer Bug"]
+	GameManager.bugs = 60  # High bugs = high outage chance (60 × 0.5% × 3 = 90% daily)
+	GameManager.poorly_shipped_tasks = ["Blockchain", "Logo Fix", "Printer Bug"]
 	# GameManager.money = 2000
 	# GameManager.ducks = 2
 	# GameManager.side_project.progress = 100

@@ -1,16 +1,16 @@
 {
   "responsibility": {
-    "first_pip": "You take responsibility for the outage.\n\nManagement puts you on a Performance Improvement Plan.\n\n⚠️ One more PIP and you're out.",
+    "first_pip": "You take responsibility for the outage.\n\nManagement puts you on a Performance Improvement Plan.\n\nYou spent the day firefighting.\n\n⚠️ One more PIP and you're out.\n\n(No work progress today)",
     "fired": "You've received 2 PIP warnings.\n\nHR called you in for a 'conversation.'\n\nYou're fired.\n\n[Ending: Managed Out]"
   },
   "scapegoat": {
-    "first": "You blame the intern who just left.\n\nManagement seems satisfied... for now.",
-    "second": "You blame the intern who just left.\n\nManagement seems satisfied.\n\nBut the team morale feels... different.",
+    "first": "You blame the intern who just left.\n\nManagement seems satisfied... for now.\n\nYou spent the day firefighting.\n\n(No work progress today)",
+    "second": "You blame the intern who just left.\n\nManagement seems satisfied.\n\nBut the team morale feels... different.\n\nYou spent the day firefighting.\n\n(No work progress today)",
     "company_collapse": "The blame culture is toxic.\n\nEngineers are quitting en masse.\n\nInvestors pulled funding.\n\nThe company collapses.\n\n[Ending: Toxic Culture]"
   },
   "systemic": {
-    "first": "You blame impossible product requirements.\n\nManagement notes your complaint.",
-    "second": "You blame impossible product requirements.\n\nManagement notes your complaint.\n\nThe blame game is getting old.",
+    "first": "You blame impossible product requirements.\n\nManagement notes your complaint.\n\nYou spent the day firefighting.\n\n(No work progress today)",
+    "second": "You blame impossible product requirements.\n\nManagement notes your complaint.\n\nThe blame game is getting old.\n\nYou spent the day firefighting.\n\n(No work progress today)",
     "company_collapse": "The blame culture is toxic.\n\nEngineers are quitting en masse.\n\nInvestors pulled funding.\n\nThe company collapses.\n\n[Ending: Toxic Culture]"
   }
 }
