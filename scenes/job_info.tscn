@@ -11,7 +11,7 @@ border_width_right = 0
 border_width_bottom = 0
 
 [node name="JobInfo" type="PanelContainer"]
-custom_minimum_size = Vector2(0, 28)
+custom_minimum_size = Vector2(0, 22)
 theme = ExtResource("2_main_theme")
 theme_override_styles/panel = SubResource("StyleBoxFlat_job_info")
 script = ExtResource("1_job_info")
@@ -19,9 +19,9 @@ script = ExtResource("1_job_info")
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
 theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 4
+theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 4
+theme_override_constants/margin_bottom = 2
 
 [node name="JobContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
