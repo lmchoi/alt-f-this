@@ -35,6 +35,22 @@ Open project in Godot 4.5 and press F5. Main scene: [scenes/game_ui.tscn](scenes
 
 ## Architecture & Workflow
 
+### Font Size Hierarchy
+
+Consistent font sizing for readability. Base defaults in [themes/main_theme.tres](themes/main_theme.tres). Scene files override as needed.
+
+- **48px**: End game title (dramatic impact)
+- **32px**: Top bar stats (always visible, critical info)
+- **28px**: Task titles, dialog titles (primary headings)
+- **24px**: Progress percentage, deadline (high visibility metrics)
+- **22px**: Task description, action buttons (important actions)
+- **20px**: Base labels, metadata, badges (minimum readable size - theme default)
+
+To change font sizes:
+1. Update scene-specific overrides in .tscn files (e.g., [scenes/task_panel.tscn](scenes/task_panel.tscn))
+2. Update theme defaults in theme files
+3. Keep this hierarchy in sync with actual usage
+
 ### Incremental Implementation
 
 **IMPORTANT:** Break features into small, testable commits (20-100 lines, 1-3 files each).
