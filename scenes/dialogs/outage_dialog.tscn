@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://tcn5yq8brhx1"]
+
+[ext_resource type="Script" uid="uid://57tvoy16rd5j" path="res://scenes/dialogs/outage_dialog.gd" id="1_outage"]
+[ext_resource type="Theme" uid="uid://f4lrrcd0nn1k" path="res://themes/dialog_theme.tres" id="2_dialog_theme"]
+
+[node name="OutageDialog" type="AcceptDialog"]
+oversampling_override = 1.0
+initial_position = 1
+size = Vector2i(400, 250)
+theme = ExtResource("2_dialog_theme")
+script = ExtResource("1_outage")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 384.0
+offset_bottom = 188.0
+
+[node name="MessageLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Message will appear here"
+
+[node name="Spacer" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="ResponsibilityButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "I own this mistake."
+
+[node name="ScapegoatButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "The intern we just let go."
+
+[node name="SystemicButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Impossible product requirements."

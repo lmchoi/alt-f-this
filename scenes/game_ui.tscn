@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" path="res://scenes/dialogs/outage_consequence_popup.tscn" id="5_outage_consequence"]
 [ext_resource type="Script" uid="uid://c6kb37pd6cpiu" path="res://scenes/dialogs/deadline_dialog.gd" id="6_djwj0"]
 [ext_resource type="Script" uid="uid://c21qcpvp6sbak" path="res://scenes/dialogs/completion_dialog.gd" id="7_completion"]
-[ext_resource type="Script" uid="uid://57tvoy16rd5j" path="res://scenes/dialogs/outage_dialog.gd" id="7_e0pfi"]
+[ext_resource type="PackedScene" uid="uid://tcn5yq8brhx1" path="res://scenes/dialogs/outage_dialog.tscn" id="7_outage_dialog"]
 
 [node name="GameUI" type="CanvasLayer"]
 script = ExtResource("1_yubou")
@@ -177,8 +177,4 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 0, 0, 0.3)
 
-[node name="OutageDialog" type="AcceptDialog" parent="."]
-initial_position = 1
-size = Vector2i(500, 200)
-theme = ExtResource("5_dialog_theme")
-script = ExtResource("7_e0pfi")
+[node name="OutageDialog" parent="." instance=ExtResource("7_outage_dialog")]
