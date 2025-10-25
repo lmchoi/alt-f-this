@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bgkcmaeachwe4" path="res://scenes/task_panel.tscn" id="3_taskpanel"]
 [ext_resource type="PackedScene" uid="uid://c8y5kn7m2p3qr" path="res://scenes/side_project_panel.tscn" id="4_sideproject"]
 [ext_resource type="PackedScene" uid="uid://b5nqygpy3h33x" path="res://scenes/dialogs/event_popup.tscn" id="4_u2dgd"]
-[ext_resource type="Theme" path="res://themes/dialog_theme.tres" id="5_dialog_theme"]
+[ext_resource type="Theme" uid="uid://c4e4dhs8awvwo" path="res://themes/dialog_theme.tres" id="5_dialog_theme"]
 [ext_resource type="PackedScene" path="res://scenes/dialogs/outage_consequence_popup.tscn" id="5_outage_consequence"]
 [ext_resource type="Script" uid="uid://c6kb37pd6cpiu" path="res://scenes/dialogs/deadline_dialog.gd" id="6_djwj0"]
 [ext_resource type="Script" uid="uid://c21qcpvp6sbak" path="res://scenes/dialogs/completion_dialog.gd" id="7_completion"]
@@ -36,12 +36,12 @@ theme_override_constants/separation = 0
 layout_mode = 2
 
 [node name="JobInfo" parent="VBoxContainer" instance=ExtResource("3_jobinfo")]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 
 [node name="TaskPanelMargin" type="MarginContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 400)
 layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 20
@@ -49,9 +49,12 @@ theme_override_constants/margin_bottom = 10
 
 [node name="TaskPanel" parent="VBoxContainer/TaskPanelMargin" instance=ExtResource("3_taskpanel")]
 layout_mode = 2
+size_flags_vertical = 4
 
 [node name="SideProjectMargin" type="MarginContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
+size_flags_horizontal = 0
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 20
@@ -59,8 +62,10 @@ theme_override_constants/margin_bottom = 5
 
 [node name="SideProjectPanel" parent="VBoxContainer/SideProjectMargin" instance=ExtResource("4_sideproject")]
 layout_mode = 2
+size_flags_vertical = 4
 
 [node name="ActionButtonsMargin" type="MarginContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 5

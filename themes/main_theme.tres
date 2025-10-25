@@ -1,21 +1,5 @@
 [gd_resource type="Theme" load_steps=4 format=3 uid="uid://cep5kldx1nq32"]
 
-;; FONT SIZE HIERARCHY
-;; This theme defines base defaults. Scene files (.tscn) override specific elements as needed.
-;;
-;; Design System:
-;; - 48px: End game title (dramatic impact)
-;; - 32px: Top bar stats (always visible, critical info)
-;; - 28px: Task titles, dialog titles (primary headings)
-;; - 24px: Progress percentage, deadline (high visibility metrics)
-;; - 22px: Task description, action buttons (important actions)
-;; - 20px: Base labels, metadata, badges (minimum readable size - theme default)
-;;
-;; To change font sizes:
-;; 1. Update scene-specific overrides in .tscn files (e.g., scenes/task_panel.tscn)
-;; 2. Update theme defaults below (Label/Button font_sizes)
-;; 3. Keep this comment in sync with actual usage
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_standard"]
 bg_color = Color(0.1, 0.12, 0.1, 1)
 border_width_left = 2
