@@ -84,10 +84,10 @@ func _update_complexity_label(complexity: int):
 
 func _update_deadline_label(days_left: int):
 	if days_left < 0:
-		deadline_label.text = str(abs(days_left)) + " days overdue"
+		deadline_label.text = "⚡ " + str(abs(days_left)) + " days overdue ⚡"
 		deadline_label.add_theme_color_override("font_color", COLOR_RED)
 	elif days_left <= 1:
-		deadline_label.text = "Due in " + str(days_left) + " days"
+		deadline_label.text = "⚡ Due in " + str(days_left) + " days"
 		deadline_label.add_theme_color_override("font_color", COLOR_YELLOW)
 	else:
 		deadline_label.text = "Due in " + str(days_left) + " days"
