@@ -36,6 +36,16 @@ theme_override_constants/separation = 0
 [node name="TopBar" parent="VBoxContainer" instance=ExtResource("2_topbar")]
 layout_mode = 2
 
+[node name="SideProjectMargin" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+
+[node name="SideProjectPanel" parent="VBoxContainer/SideProjectMargin" instance=ExtResource("4_sideproject")]
+layout_mode = 2
+
+
 [node name="JobInfoMargin" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 20
@@ -52,15 +62,6 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 20
 
 [node name="TaskPanel" parent="VBoxContainer/TaskPanelMargin" instance=ExtResource("3_taskpanel")]
-layout_mode = 2
-
-[node name="SideProjectMargin" type="MarginContainer" parent="VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 20
-
-[node name="SideProjectPanel" parent="VBoxContainer/SideProjectMargin" instance=ExtResource("4_sideproject")]
 layout_mode = 2
 
 [node name="ActionButtons" type="HBoxContainer" parent="."]
