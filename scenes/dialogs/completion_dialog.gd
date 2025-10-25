@@ -1,6 +1,4 @@
-extends AcceptDialog
-
-signal completion_choice(choice: String)
+extends PopupPanel
 
 func get_gold_plating_message() -> String:
 	"""Get random message for trying to work at 100% progress."""
@@ -14,20 +12,6 @@ func get_gold_plating_message() -> String:
 	]
 	return messages[randi() % messages.size()]
 
-func _ready():
-	get_ok_button().hide()
-	custom_action.connect(_on_custom_action)
-
-	# Add choice buttons
-	add_button("SHIP & NEW TASK", false, "ship")
-	add_button("HUSTLE", false, "hustle")
-
 func show_completion():
-	title = "Task Complete (100%)"
-	dialog_text = get_gold_plating_message()
-
-	popup_centered()
-
-func _on_custom_action(action: String):
-	completion_choice.emit(action)
-	hide()
+	$CompletionMessage.text = get_gold_plating_message()
+	popup()

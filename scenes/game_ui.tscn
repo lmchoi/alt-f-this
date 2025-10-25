@@ -148,11 +148,23 @@ visible = false
 unique_name_in_owner = true
 visible = false
 
-[node name="CompletionDialog" type="AcceptDialog" parent="."]
+[node name="CompletionDialog" type="PopupPanel" parent="."]
 initial_position = 1
-size = Vector2i(500, 200)
+size = Vector2i(400, 150)
+transparent_bg = false
+visible = false
+transparent = false
 theme = ExtResource("5_dialog_theme")
 script = ExtResource("7_completion")
+
+[node name="CompletionMessage" type="Label" parent="CompletionDialog"]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 384.0
+offset_bottom = 134.0
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="GameOverDialog" type="ConfirmationDialog" parent="."]
 initial_position = 1

@@ -17,7 +17,6 @@ func _ready():
 	GameManager.production_outage_occurred.connect(_on_production_outage)
 	GameManager.outage_consequence.connect(_on_outage_consequence)
 
-	$CompletionDialog.completion_choice.connect(_on_completion_choice)
 	$OutageDialog.outage_choice.connect(_on_outage_choice)
 	$"%OutageConsequencePopup".consequence_dismissed.connect(_on_outage_consequence_dismissed)
 
@@ -71,10 +70,6 @@ func _on_outage_choice(choice: String):
 
 func _on_task_completed():
 	$CompletionDialog.show_completion()
-
-func _on_completion_choice(action: String):
-	GameManager.process_turn(action)
-	$CompletionDialog.hide()
 
 func _setup_test_scenario():
 	"""Debug: Setup test scenario for production outage testing"""
