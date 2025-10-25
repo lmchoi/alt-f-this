@@ -45,6 +45,7 @@ func _load_progress_indicators():
 func _ready():
 	_load_progress_indicators()
 	# Apply color palette
+	task_id_label.add_theme_color_override("font_color", COLOR_TEXT_STANDARD)
 	task_label.add_theme_color_override("font_color", COLOR_TEXT_STANDARD)
 	description_label.add_theme_color_override("font_color", COLOR_TEXT_STANDARD)
 	complexity_label.add_theme_color_override("font_color", COLOR_BRIGHT_GREEN)
