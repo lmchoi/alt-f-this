@@ -31,7 +31,7 @@ func show_game_over(ending_type: String, stats: Dictionary):
 
 func show_victory(stats: Dictionary):
 	"""Display victory screen with stats."""
-	var ending = endings_data.get("victory", {"title": "VICTORY!", "message": "You escaped!"})
+	var ending = endings_data.get("victory_escape", {"title": "ESCAPED!", "message": "You're free!"})
 
 	title_label.text = ending["title"]
 	message_label.text = ending["message"]
@@ -41,12 +41,15 @@ func show_victory(stats: Dictionary):
 
 func _format_stats(stats: Dictionary) -> String:
 	"""Format stats dictionary into display text."""
-	return "Tasks completed: %d\nDays survived: %d\nBugs: %d\nDucks: %d" % [
-		stats.get("tasks_completed", 0),
-		stats.get("days_survived", 0),
-		stats.get("bugs", 0),
-		stats.get("ducks", 0)
+	var lines = [
+		"Tasks completed: %d" % stats.get("tasks_completed", 0),
+		"Days survived: %d" % stats.get("days_survived", 0),
+		"Bugs: %d" % stats.get("bugs", 0),
+		"Ducks: %d" % stats.get("ducks", 0),
+		"Side Project: %d%%" % stats.get("side_project_progress", 0),
+		"Money: £%d" % stats.get("money", 0)
 	]
+	return "\n".join(lines)
 
 func _on_button_pressed():
 	action_pressed.emit()

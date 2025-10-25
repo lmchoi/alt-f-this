@@ -187,8 +187,8 @@ func handle_outage_choice(choice: String):
 	advance_turn()
 
 func check_victory():
-	"""Check if player has reached victory money goal."""
-	if money >= VICTORY_MONEY_GOAL:
+	"""Check if player has reached victory: need both £5K AND 100% side project."""
+	if money >= VICTORY_MONEY_GOAL and side_project.progress >= 100:
 		victory.emit(get_game_stats())
 
 func get_game_stats() -> Dictionary:
@@ -197,7 +197,9 @@ func get_game_stats() -> Dictionary:
 		"tasks_completed": completed_tasks,
 		"days_survived": day,
 		"bugs": bugs,
-		"ducks": ducks
+		"ducks": ducks,
+		"side_project_progress": side_project.progress,
+		"money": money
 	}
 
 func _trigger_random_work_event():

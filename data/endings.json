@@ -23,8 +23,8 @@
     "title": "Company Collapse",
     "message": "You blamed the system too many times.\n\nNothing changed.\n\nThe company collapsed under technical debt."
   },
-  "victory": {
-    "title": "VICTORY!",
-    "message": "You saved £5,000!\n\nYou quit with a dramatic email and escape to start your own company."
+  "victory_escape": {
+    "title": "ESCAPED!",
+    "message": "You saved £5,000. Your side project is complete.\n\nYou quit with a dramatic email.\n\nNo more corporate bullshit.\n\nYou're free."
   }
 }
