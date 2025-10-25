@@ -1,6 +1,7 @@
 extends Node
 
 var _tasks: Array = []
+var _next_task_id: int = 1000  # Start at ALT-1000
 
 func _ready() -> void:
 	load_tasks()
@@ -28,6 +29,11 @@ func get_random_task(today_date: int = 1, job_level: int = 0) -> Task:
 	var task_data = valid_tasks[randi() % valid_tasks.size()]
 	print("new task: " + task_data["title"] + " (complexity: " + str(task_data["complexity"]) + ")")
 	var new_task = Task.new()
+
+	# Generate JIRA-style task ID
+	new_task.task_id = "ALT-%d" % _next_task_id
+	_next_task_id += 1
+
 	new_task.title = task_data["title"]
 	new_task.description = task_data["description"]
 	new_task.flavor = task_data["flavor"]

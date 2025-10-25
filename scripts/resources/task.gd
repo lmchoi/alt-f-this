@@ -1,6 +1,7 @@
 class_name Task
 extends Resource
 
+@export var task_id := "ALT-0000"  # JIRA-style task ID
 @export var title := "Fix CEO's PowerPoint"
 @export var description := "The CEO needs this done ASAP"
 @export var flavor := ""  # e.g., "Design Hell", "Buzzword Compliance"
