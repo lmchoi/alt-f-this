@@ -4,19 +4,19 @@
 [ext_resource type="Theme" path="res://themes/main_theme.tres" id="2_main_theme"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_task_panel"]
-bg_color = Color(0.1, 0.12, 0.1, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.1, 0.45, 0.1, 1)
+bg_color = Color(0.145, 0.145, 0.149, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.243, 0.243, 0.259, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
-shadow_color = Color(0.1, 0.45, 0.1, 0.3)
-shadow_size = 4
-shadow_offset = Vector2(0, 2)
+shadow_color = Color(0, 0, 0, 0.2)
+shadow_size = 3
+shadow_offset = Vector2(0, 1)
 
 [node name="TaskPanel" type="PanelContainer"]
 theme = ExtResource("2_main_theme")
