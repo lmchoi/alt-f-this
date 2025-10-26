@@ -222,12 +222,31 @@ func _trigger_random_work_event():
 
 func advance_turn():
 	"""Advance day and check all daily events."""
+	check_victory()
+
+	# Check end game conditions once per turn
+	if ducks <= 0:
+		game_over.emit("burnout", get_game_stats())
+		return
+
+	if bugs >= MAX_BUGS_GAME_OVER:
+		game_over.emit("death_spiral", get_game_stats())
+		return
+
 	# Track days sitting at 100%
 	if current_task.progress >= 100:
 		days_at_100_percent += 1
 
 	# Advance to next day
 	day += 1
+
+
+	# Check if task is overdue and track days
+	if day > current_task.due_day:
+		overdue_days += 1
+		if overdue_days >= MAX_OVERDUE_DAYS:
+			game_over.emit("fired_deadline", get_game_stats())
+			return
 
 	# Check for payday
 	days_until_payday -= 1
@@ -239,23 +258,6 @@ func advance_turn():
 	# Check for production outages (time bombs)
 	check_time_bombs()
 
-	# Check if task is overdue and track days
-	if day > current_task.due_day:
-		overdue_days += 1
-		if overdue_days >= MAX_OVERDUE_DAYS:
-			game_over.emit("fired_deadline", get_game_stats())
-			return
-
-	# Check end game conditions once per turn
-	if ducks <= 0:
-		game_over.emit("burnout", get_game_stats())
-		return
-
-	if bugs >= MAX_BUGS_GAME_OVER:
-		game_over.emit("death_spiral", get_game_stats())
-		return
-
-	check_victory()
 
 func process_turn(action: String):
 	"""Complete turn cycle: execute action, advance day, check events."""
