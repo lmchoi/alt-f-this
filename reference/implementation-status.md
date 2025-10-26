@@ -25,6 +25,7 @@ Quick reference for what's built vs what's next.
 - ✅ **Overdue Days** - Tracks days past deadline, fired at 3 days overdue
 - ✅ **Side Project** - Progress (0-100%), product name, tracked in GameManager
 - ✅ **Side Project UI** - Panel showing project name and progress percentage
+- ✅ **Clean Code Tokens** - Earned by shipping any task at 100%, shown in end game stats
 
 ### Task System
 - ✅ Tasks from JSON with complexity (1-10)
@@ -35,7 +36,10 @@ Quick reference for what's built vs what's next.
 - ✅ Progress bar (updates in real-time)
 - ✅ Quality messages on ship (rock_bottom → excellent)
 - ✅ "Too early to ship" messages
-- ⚠️ **Task categories** - Loaded from JSON but not used for game logic yet
+- ✅ **Task categories** - Critical, Optics, Tech Debt with special mechanics:
+  - **Critical**: Ship <80% → guaranteed outage next turn (via time bomb system)
+  - **Optics**: 1 day late → instant PIP (vs 3 days for normal tasks)
+  - **Tech Debt**: Bugs × 3 when shipped incomplete
 
 ### Production Outages
 - ✅ Ship <50% → time bomb (poorly_shipped_tasks array)
