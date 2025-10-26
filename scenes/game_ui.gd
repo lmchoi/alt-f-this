@@ -17,7 +17,6 @@ func _ready():
 	GameManager.victory.connect(_on_victory)
 	GameManager.production_outage_occurred.connect(_on_production_outage)
 	GameManager.outage_consequence.connect(_on_outage_consequence)
-	GameManager.pip_warning_occurred.connect(_on_pip_warning)
 
 	$OutageDialog.outage_choice.connect(_on_outage_choice)
 	$"%OutageConsequencePopup".consequence_dismissed.connect(_on_outage_consequence_dismissed)
@@ -48,11 +47,6 @@ func _on_event_occurred(event: Dictionary):
 
 func _on_outage_consequence(text: String):
 	# Show outage-specific consequence popup (with red styling)
-	$"%OutageConsequencePopup".show_consequence(text)
-
-func _on_pip_warning(text: String):
-	# Show PIP warning with same dramatic styling as outage consequence
-	# But don't pause turn (no red overlay, no finish_outage_turn call)
 	$"%OutageConsequencePopup".show_consequence(text)
 
 func _on_outage_consequence_dismissed():
