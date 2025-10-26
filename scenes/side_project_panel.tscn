@@ -37,7 +37,7 @@ theme_override_constants/separation = 6
 [node name="HeaderLabel" type="Label" parent="MarginContainer/MainContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
-text = "🚀 ESCAPE PLAN: Project Banana"
+text = "🚀 ESCAPE PLAN"
 
 [node name="ProgressLabel" type="Label" parent="MarginContainer/MainContainer"]
 unique_name_in_owner = true

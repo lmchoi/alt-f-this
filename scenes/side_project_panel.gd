@@ -16,5 +16,5 @@ func _on_side_project_updated(data: Dictionary):
 	_update_display(data)
 
 func _update_display(data: Dictionary):
-	header_label.text = "🚀 ESCAPE PLAN: " + data.product_name
+	header_label.text = "🚀 ESCAPE PLAN"
 	progress_label.text = "Progress: %d%%" % data.progress

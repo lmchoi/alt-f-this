@@ -77,7 +77,6 @@ var bugs := 0:
 
 # Side project state
 var side_project := {
-	"product_name": "Project Banana",
 	"progress": 0  # 0-100, escape progress
 }:
 	set(value):
