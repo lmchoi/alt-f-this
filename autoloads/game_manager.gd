@@ -40,6 +40,7 @@ signal payday_occurred(amount)
 signal task_completed_awaiting_choice()
 signal side_project_updated(side_project_data)
 signal pip_warnings_changed(count)
+signal clean_code_tokens_changed(count)
 
 var current_task: Task:
 	set(value):
@@ -99,6 +100,10 @@ var pip_warnings := 0:  # 2 warnings = fired
 		pip_warnings = value
 		pip_warnings_changed.emit(pip_warnings)
 var total_blames := 0  # 3 blames = company collapse
+var clean_code_tokens := 0:  # Earned by shipping tech debt at 100%
+	set(value):
+		clean_code_tokens = value
+		clean_code_tokens_changed.emit(clean_code_tokens)
 var blame_stats := {
 	"responsibility": 0,  # Took personal responsibility
 	"scapegoat": 0,       # Blamed others
@@ -229,7 +234,8 @@ func get_game_stats() -> Dictionary:
 		"bugs": bugs,
 		"ducks": ducks,
 		"side_project_progress": side_project.progress,
-		"money": money
+		"money": money,
+		"clean_code_tokens": clean_code_tokens
 	}
 
 func _trigger_random_work_event():
