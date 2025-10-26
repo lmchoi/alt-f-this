@@ -35,6 +35,7 @@ signal task_progress_changed(progress)
 signal payday_occurred(amount)
 signal task_completed_awaiting_choice()
 signal side_project_updated(side_project_data)
+signal pip_warnings_changed(count)
 
 var current_task: Task:
 	set(value):
@@ -88,7 +89,10 @@ var poorly_shipped_tasks := []  # Tasks shipped at <50% (can trigger outages)
 var outage_in_progress := false  # Track if outage consequence is being shown
 
 # PIP and blame tracking
-var pip_warnings := 0  # 2 warnings = fired
+var pip_warnings := 0:  # 2 warnings = fired
+	set(value):
+		pip_warnings = value
+		pip_warnings_changed.emit(pip_warnings)
 var total_blames := 0  # 3 blames = company collapse
 var blame_stats := {
 	"responsibility": 0,  # Took personal responsibility

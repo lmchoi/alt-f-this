@@ -55,3 +55,10 @@ text = "🐛"
 unique_name_in_owner = true
 layout_mode = 2
 text = "0"
+
+[node name="PIPIndicator" type="Label" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+text = "⚠️ ON PIP"
+modulate = Color(1, 1, 1, 0)
