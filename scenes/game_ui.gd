@@ -52,8 +52,7 @@ func _on_outage_consequence(text: String):
 
 func _on_pip_warning(text: String):
 	# Show PIP warning with dramatic outage styling
-	$"%PIPWarningPopup/WarningMessage".text = text
-	$"%PIPWarningPopup".popup()
+	$"%PipWarningPopup".show_warning(text)
 
 func _on_outage_consequence_dismissed():
 	# Clean up outage UI and advance the day
