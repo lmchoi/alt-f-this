@@ -4,6 +4,7 @@ const COLOR_ESCAPE_GOLD = Color(0.9, 0.7, 0.3, 1)  # Hopeful gold/amber
 const COLOR_PROGRESS = Color(0.7, 0.85, 0.7, 1)    # Soft green
 
 @onready var header_label = $MarginContainer/MainContainer/HeaderLabel
+@onready var progress_bar = %ProgressBar
 @onready var progress_label = %ProgressLabel
 
 func _ready():
@@ -17,4 +18,5 @@ func _on_side_project_updated(data: Dictionary):
 
 func _update_display(data: Dictionary):
 	header_label.text = "🚀 ESCAPE PLAN"
+	progress_bar.value = data.progress
 	progress_label.text = "Progress: %d%%" % data.progress
