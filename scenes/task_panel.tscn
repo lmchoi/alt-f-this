@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bgkcmaeachwe4"]
+[gd_scene load_steps=10 format=3 uid="uid://bgkcmaeachwe4"]
 
 [ext_resource type="Script" uid="uid://d32w28r7nfax5" path="res://scenes/task_panel.gd" id="1_task_panel"]
 [ext_resource type="Theme" uid="uid://buaicsh0r3xyc" path="res://themes/main_theme.tres" id="2_main_theme"]
@@ -17,6 +17,8 @@ corner_radius_bottom_left = 6
 shadow_color = Color(0.4, 0.4, 0.45, 0.3)
 shadow_size = 4
 shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pbk26"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_progress_bg"]
 bg_color = Color(0.05, 0.05, 0.08, 1)
@@ -46,18 +48,6 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ship_it_hover"]
-bg_color = Color(0.15, 0.15, 0.18, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.85, 0.85, 0.9, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ship_it_pressed"]
 bg_color = Color(0.75, 0.75, 0.8, 0.3)
 border_width_left = 2
@@ -70,7 +60,20 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ship_it_hover"]
+bg_color = Color(0.15, 0.15, 0.18, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85, 0.85, 0.9, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
 [node name="TaskPanel" type="PanelContainer"]
+custom_minimum_size = Vector2(400, 0)
 theme = ExtResource("2_main_theme")
 theme_override_styles/panel = SubResource("StyleBoxFlat_task_panel")
 script = ExtResource("1_task_panel")
@@ -84,7 +87,6 @@ theme_override_constants/margin_bottom = 15
 
 [node name="MainContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 12
 
 [node name="HeaderRow" type="HBoxContainer" parent="MarginContainer/MainContainer"]
 layout_mode = 2
@@ -93,44 +95,64 @@ theme_override_constants/separation = 10
 [node name="TaskIdLabel" type="Label" parent="MarginContainer/MainContainer/HeaderRow"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 24
 text = "ALT-1000"
 
 [node name="TaskLabel" type="Label" parent="MarginContainer/MainContainer/HeaderRow"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 24
 text = "Fix CEO's PowerPoint"
-autowrap_mode = 3
+clip_text = true
 
 [node name="HeaderBadgeContainer" type="HBoxContainer" parent="MarginContainer/MainContainer/HeaderRow"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 6
 
-[node name="DescriptionLabel" type="Label" parent="MarginContainer/MainContainer"]
+[node name="Separator" type="HSeparator" parent="MarginContainer/MainContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="DescriptonBoxContainer" type="VBoxContainer" parent="MarginContainer/MainContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="DescriptionLabel" type="Label" parent="MarginContainer/MainContainer/DescriptonBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_font_sizes/font_size = 22
 text = "Description goes here"
+vertical_alignment = 1
 autowrap_mode = 3
+clip_text = true
 
-[node name="ComplexityLabel" type="Label" parent="MarginContainer/MainContainer"]
+[node name="ComplexityLabel" type="Label" parent="MarginContainer/MainContainer/DescriptonBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Complexity: 🍝"
 
-[node name="DeadlineLabel" type="Label" parent="MarginContainer/MainContainer"]
+[node name="Separator2" type="HSeparator" parent="MarginContainer/MainContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+theme_override_styles/separator = SubResource("StyleBoxEmpty_pbk26")
+
+[node name="ProgressVBoxContainer" type="VBoxContainer" parent="MarginContainer/MainContainer"]
+layout_mode = 2
+
+[node name="DeadlineLabel" type="Label" parent="MarginContainer/MainContainer/ProgressVBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Due in 5 days"
 horizontal_alignment = 1
 
-[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/MainContainer"]
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/MainContainer/ProgressVBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
@@ -138,7 +160,7 @@ size_flags_vertical = 1
 theme_override_styles/background = SubResource("StyleBoxFlat_progress_bg")
 theme_override_styles/fill = SubResource("StyleBoxFlat_progress_fill")
 
-[node name="ShipItIndicator" type="Label" parent="MarginContainer/MainContainer"]
+[node name="ShipItIndicator" type="Label" parent="MarginContainer/MainContainer/ProgressVBoxContainer"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -146,16 +168,21 @@ size_flags_horizontal = 3
 text = "⚠ SHIP IT available (risky!)"
 horizontal_alignment = 1
 
+[node name="Separator3" type="HSeparator" parent="MarginContainer/MainContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+theme_override_styles/separator = SubResource("StyleBoxEmpty_pbk26")
+
 [node name="ShipItButton" type="Button" parent="MarginContainer/MainContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_colors/font_color = Color(0.75, 0.75, 0.8, 1)
-theme_override_colors/font_hover_color = Color(0.85, 0.85, 0.9, 1)
 theme_override_colors/font_pressed_color = Color(0.95, 0.95, 1, 1)
+theme_override_colors/font_hover_color = Color(0.85, 0.85, 0.9, 1)
 theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_ship_it_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_ship_it_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ship_it_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ship_it_hover")
 text = "🚨 SHIP IT"

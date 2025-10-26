@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bkcqc3g6mk6ky"]
+[gd_scene load_steps=21 format=3 uid="uid://bkcqc3g6mk6ky"]
 
 [ext_resource type="Script" uid="uid://ccibd5kcuisnk" path="res://scenes/game_ui.gd" id="1_yubou"]
 [ext_resource type="Theme" uid="uid://buaicsh0r3xyc" path="res://themes/main_theme.tres" id="2_main_theme"]
@@ -73,8 +73,8 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_work_hover"]
-bg_color = Color(0.1, 0.1, 0.12, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_work_pressed"]
+bg_color = Color(0.75, 0.75, 0.8, 0.2)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -85,8 +85,8 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_work_pressed"]
-bg_color = Color(0.75, 0.75, 0.8, 0.2)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_work_hover"]
+bg_color = Color(0.1, 0.1, 0.12, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -216,12 +216,12 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.75, 0.75, 0.8, 1)
-theme_override_colors/font_disabled_color = Color(0.75, 0.75, 0.8, 0.5)
-theme_override_colors/font_hover_color = Color(0.85, 0.85, 0.9, 1)
 theme_override_colors/font_pressed_color = Color(0.9, 0.9, 0.95, 1)
+theme_override_colors/font_hover_color = Color(0.85, 0.85, 0.9, 1)
+theme_override_colors/font_disabled_color = Color(0.75, 0.75, 0.8, 0.5)
 theme_override_styles/normal = SubResource("StyleBoxFlat_work_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_work_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_work_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_work_hover")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_work_disabled")
 text = "DO 🐵 JOB"
 script = ExtResource("2_rns2u")
