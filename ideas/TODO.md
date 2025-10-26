@@ -16,6 +16,7 @@
 2. Add event dialog for caught/lie/ignore choices
 3. Random event when beg for mercy
 4. Need indicator for time bombs?
+5. ~~Implement task category mechanics (Critical/Optics/Tech Debt)~~ ✅ DONE
 
 ---
 
