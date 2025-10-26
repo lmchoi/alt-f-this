@@ -1,8 +1,5 @@
 extends PanelContainer
 
-const COLOR_JOB_GREY = Color(0.75, 0.75, 0.8, 1)    # Header - silver/bright grey
-const COLOR_JOB_INFO = Color(0.6, 0.75, 0.85, 1)    # Info - corporate blue
-
 @onready var job_title := $MarginContainer/VBoxContainer/JobTitleLabel
 @onready var salary_label := $"%SalaryLabel"
 @onready var bugs_icon := $MarginContainer/VBoxContainer/BugsContainer/BugsIcon
@@ -11,10 +8,10 @@ const COLOR_JOB_INFO = Color(0.6, 0.75, 0.85, 1)    # Info - corporate blue
 
 func _ready():
 	# Apply color theme
-	job_title.add_theme_color_override("font_color", COLOR_JOB_GREY)
-	salary_label.add_theme_color_override("font_color", COLOR_JOB_INFO)
-	bugs_icon.add_theme_color_override("font_color", COLOR_JOB_INFO)
-	bugs_value.add_theme_color_override("font_color", COLOR_JOB_INFO)
+	job_title.add_theme_color_override("font_color", UIColors.JOB_SILVER)
+	salary_label.add_theme_color_override("font_color", UIColors.JOB_INFO_BLUE)
+	bugs_icon.add_theme_color_override("font_color", UIColors.JOB_INFO_BLUE)
+	bugs_value.add_theme_color_override("font_color", UIColors.JOB_INFO_BLUE)
 
 	GameManager.bugs_changed.connect(_update_bugs)
 	GameManager.next_day.connect(_update_payday)
