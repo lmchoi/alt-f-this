@@ -34,8 +34,11 @@ const CATEGORY_STYLES = {
 @onready var deadline_label := $"%DeadlineLabel"
 @onready var progress_bar := $"%ProgressBar"
 @onready var ship_it_indicator := $"%ShipItIndicator"
+@onready var ship_it_button := $"%ShipItButton"
 
 var progress_indicators: Dictionary = {}
+
+signal ship_it_pressed
 
 func _load_progress_indicators():
 	var json_text = FileAccess.get_file_as_string("res://data/progress_indicators.json")
@@ -54,6 +57,10 @@ func _ready():
 	GameManager.current_task_updated.connect(_on_current_task_updated)
 	GameManager.next_day.connect(_on_next_day)
 	GameManager.task_progress_changed.connect(_update_progress)
+	ship_it_button.pressed.connect(_on_ship_it_pressed)
+
+func _on_ship_it_pressed():
+	ship_it_pressed.emit()
 
 func _on_current_task_updated(current_task: Task):
 	task_id_label.text = current_task.task_id

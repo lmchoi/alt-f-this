@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bgkcmaeachwe4"]
+[gd_scene load_steps=4 format=3 uid="uid://bgkcmaeachwe4"]
 
 [ext_resource type="Script" uid="uid://d32w28r7nfax5" path="res://scenes/task_panel.gd" id="1_task_panel"]
-[ext_resource type="Theme" path="res://themes/main_theme.tres" id="2_main_theme"]
+[ext_resource type="Theme" uid="uid://buaicsh0r3xyc" path="res://themes/main_theme.tres" id="2_main_theme"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_task_panel"]
 bg_color = Color(0.145, 0.145, 0.149, 1)
@@ -42,7 +42,6 @@ theme_override_constants/separation = 10
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
-
 text = "ALT-1000"
 
 [node name="TaskLabel" type="Label" parent="MarginContainer/MainContainer/HeaderRow"]
@@ -84,11 +83,19 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_vertical = 1
-show_percentage = true
 
 [node name="ShipItIndicator" type="Label" parent="MarginContainer/MainContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
+size_flags_horizontal = 3
 text = "⚠ SHIP IT available (risky!)"
 horizontal_alignment = 1
-visible = false
+
+[node name="ShipItButton" type="Button" parent="MarginContainer/MainContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 22
+text = "🚨 SHIP IT"

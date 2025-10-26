@@ -3,13 +3,14 @@ extends Node
 @onready var work_button := $"%WorkButton" as ActionButton
 @onready var slack_button := $"%SlackButton" as ActionButton
 @onready var ship_it_button := $"%ShipItButton" as ActionButton
+@onready var task_panel := $"%TaskPanel"
 
 var end_game_panel: Panel
 
 func _ready():
 	work_button.pressed.connect(_on_work_button_pressed)
 	slack_button.pressed.connect(_on_slack_button_pressed)
-	ship_it_button.pressed.connect(_on_ship_it_button_pressed)
+	task_panel.ship_it_pressed.connect(_on_ship_it_button_pressed)
 	GameManager.event_occurred.connect(_on_event_occurred)
 	GameManager.task_completed_awaiting_choice.connect(_on_task_completed)
 	GameManager.game_over.connect(_on_game_over)
