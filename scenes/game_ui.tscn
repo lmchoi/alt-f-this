@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://b5nqygpy3h33x" path="res://scenes/dialogs/event_popup.tscn" id="4_u2dgd"]
 [ext_resource type="Theme" uid="uid://f4lrrcd0nn1k" path="res://themes/dialog_theme.tres" id="5_dialog_theme"]
 [ext_resource type="PackedScene" path="res://scenes/dialogs/outage_consequence_popup.tscn" id="5_outage_consequence"]
+[ext_resource type="Theme" path="res://themes/outage_theme.tres" id="6_outage_theme"]
 [ext_resource type="Script" uid="uid://c21qcpvp6sbak" path="res://scenes/dialogs/completion_dialog.gd" id="7_completion"]
 [ext_resource type="PackedScene" uid="uid://tcn5yq8brhx1" path="res://scenes/dialogs/outage_dialog.tscn" id="7_outage_dialog"]
 
@@ -229,6 +230,24 @@ metadata/_custom_type_script = "uid://o4uecgfegpr2"
 
 [node name="EventPopup" parent="." instance=ExtResource("4_u2dgd")]
 visible = false
+
+[node name="PIPWarningPopup" type="PopupPanel" parent="."]
+unique_name_in_owner = true
+initial_position = 1
+size = Vector2i(400, 150)
+transparent_bg = false
+visible = false
+transparent = false
+theme = ExtResource("6_outage_theme")
+
+[node name="WarningMessage" type="Label" parent="PIPWarningPopup"]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 384.0
+offset_bottom = 134.0
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="OutageConsequencePopup" parent="." instance=ExtResource("5_outage_consequence")]
 unique_name_in_owner = true
