@@ -188,35 +188,27 @@ func finish_outage_turn():
 	outage_in_progress = false
 	advance_turn()
 
-func check_game_over():
-	"""Check if player has reached victory: need both £5K AND 100% side project."""
+func check_game_over() -> bool:
+	"""Check if player has reached victory or game over condition. Returns true if game ended."""
 	if money >= VICTORY_MONEY_GOAL and side_project.progress >= 100:
 		victory.emit(get_game_stats())
-		return
-
-	# Check end game conditions once per turn
-	if pip_warnings >= MAX_PIP_WARNINGS:
+	elif pip_warnings >= MAX_PIP_WARNINGS:
 		game_over.emit("fired_pip", get_game_stats())
-		return
-
-	if total_blames >= MAX_BLAMES:
+	elif total_blames >= MAX_BLAMES:
 		# Determine which type of blame caused collapse
 		# TODO: Could track which blame type caused the final strike instead
 		var ending = "company_collapse_scapegoat" if blame_stats["scapegoat"] > blame_stats["systemic"] else "company_collapse_systemic"
 		game_over.emit(ending, get_game_stats())
-		return
-
-	if ducks <= 0:
+	elif ducks <= 0:
 		game_over.emit("burnout", get_game_stats())
-		return
-
-	if bugs >= MAX_BUGS_GAME_OVER:
+	elif bugs >= MAX_BUGS_GAME_OVER:
 		game_over.emit("death_spiral", get_game_stats())
-		return
-
-	if overdue_days >= MAX_OVERDUE_DAYS and pip_warnings != 0:
+	elif overdue_days >= MAX_OVERDUE_DAYS and pip_warnings != 0:
 		game_over.emit("fired_deadline", get_game_stats())
-		return
+	else:
+		return false
+
+	return true
 
 func get_game_stats() -> Dictionary:
 	"""Generate stats dictionary for game over/victory screens."""
@@ -246,15 +238,20 @@ func advance_turn():
 	if day > current_task.due_day:
 		overdue_days += 1
 
-	check_game_over()
+	if check_game_over():
+		return
 
 	# Track days sitting at 100%
 	if current_task.progress >= 100:
 		days_at_100_percent += 1
 
-
 	if overdue_days >= MAX_OVERDUE_DAYS:
 		pip_warnings += 1
+		event_occurred.emit({
+			"text": "Task deadline missed by 3+ days.\n\n⚠️ PERFORMANCE IMPROVEMENT PLAN\n\nOne more violation = terminated.\n\n(Starting new task)",
+			"money": 0,
+			"ducks": 0
+		})
 		pick_up_new_task()
 
 	# Check for payday
