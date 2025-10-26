@@ -49,7 +49,8 @@ func _format_stats(stats: Dictionary) -> String:
 		"Bugs: %d" % stats.get("bugs", 0),
 		"Ducks: %d" % stats.get("ducks", 0),
 		"Side Project: %d%%" % stats.get("side_project_progress", 0),
-		"Money: £%d" % stats.get("money", 0)
+		"Money: £%d" % stats.get("money", 0),
+		"Clean Code Tokens: %d" % stats.get("clean_code_tokens", 0)
 	]
 	return "\n".join(lines)
 
