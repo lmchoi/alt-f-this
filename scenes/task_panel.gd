@@ -14,6 +14,7 @@ const BADGE_THEME = preload("res://themes/badge_theme.tres")
 const CATEGORY_STYLES = {
 	"critical": "CriticalBadge",
 	"optics": "OpticsBadge",
+	"tech_debt": "TechDebtBadge",
 	"technical": "TechnicalBadge",
 	"urgent": "UrgentBadge"
 }
