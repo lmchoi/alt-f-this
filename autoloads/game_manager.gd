@@ -30,6 +30,7 @@ signal game_over(ending_type: String, stats: Dictionary)
 signal victory(stats: Dictionary)
 signal production_outage_occurred(task_name)
 signal outage_consequence(text)
+signal pip_warning_occurred(text)
 signal current_task_updated(task)
 signal task_progress_changed(progress)
 signal payday_occurred(amount)
@@ -247,11 +248,7 @@ func advance_turn():
 
 	if overdue_days >= MAX_OVERDUE_DAYS:
 		pip_warnings += 1
-		event_occurred.emit({
-			"text": "Task deadline missed by 3+ days.\n\n⚠️ PERFORMANCE IMPROVEMENT PLAN\n\nOne more violation = terminated.\n\n(Starting new task)",
-			"money": 0,
-			"ducks": 0
-		})
+		pip_warning_occurred.emit("Task deadline missed by 3+ days.\n\n⚠️ PERFORMANCE IMPROVEMENT PLAN\n\nManagement is watching you closely.\n\nOne more violation = terminated.\n\n(Starting new task)")
 		pick_up_new_task()
 
 	# Check for payday
