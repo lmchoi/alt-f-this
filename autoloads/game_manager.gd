@@ -318,8 +318,8 @@ func hustle() -> ActionOutcome:
 		event_occurred.emit({"text": "Side project is complete!\n\nNow you just need the money to escape...", "money": 0, "ducks": 0})
 		return ActionOutcome.DO_NOTHING
 
-	# Progress side project (10% per hustle)
-	var progress_gain = 10
+	# Progress side project (5% per hustle)
+	var progress_gain = 5
 	side_project.progress = min(100, side_project.progress + progress_gain)
 	side_project_updated.emit(side_project)
 
