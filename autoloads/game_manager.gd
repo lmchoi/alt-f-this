@@ -89,7 +89,7 @@ var side_project := {
 		side_project_updated.emit(side_project)
 
 var production_outages := 0  # Track total outages for firing (3 = fired)
-var poorly_shipped_tasks := []  # Tasks shipped at <50% (can trigger outages)
+var poorly_shipped_tasks := []  # Tasks shipped at <50% or critical <80% (can trigger outages). Array of {name: String, is_critical: bool}
 var outage_in_progress := false  # Track if outage consequence is being shown
 var last_outage_choice := ""  # Track the most recent outage blame choice
 
@@ -145,16 +145,23 @@ func check_time_bombs():
 	if poorly_shipped_tasks.size() == 0:
 		return  # No poorly shipped tasks = no outages possible
 
-	# Outage chance = (bugs × 0.5%) per poorly shipped task
+	# Check for critical task outages first (guaranteed)
+	for task_data in poorly_shipped_tasks:
+		if task_data.is_critical:
+			trigger_production_outage(task_data.name)
+			poorly_shipped_tasks.erase(task_data)
+			return  # Only one outage per turn
+
+	# Regular time bombs: outage chance = (bugs × 0.5%) per poorly shipped task
 	# Example: 60 bugs × 3 bad tasks = 90% daily chance
 	var outage_chance = bugs * OUTAGE_CHANCE_PER_BUG * poorly_shipped_tasks.size()
 
 	if randf() < outage_chance:
 		# Pick a random poorly shipped task to blame
-		var task_name = poorly_shipped_tasks.pick_random()
-		trigger_production_outage(task_name)
+		var task_data = poorly_shipped_tasks.pick_random()
+		trigger_production_outage(task_data.name)
 		# Remove so it can't trigger again
-		poorly_shipped_tasks.erase(task_name)
+		poorly_shipped_tasks.erase(task_data)
 
 func trigger_production_outage(task_name: String):
 	"""Handle a production outage - the Papers Please 'terrorist exploded' moment."""
@@ -358,21 +365,20 @@ func ship_it() -> ActionOutcome:
 	print('ship it at %d%%' % current_task.progress)
 
 	var progress = current_task.progress
-
-	# Critical tasks: shipping <80% triggers immediate outage
-	if current_task.categories.has("critical") and progress < CRITICAL_OUTAGE_THRESHOLD:
-		trigger_production_outage(current_task.title)
-		pick_up_new_task()
-		return ActionOutcome.DO_NOTHING  # Outage flow handles day advance
+	var is_critical = current_task.categories.has("critical")
 
 	# Calculate bugs to add: (100 - progress) / 10
 	var bugs_to_add = (100 - progress) / BUGS_PER_INCOMPLETE_PERCENT
 	add_bugs(int(bugs_to_add))
 
 	# Track poorly shipped tasks (can cause outages later)
-	if progress < POOR_QUALITY_THRESHOLD:
-		poorly_shipped_tasks.append(current_task.title)
-		print("⚠️ Poor quality ship: '%s' added to outage risk pool" % current_task.title)
+	# Critical: <80%, Normal: <50%
+	var is_poorly_shipped = (is_critical and progress < CRITICAL_OUTAGE_THRESHOLD) or (progress < POOR_QUALITY_THRESHOLD)
+
+	if is_poorly_shipped:
+		poorly_shipped_tasks.append({"name": current_task.title, "is_critical": is_critical})
+		var threshold = int(CRITICAL_OUTAGE_THRESHOLD) if is_critical else POOR_QUALITY_THRESHOLD
+		print("⚠️ Poor quality ship: '%s' added to outage risk pool (critical: %s, threshold: %d%%)" % [current_task.title, is_critical, threshold])
 
 	pick_up_new_task()
 
