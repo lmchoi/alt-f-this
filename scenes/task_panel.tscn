@@ -4,19 +4,71 @@
 [ext_resource type="Theme" uid="uid://buaicsh0r3xyc" path="res://themes/main_theme.tres" id="2_main_theme"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_task_panel"]
-bg_color = Color(0.145, 0.145, 0.149, 1)
+bg_color = Color(0.12, 0.12, 0.15, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.6, 0.6, 0.65, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0.4, 0.4, 0.45, 0.3)
+shadow_size = 4
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_progress_bg"]
+bg_color = Color(0.05, 0.05, 0.08, 1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.243, 0.243, 0.259, 1)
+border_color = Color(0.4, 0.4, 0.45, 0.6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_progress_fill"]
+bg_color = Color(0.6, 0.75, 0.85, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.6, 0.75, 0.85, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ship_it_normal"]
+bg_color = Color(0.12, 0.12, 0.15, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.75, 0.75, 0.8, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
-shadow_color = Color(0, 0, 0, 0.2)
-shadow_size = 3
-shadow_offset = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ship_it_hover"]
+bg_color = Color(0.15, 0.15, 0.18, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85, 0.85, 0.9, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ship_it_pressed"]
+bg_color = Color(0.75, 0.75, 0.8, 0.3)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85, 0.85, 0.9, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="TaskPanel" type="PanelContainer"]
 theme = ExtResource("2_main_theme")
@@ -83,6 +135,8 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_progress_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_progress_fill")
 
 [node name="ShipItIndicator" type="Label" parent="MarginContainer/MainContainer"]
 unique_name_in_owner = true
@@ -97,5 +151,11 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 8
+theme_override_colors/font_color = Color(0.75, 0.75, 0.8, 1)
+theme_override_colors/font_hover_color = Color(0.85, 0.85, 0.9, 1)
+theme_override_colors/font_pressed_color = Color(0.95, 0.95, 1, 1)
 theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_ship_it_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ship_it_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ship_it_pressed")
 text = "🚨 SHIP IT"

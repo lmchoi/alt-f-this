@@ -1,16 +1,19 @@
 extends PanelContainer
 
-# Color palette - adjust these to change UI theme
-const COLOR_BRIGHT_GREEN = Color(0.2, 0.8, 0.2, 1)    # Gameplay info (default)
+# Job panel color theme (silver/grey/corporate)
+const COLOR_JOB_GREY = Color(0.75, 0.75, 0.8, 1)    # Header - silver/bright grey
+const COLOR_JOB_INFO = Color(0.6, 0.75, 0.85, 1)    # Info - corporate blue
+
+# Status colors
+const COLOR_GREEN = Color(0.2, 0.8, 0.2, 1)           # Success, ready to ship
 const COLOR_YELLOW = Color(0.8, 0.8, 0.2, 1)          # Warnings, urgency
 const COLOR_ORANGE = Color(0.8, 0.4, 0.2, 1)          # Bugs, problems
 const COLOR_RED = Color(0.8, 0.2, 0.2, 1)             # Critical, overdue
-const COLOR_TEXT_STANDARD = Color(0.85, 0.85, 0.85, 1) # Standard readable text
 const COLOR_TEXT_SUBDUED = Color(0.7, 0.7, 0.7, 1)    # Less important but still readable
 
 # Color name mapping for JSON data
 const COLOR_MAP = {
-	"green": COLOR_BRIGHT_GREEN,
+	"green": COLOR_GREEN,
 	"yellow": COLOR_YELLOW,
 	"orange": COLOR_ORANGE,
 	"red": COLOR_RED,
@@ -46,13 +49,13 @@ func _load_progress_indicators():
 
 func _ready():
 	_load_progress_indicators()
-	# Apply color palette
-	task_id_label.add_theme_color_override("font_color", COLOR_TEXT_STANDARD)
-	task_label.add_theme_color_override("font_color", COLOR_TEXT_STANDARD)
-	description_label.add_theme_color_override("font_color", COLOR_TEXT_STANDARD)
-	complexity_label.add_theme_color_override("font_color", COLOR_BRIGHT_GREEN)
+	# Apply job color theme
+	task_id_label.add_theme_color_override("font_color", COLOR_JOB_GREY)
+	task_label.add_theme_color_override("font_color", COLOR_JOB_GREY)
+	description_label.add_theme_color_override("font_color", COLOR_JOB_INFO)
+	complexity_label.add_theme_color_override("font_color", COLOR_JOB_INFO)
 	ship_it_indicator.add_theme_color_override("font_color", COLOR_YELLOW)
-	progress_bar.add_theme_color_override("font_color", COLOR_BRIGHT_GREEN)
+	progress_bar.add_theme_color_override("font_color", COLOR_JOB_INFO)
 
 	GameManager.current_task_updated.connect(_on_current_task_updated)
 	GameManager.next_day.connect(_on_next_day)
@@ -95,7 +98,7 @@ func _update_deadline_label(days_left: int):
 		deadline_label.add_theme_color_override("font_color", COLOR_YELLOW)
 	else:
 		deadline_label.text = "Due in " + str(days_left) + " days"
-		deadline_label.add_theme_color_override("font_color", COLOR_BRIGHT_GREEN)
+		deadline_label.add_theme_color_override("font_color", COLOR_JOB_INFO)
 
 func _update_progress(progress: float):
 	progress_bar.value = progress
@@ -121,7 +124,7 @@ func _update_progress(progress: float):
 			ship_it_indicator.text = indicator_data["text"]
 
 		# Map color name to actual color
-		var color = COLOR_MAP.get(indicator_data["color"], COLOR_TEXT_STANDARD)
+		var color = COLOR_MAP.get(indicator_data["color"], COLOR_JOB_INFO)
 		ship_it_indicator.add_theme_color_override("font_color", color)
 
 		ship_it_indicator.visible = true
