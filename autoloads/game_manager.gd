@@ -382,6 +382,10 @@ func ship_it() -> ActionOutcome:
 
 	add_bugs(int(bugs_to_add))
 
+	# Reward clean code: earn token for shipping at 100%
+	if progress >= 100:
+		clean_code_tokens += 1
+
 	# Track poorly shipped tasks (can cause outages later)
 	# Critical: <80%, Normal: <50%
 	var is_poorly_shipped = (is_critical and progress < CRITICAL_OUTAGE_THRESHOLD) or (progress < POOR_QUALITY_THRESHOLD)

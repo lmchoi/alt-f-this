@@ -80,7 +80,7 @@ func _on_task_completed():
 func _setup_test_scenario():
 	"""Debug: Setup test scenario for production outage testing"""
 	# GameManager.bugs = 60  # High bugs = high outage chance (60 × 0.5% × 3 = 90% daily)
-	# GameManager.poorly_shipped_tasks = ["Blockchain", "Logo Fix", "Printer Bug"]
+	# GameManager.poorly_shipped_tasks = [{"name": "Blockchain", "is_critical": false}, {"name": "Logo Fix", "is_critical": false}, {"name": "Printer Bug", "is_critical": false}]
 	# GameManager.money = 2000
 	# GameManager.ducks = 2
 	# GameManager.side_project.progress = 100
@@ -92,15 +92,3 @@ func _setup_test_scenario():
 	# print("  - Ducks: 2")
 	# print("  - Day: 10")
 	# print("  → Outage should trigger soon! (~90% chance per day)")
-
-	# TEST TECH DEBT: Force a tech_debt task
-	var test_task = Task.new()
-	test_task.task_id = "ALT-TEST"
-	test_task.title = "Migrate to New API (Breaking Changes)"
-	test_task.complexity = 4
-	test_task.due_day = GameManager.day + 7
-	var categories_array: Array[String] = ["tech_debt"]
-	test_task.categories = categories_array
-	GameManager.current_task = test_task
-	GameManager.bugs = 0
-	print("🔧 DEBUG: Tech Debt task loaded → Ship at 50% to see 3x bug multiplication")
