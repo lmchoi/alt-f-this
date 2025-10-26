@@ -92,3 +92,15 @@ func _setup_test_scenario():
 	# print("  - Ducks: 2")
 	# print("  - Day: 10")
 	# print("  → Outage should trigger soon! (~90% chance per day)")
+
+	# TEST TECH DEBT: Force a tech_debt task
+	var test_task = Task.new()
+	test_task.task_id = "ALT-TEST"
+	test_task.title = "Migrate to New API (Breaking Changes)"
+	test_task.complexity = 4
+	test_task.due_day = GameManager.day + 7
+	var categories_array: Array[String] = ["tech_debt"]
+	test_task.categories = categories_array
+	GameManager.current_task = test_task
+	GameManager.bugs = 0
+	print("🔧 DEBUG: Tech Debt task loaded → Ship at 50% to see 3x bug multiplication")
