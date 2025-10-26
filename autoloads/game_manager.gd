@@ -359,6 +359,12 @@ func ship_it() -> ActionOutcome:
 
 	var progress = current_task.progress
 
+	# Critical tasks: shipping <80% triggers immediate outage
+	if current_task.categories.has("critical") and progress < CRITICAL_OUTAGE_THRESHOLD:
+		trigger_production_outage(current_task.title)
+		pick_up_new_task()
+		return ActionOutcome.DO_NOTHING  # Outage flow handles day advance
+
 	# Calculate bugs to add: (100 - progress) / 10
 	var bugs_to_add = (100 - progress) / BUGS_PER_INCOMPLETE_PERCENT
 	add_bugs(int(bugs_to_add))
