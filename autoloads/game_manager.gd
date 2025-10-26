@@ -214,7 +214,7 @@ func check_game_over():
 		game_over.emit("death_spiral", get_game_stats())
 		return
 
-	if overdue_days >= MAX_OVERDUE_DAYS:
+	if overdue_days >= MAX_OVERDUE_DAYS and pip_warnings != 0:
 		game_over.emit("fired_deadline", get_game_stats())
 		return
 
@@ -240,17 +240,22 @@ func _trigger_random_work_event():
 
 func advance_turn():
 	"""Advance day and check all daily events."""
+	# Advance to next day
+	day += 1
+
+	if day > current_task.due_day:
+		overdue_days += 1
+
 	check_game_over()
 
 	# Track days sitting at 100%
 	if current_task.progress >= 100:
 		days_at_100_percent += 1
 
-	# Advance to next day
-	day += 1
 
-	if day > current_task.due_day:
-		overdue_days += 1
+	if overdue_days >= MAX_OVERDUE_DAYS:
+		pip_warnings += 1
+		pick_up_new_task()
 
 	# Check for payday
 	days_until_payday -= 1
