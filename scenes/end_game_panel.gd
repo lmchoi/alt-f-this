@@ -3,16 +3,12 @@ extends Panel
 @onready var title_label := $"%TitleLabel"
 @onready var message_label := $"%MessageLabel"
 @onready var stats_label := $"%StatsLabel"
-@onready var button := $"%ActionButton"
 @onready var panel_container := $"PanelContainer"
 
 var endings_data: Dictionary = {}
 var is_victory: bool = false
 
-signal action_pressed
-
 func _ready():
-	button.pressed.connect(_on_button_pressed)
 	visible = false
 	_load_endings()
 
@@ -31,7 +27,6 @@ func show_game_over(ending_type: String, stats: Dictionary):
 	title_label.text = ending["title"]
 	message_label.text = ending["message"]
 	stats_label.text = _format_stats(stats)
-	button.text = "Rage Quit"
 	visible = true
 
 func show_victory(stats: Dictionary):
@@ -44,7 +39,6 @@ func show_victory(stats: Dictionary):
 	title_label.text = ending["title"]
 	message_label.text = ending["message"]
 	stats_label.text = _format_stats(stats)
-	button.text = "I'm Free!"
 	visible = true
 
 func _format_stats(stats: Dictionary) -> String:
@@ -86,7 +80,3 @@ func _apply_theme():
 		title_label.add_theme_color_override("font_color", Color(0.8, 0.2, 0.2, 1))
 
 	panel_container.add_theme_stylebox_override("panel", style)
-
-func _on_button_pressed():
-	action_pressed.emit()
-	get_tree().quit()

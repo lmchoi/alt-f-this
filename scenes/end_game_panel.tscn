@@ -86,11 +86,3 @@ Bugs: 45
 Ducks: 1"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="ActionButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 50)
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 22
-text = "Rage Quit"
