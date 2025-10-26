@@ -54,21 +54,6 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "2"
 
-[node name="BugsContainer" type="HBoxContainer" parent="HBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="BugsIcon" type="Label" parent="HBoxContainer/BugsContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "🐛"
-
-[node name="BugsValue" type="Label" parent="HBoxContainer/BugsContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "0"
-
 [node name="Spacer" type="Control" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3

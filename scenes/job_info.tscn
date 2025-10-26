@@ -1,7 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cjob_info"]
+[gd_scene load_steps=3 format=3 uid="uid://dhs52b5767yn3"]
 
-[ext_resource type="Script" path="res://scenes/job_info.gd" id="1_job_info"]
-[ext_resource type="Theme" path="res://themes/main_theme.tres" id="2_main_theme"]
+[ext_resource type="Script" uid="uid://cuftearj87vqs" path="res://scenes/job_info.gd" id="1_job_info"]
+[ext_resource type="Theme" uid="uid://buaicsh0r3xyc" path="res://themes/main_theme.tres" id="2_main_theme"]
 
 [node name="JobInfo" type="PanelContainer"]
 custom_minimum_size = Vector2(0, 60)
@@ -15,15 +15,27 @@ theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 15
 
-[node name="JobContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="JobTitleLabel" type="Label" parent="MarginContainer/JobContainer"]
+[node name="JobTitleLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Job Title: Junior Developer"
 
-[node name="SalaryLabel" type="Label" parent="MarginContainer/JobContainer"]
+[node name="SalaryLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Salary: £100"
+
+[node name="BugsContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BugsIcon" type="Label" parent="MarginContainer/VBoxContainer/BugsContainer"]
+layout_mode = 2
+text = "🐛"
+
+[node name="BugsValue" type="Label" parent="MarginContainer/VBoxContainer/BugsContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
