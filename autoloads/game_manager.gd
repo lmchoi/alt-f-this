@@ -188,10 +188,35 @@ func finish_outage_turn():
 	outage_in_progress = false
 	advance_turn()
 
-func check_victory():
+func check_game_over():
 	"""Check if player has reached victory: need both £5K AND 100% side project."""
 	if money >= VICTORY_MONEY_GOAL and side_project.progress >= 100:
 		victory.emit(get_game_stats())
+		return
+
+	# Check end game conditions once per turn
+	if pip_warnings >= MAX_PIP_WARNINGS:
+		game_over.emit("fired_pip", get_game_stats())
+		return
+
+	if total_blames >= MAX_BLAMES:
+		# Determine which type of blame caused collapse
+		# TODO: Could track which blame type caused the final strike instead
+		var ending = "company_collapse_scapegoat" if blame_stats["scapegoat"] > blame_stats["systemic"] else "company_collapse_systemic"
+		game_over.emit(ending, get_game_stats())
+		return
+
+	if ducks <= 0:
+		game_over.emit("burnout", get_game_stats())
+		return
+
+	if bugs >= MAX_BUGS_GAME_OVER:
+		game_over.emit("death_spiral", get_game_stats())
+		return
+
+	if overdue_days >= MAX_OVERDUE_DAYS:
+		game_over.emit("fired_deadline", get_game_stats())
+		return
 
 func get_game_stats() -> Dictionary:
 	"""Generate stats dictionary for game over/victory screens."""
@@ -215,27 +240,7 @@ func _trigger_random_work_event():
 
 func advance_turn():
 	"""Advance day and check all daily events."""
-	check_victory()
-
-	# Check end game conditions once per turn
-	if pip_warnings >= MAX_PIP_WARNINGS:
-		game_over.emit("fired_pip", get_game_stats())
-		return
-
-	if total_blames >= MAX_BLAMES:
-		# Determine which type of blame caused collapse
-		# TODO: Could track which blame type caused the final strike instead
-		var ending = "company_collapse_scapegoat" if blame_stats["scapegoat"] > blame_stats["systemic"] else "company_collapse_systemic"
-		game_over.emit(ending, get_game_stats())
-		return
-
-	if ducks <= 0:
-		game_over.emit("burnout", get_game_stats())
-		return
-
-	if bugs >= MAX_BUGS_GAME_OVER:
-		game_over.emit("death_spiral", get_game_stats())
-		return
+	check_game_over()
 
 	# Track days sitting at 100%
 	if current_task.progress >= 100:
@@ -244,13 +249,8 @@ func advance_turn():
 	# Advance to next day
 	day += 1
 
-
-	# Check if task is overdue and track days
 	if day > current_task.due_day:
 		overdue_days += 1
-		if overdue_days >= MAX_OVERDUE_DAYS:
-			game_over.emit("fired_deadline", get_game_stats())
-			return
 
 	# Check for payday
 	days_until_payday -= 1
