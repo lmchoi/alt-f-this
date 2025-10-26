@@ -137,8 +137,65 @@ const JOB_INFO = Color(0.6, 0.75, 0.85, 1)
 2. Move ship it button to task panel
 3. Restyle job panel and WORK button with grey/silver theme
 
+## Color Theme Refinement (Later Same Day)
+
+### Three Distinct Themes Established
+
+**Core UI (Gold/Blue)** - Universal HUD elements:
+- Screen background: Blue tint `Color(0.05, 0.08, 0.12, 1)` (was green)
+- Top bar: Dark `Color(0.08, 0.08, 0.1, 1)` with gold border `Color(0.9, 0.75, 0.3, 1)`
+- Money/Ducks: Gold text `Color(0.9, 0.75, 0.3, 1)` (escape resources)
+- Day: Silver text `Color(0.75, 0.75, 0.8, 1)` (job context)
+
+**Job/Work Theme (Silver/Blue-Grey)** - Corporate grind:
+- Task panel: `Color(0.12, 0.12, 0.15, 1)` with medium grey border `Color(0.6, 0.6, 0.65, 1)`
+- Job info panel: Same background with brighter silver border `Color(0.75, 0.75, 0.8, 1)`
+- WORK button: Pure grey backgrounds `Color(0.06, 0.06, 0.06)` with silver border/text
+- Theme: Cool, oppressive, corporate blue-grey
+
+**Escape/Side Project Theme (Gold/Warm)** - Freedom/banana theme:
+- Side project panel: Warm brown `Color(0.15, 0.12, 0.08, 1)`
+- HUSTLE button: Pure grey backgrounds `Color(0.06, 0.06, 0.06)` with gold border/text
+- Theme: Warm, hopeful, matches banana/monkey theme
+
+### Green Tint Removal
+Removed all green tints throughout UI:
+- Screen background: Green → Blue tint
+- Top bar: Green → Dark with subtle blue
+- HUSTLE button: Green backgrounds → Pure grey
+- Main theme still has green (unused legacy)
+
+### Button Unification
+Both WORK and HUSTLE now share:
+- Same neutral grey backgrounds (0.06 normal, 0.11 hover)
+- Only borders/text differ (silver vs gold)
+- Better contrast for both color schemes
+
+### Outstanding Items
+
+**End Game Panel** (`scenes/end_game_panel.tscn`):
+- Current: Green tint `Color(0.05, 0.08, 0.05, 0.95)` ⚠️
+- Suggested: Context-aware styling
+  - Victory: Gold theme with gold border
+  - Defeat: Dark theme with red border
+
+**Dialog Theme** (`themes/dialog_theme.tres`):
+- Current: Green theme ⚠️
+- Suggested: Core UI gold/blue as default
+  - Background: `Color(0.08, 0.08, 0.12, 1)`
+  - Border/Title: Gold `Color(0.9, 0.75, 0.3, 1)`
+  - Text: Silver `Color(0.75, 0.75, 0.8, 1)`
+  - Future: Specialized themes for job/escape dialogs
+
+### Commits Made (Color Theme)
+1. Apply gold/blue core UI theme and remove green tints
+2. Match WORK and HUSTLE button backgrounds
+3. Show green indicator when task is ready to ship
+
 ## Next Steps (Deferred)
 
-1. Complete theme refactor (centralize all colors)
-2. Add first-day tutorial popup
-3. Add deadline warning system
+1. Update dialog theme to core UI gold/blue
+2. Style end game panel (context-aware victory/defeat)
+3. Complete theme refactor (centralize all colors)
+4. Add first-day tutorial popup
+5. Add deadline warning system
