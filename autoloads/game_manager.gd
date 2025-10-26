@@ -87,6 +87,7 @@ var side_project := {
 var production_outages := 0  # Track total outages for firing (3 = fired)
 var poorly_shipped_tasks := []  # Tasks shipped at <50% (can trigger outages)
 var outage_in_progress := false  # Track if outage consequence is being shown
+var last_outage_choice := ""  # Track the most recent outage blame choice
 
 # PIP and blame tracking
 var pip_warnings := 0:  # 2 warnings = fired
@@ -161,33 +162,25 @@ func trigger_production_outage(task_name: String):
 
 func handle_outage_choice(choice: String):
 	"""Process the player's blame choice for a production outage."""
-	# Track blame statistics
+	# Track blame statistics and increment counters
 	blame_stats[choice] += 1
 
 	match choice:
 		"responsibility":
 			pip_warnings += 1
-			if pip_warnings >= MAX_PIP_WARNINGS:
-				game_over.emit("fired_pip", get_game_stats())
-			else:
-				outage_consequence.emit(outage_messages["responsibility"]["first_pip"])
+			outage_consequence.emit(outage_messages["responsibility"]["first_pip"])
 
 		"scapegoat":
 			total_blames += 1
-			if total_blames >= MAX_BLAMES:
-				game_over.emit("company_collapse_scapegoat", get_game_stats())
-			else:
-				var message_key = "first" if total_blames == 1 else "second"
-				outage_consequence.emit(outage_messages[choice][message_key])
+			var message_key = "first" if total_blames == 1 else "second"
+			outage_consequence.emit(outage_messages[choice][message_key])
 
 		"systemic":
 			total_blames += 1
-			if total_blames >= MAX_BLAMES:
-				game_over.emit("company_collapse_systemic", get_game_stats())
-			else:
-				var message_key = "first" if total_blames == 1 else "second"
-				outage_consequence.emit(outage_messages[choice][message_key])
+			var message_key = "first" if total_blames == 1 else "second"
+			outage_consequence.emit(outage_messages[choice][message_key])
 
+	# Game-ending conditions checked in advance_turn()
 	# Day advance happens in UI after consequence popup dismissed (see game_ui.gd)
 
 func finish_outage_turn():
@@ -225,6 +218,17 @@ func advance_turn():
 	check_victory()
 
 	# Check end game conditions once per turn
+	if pip_warnings >= MAX_PIP_WARNINGS:
+		game_over.emit("fired_pip", get_game_stats())
+		return
+
+	if total_blames >= MAX_BLAMES:
+		# Determine which type of blame caused collapse
+		# TODO: Could track which blame type caused the final strike instead
+		var ending = "company_collapse_scapegoat" if blame_stats["scapegoat"] > blame_stats["systemic"] else "company_collapse_systemic"
+		game_over.emit(ending, get_game_stats())
+		return
+
 	if ducks <= 0:
 		game_over.emit("burnout", get_game_stats())
 		return
