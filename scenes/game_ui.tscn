@@ -4,7 +4,7 @@
 [ext_resource type="Theme" uid="uid://buaicsh0r3xyc" path="res://themes/main_theme.tres" id="2_main_theme"]
 [ext_resource type="Script" uid="uid://o4uecgfegpr2" path="res://scripts/ui/action_button.gd" id="2_rns2u"]
 [ext_resource type="PackedScene" uid="uid://bvq8yh3xqw7ej" path="res://scenes/top_bar.tscn" id="2_topbar"]
-[ext_resource type="PackedScene" path="res://scenes/job_info.tscn" id="3_jobinfo"]
+[ext_resource type="PackedScene" uid="uid://dhs52b5767yn3" path="res://scenes/job_info.tscn" id="3_jobinfo"]
 [ext_resource type="PackedScene" uid="uid://bgkcmaeachwe4" path="res://scenes/task_panel.tscn" id="3_taskpanel"]
 [ext_resource type="PackedScene" uid="uid://c8y5kn7m2p3qr" path="res://scenes/side_project_panel.tscn" id="4_sideproject"]
 [ext_resource type="PackedScene" uid="uid://b5nqygpy3h33x" path="res://scenes/dialogs/event_popup.tscn" id="4_u2dgd"]
@@ -25,8 +25,8 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hustle_hover"]
-bg_color = Color(0.1, 0.12, 0.1, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hustle_pressed"]
+bg_color = Color(0.9, 0.7, 0.3, 0.2)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -37,8 +37,8 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hustle_pressed"]
-bg_color = Color(0.9, 0.7, 0.3, 0.2)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hustle_hover"]
+bg_color = Color(0.1, 0.12, 0.1, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -99,21 +99,22 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 
-[node name="BoxContainer" type="BoxContainer" parent="MainThemeContainer/VBoxContainer"]
+[node name="InfoMargin" type="MarginContainer" parent="MainThemeContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 6
-size_flags_stretch_ratio = 0.4
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
 
-[node name="SideProjectMargin" type="MarginContainer" parent="MainThemeContainer/VBoxContainer/BoxContainer"]
+[node name="InfoHBoxContainer" type="HBoxContainer" parent="MainThemeContainer/VBoxContainer/InfoMargin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="SideProjectPanel" parent="MainThemeContainer/VBoxContainer/InfoMargin/InfoHBoxContainer" instance=ExtResource("4_sideproject")]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 10
 
-[node name="SideProjectPanel" parent="MainThemeContainer/VBoxContainer/BoxContainer/SideProjectMargin" instance=ExtResource("4_sideproject")]
+[node name="JobInfo" parent="MainThemeContainer/VBoxContainer/InfoMargin/InfoHBoxContainer" instance=ExtResource("3_jobinfo")]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="JobMarginContainer" type="MarginContainer" parent="MainThemeContainer/VBoxContainer"]
 layout_mode = 2
@@ -124,20 +125,7 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainThemeContainer/VBoxContainer/JobMarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="JobInfoMargin" type="MarginContainer" parent="MainThemeContainer/VBoxContainer/JobMarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="JobInfo" parent="MainThemeContainer/VBoxContainer/JobMarginContainer/VBoxContainer/JobInfoMargin" instance=ExtResource("3_jobinfo")]
-layout_mode = 2
-
-[node name="TaskPanelMargin" type="MarginContainer" parent="MainThemeContainer/VBoxContainer/JobMarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="TaskPanel" parent="MainThemeContainer/VBoxContainer/JobMarginContainer/VBoxContainer/TaskPanelMargin" instance=ExtResource("3_taskpanel")]
+[node name="TaskPanel" parent="MainThemeContainer/VBoxContainer/JobMarginContainer" instance=ExtResource("3_taskpanel")]
 layout_mode = 2
 
 [node name="BottomSpacer" type="Control" parent="MainThemeContainer/VBoxContainer"]
@@ -163,12 +151,12 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9, 0.7, 0.3, 1)
-theme_override_colors/font_disabled_color = Color(0.9, 0.7, 0.3, 0.5)
-theme_override_colors/font_hover_color = Color(1, 0.8, 0.4, 1)
 theme_override_colors/font_pressed_color = Color(1, 0.85, 0.5, 1)
+theme_override_colors/font_hover_color = Color(1, 0.8, 0.4, 1)
+theme_override_colors/font_disabled_color = Color(0.9, 0.7, 0.3, 0.5)
 theme_override_styles/normal = SubResource("StyleBoxFlat_hustle_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_hustle_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_hustle_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hustle_hover")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_hustle_disabled")
 text = "REAL WORK
 (Side Project)"
@@ -204,10 +192,9 @@ unique_name_in_owner = true
 visible = false
 
 [node name="CompletionDialog" type="PopupPanel" parent="."]
+transparent_bg = false
 initial_position = 1
 size = Vector2i(400, 150)
-transparent_bg = false
-visible = false
 transparent = false
 theme = ExtResource("5_dialog_theme")
 script = ExtResource("7_completion")
