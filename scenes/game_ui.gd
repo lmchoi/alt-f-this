@@ -92,3 +92,15 @@ func _setup_test_scenario():
 	# print("  - Ducks: 2")
 	# print("  - Day: 10")
 	# print("  → Outage should trigger soon! (~90% chance per day)")
+
+	# # TEST CRITICAL: Force a critical task
+	# var test_task = Task.new()
+	# test_task.task_id = "ALT-TEST"
+	# test_task.title = "Fix Production Database Outage"
+	# test_task.complexity = 3
+	# test_task.due_day = GameManager.day + 3
+	# var categories_array: Array[String] = ["critical"]
+	# test_task.categories = categories_array
+	# GameManager.current_task = test_task
+	# GameManager.bugs = 10
+	# print("🔧 DEBUG: Critical task loaded → Ship at <80% to trigger guaranteed outage next turn")
