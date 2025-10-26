@@ -262,9 +262,12 @@ func advance_turn():
 	if current_task.progress >= 100:
 		days_at_100_percent += 1
 
-	if overdue_days >= MAX_OVERDUE_DAYS:
+	# Check for deadline PIP (optics = 1 day, others = 3 days)
+	var max_days = OPTICS_MAX_OVERDUE_DAYS if current_task.categories.has("optics") else MAX_OVERDUE_DAYS
+	if overdue_days >= max_days:
 		pip_warnings += 1
-		pip_warning_occurred.emit("Task deadline missed by 3+ days.\n\n⚠️ PERFORMANCE IMPROVEMENT PLAN\n\nManagement is watching you closely.\n\nOne more violation = terminated.\n\n(Starting new task)")
+		var days_text = "1 day" if max_days == 1 else "3+ days"
+		pip_warning_occurred.emit("Task deadline missed by %s.\n\n⚠️ PERFORMANCE IMPROVEMENT PLAN\n\nManagement is watching you closely.\n\nOne more violation = terminated.\n\n(Starting new task)" % days_text)
 		pick_up_new_task()
 
 	# Check for payday
