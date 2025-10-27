@@ -71,6 +71,11 @@ var current_task: Task:
 				first_optics_shown = true
 				var message = category_warnings["optics"]["message"]
 				optics_warning_shown.emit(message)
+			# Show critical warning on first critical task encounter
+			if not first_critical_shown and current_task.categories.has("critical"):
+				first_critical_shown = true
+				var message = category_warnings["critical"]["message"]
+				critical_warning_shown.emit(message)
 
 var days_at_100_percent := 0  # Track how long task has been sitting at 100%
 

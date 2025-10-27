@@ -22,13 +22,14 @@ func _ready():
 	GameManager.pip_warning_occurred.connect(_on_pip_warning)
 	GameManager.promotion_earned.connect(_on_promotion_earned)
 	GameManager.optics_warning_shown.connect(_on_optics_warning)
+	GameManager.critical_warning_shown.connect(_on_critical_warning)
 	GameManager.next_day.connect(_on_next_day)
 
 	$OutageDialog.outage_choice.connect(_on_outage_choice)
 	$"%OutageConsequencePopup".consequence_dismissed.connect(_on_outage_consequence_dismissed)
 	$PromotionDialog.promotion_dismissed.connect(_on_promotion_dismissed)
 	$CompletionDialog.popup_hide.connect(_on_completion_dialog_dismissed)
-	$OpticsWarningDialog.warning_acknowledged.connect(_on_optics_warning_acknowledged)
+	$OpticsWarningDialog.warning_acknowledged.connect(_on_category_warning_acknowledged)
 
 	TimedModeController.timer_expired.connect(_on_timer_expired)
 
@@ -124,8 +125,12 @@ func _on_optics_warning(message: String):
 	TimedModeController.pause_timer()
 	$OpticsWarningDialog.show_optics_warning(message)
 
-func _on_optics_warning_acknowledged():
-	# Resume timer after acknowledging optics warning
+func _on_critical_warning(message: String):
+	TimedModeController.pause_timer()
+	$OpticsWarningDialog.show_optics_warning(message)
+
+func _on_category_warning_acknowledged():
+	# Resume timer after acknowledging category warning (optics/critical)
 	TimedModeController.resume_timer()
 
 func _on_timer_expired():
