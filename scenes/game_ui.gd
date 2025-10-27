@@ -4,6 +4,8 @@ extends Node
 @onready var slack_button := $"%SlackButton" as ActionButton
 @onready var ship_it_button := $"%ShipItButton" as ActionButton
 @onready var task_panel := $"%TaskPanel"
+@onready var debug_mode_toggle := $"%DebugModeToggle"
+@onready var top_bar := $MainThemeContainer/VBoxContainer/TopBar
 
 var end_game_panel: Panel
 
@@ -26,6 +28,12 @@ func _ready():
 	$PromotionDialog.promotion_dismissed.connect(_on_promotion_dismissed)
 
 	TimedModeController.timer_expired.connect(_on_timer_expired)
+
+	# Debug: Show mode toggle in debug builds
+	if OS.is_debug_build():
+		debug_mode_toggle.visible = true
+		debug_mode_toggle.toggled.connect(_on_debug_mode_toggled)
+		debug_mode_toggle.button_pressed = (GameManager.game_mode == GameManager.GameMode.TIMED)
 
 	# Load end game panel
 	var EndGamePanelScene = load("res://scenes/end_game_panel.tscn")
@@ -112,6 +120,20 @@ func _on_next_day(_day: int):
 	"""Reset timer when advancing to next day in timed mode."""
 	if GameManager.game_mode == GameManager.GameMode.TIMED:
 		TimedModeController.reset_timer(GameManager.TIMED_MODE_DURATION)
+
+func _on_debug_mode_toggled(enabled: bool):
+	"""Debug: Toggle between classic and timed mode."""
+	if enabled:
+		GameManager.game_mode = GameManager.GameMode.TIMED
+		TimedModeController.start_timer(GameManager.TIMED_MODE_DURATION)
+		print("🎮 Switched to TIMED mode")
+	else:
+		GameManager.game_mode = GameManager.GameMode.CLASSIC
+		TimedModeController.stop_timer()
+		print("🎮 Switched to CLASSIC mode")
+
+	# Update top bar timer visibility
+	top_bar._update_timer_visibility()
 
 func _setup_test_scenario():
 	"""Debug: Setup test scenario for production outage testing"""
