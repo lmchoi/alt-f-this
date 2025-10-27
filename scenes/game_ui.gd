@@ -18,9 +18,11 @@ func _ready():
 	GameManager.production_outage_occurred.connect(_on_production_outage)
 	GameManager.outage_consequence.connect(_on_outage_consequence)
 	GameManager.pip_warning_occurred.connect(_on_pip_warning)
+	GameManager.promotion_earned.connect(_on_promotion_earned)
 
 	$OutageDialog.outage_choice.connect(_on_outage_choice)
 	$"%OutageConsequencePopup".consequence_dismissed.connect(_on_outage_consequence_dismissed)
+	$PromotionDialog.promotion_dismissed.connect(_on_promotion_dismissed)
 
 	# Load end game panel
 	var EndGamePanelScene = load("res://scenes/end_game_panel.tscn")
@@ -76,6 +78,13 @@ func _on_outage_choice(choice: String):
 
 func _on_task_completed():
 	$CompletionDialog.show_completion()
+
+func _on_promotion_earned(new_level: int, new_title: String, new_salary: int):
+	$PromotionDialog.show_promotion(new_title, new_salary)
+
+func _on_promotion_dismissed():
+	# Continue game after promotion dialog closes
+	pass
 
 func _setup_test_scenario():
 	"""Debug: Setup test scenario for production outage testing"""

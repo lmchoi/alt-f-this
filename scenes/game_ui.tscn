@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" path="res://scenes/dialogs/pip_warning_popup.tscn" id="6_pip_warning"]
 [ext_resource type="Script" uid="uid://c21qcpvp6sbak" path="res://scenes/dialogs/completion_dialog.gd" id="7_completion"]
 [ext_resource type="PackedScene" uid="uid://tcn5yq8brhx1" path="res://scenes/dialogs/outage_dialog.tscn" id="7_outage_dialog"]
+[ext_resource type="PackedScene" path="res://scenes/dialogs/promotion_dialog.tscn" id="8_promotion_dialog"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hustle_normal"]
 bg_color = Color(0.06, 0.06, 0.06, 1)
@@ -273,3 +274,5 @@ mouse_filter = 2
 color = Color(1, 0, 0, 0.3)
 
 [node name="OutageDialog" parent="." instance=ExtResource("7_outage_dialog")]
+
+[node name="PromotionDialog" parent="." instance=ExtResource("8_promotion_dialog")]
