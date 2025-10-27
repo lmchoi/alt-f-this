@@ -65,6 +65,11 @@ var current_task: Task:
 		current_task = value
 		if current_task:
 			current_task_updated.emit(current_task)
+			# Show optics warning on first optics task encounter
+			if not first_optics_shown and current_task.categories.has("optics"):
+				first_optics_shown = true
+				var message = category_warnings["optics"]["message"]
+				optics_warning_shown.emit(message)
 
 var days_at_100_percent := 0  # Track how long task has been sitting at 100%
 
@@ -131,6 +136,7 @@ var blame_stats := {
 
 var ship_messages: Dictionary = {}
 var outage_messages: Dictionary = {}
+var category_warnings: Dictionary = {}
 
 const WORK_EVENTS := [
 	{"text": "Boss says: 'We're a family.'", "ducks": -1, "money": 0},
@@ -141,6 +147,7 @@ const WORK_EVENTS := [
 func _ready():
 	load_ship_messages()
 	load_outage_messages()
+	load_category_warnings()
 
 func load_ship_messages():
 	var json_text = FileAccess.get_file_as_string("res://data/ship_messages.json")
@@ -149,6 +156,10 @@ func load_ship_messages():
 func load_outage_messages():
 	var json_text = FileAccess.get_file_as_string("res://data/outage_messages.json")
 	outage_messages = JSON.parse_string(json_text)
+
+func load_category_warnings():
+	var json_text = FileAccess.get_file_as_string("res://data/category_warnings.json")
+	category_warnings = JSON.parse_string(json_text)
 
 func get_bug_multiplier() -> float:
 	"""Returns slowdown multiplier based on current bugs.
