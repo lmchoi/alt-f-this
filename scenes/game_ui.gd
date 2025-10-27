@@ -19,10 +19,13 @@ func _ready():
 	GameManager.outage_consequence.connect(_on_outage_consequence)
 	GameManager.pip_warning_occurred.connect(_on_pip_warning)
 	GameManager.promotion_earned.connect(_on_promotion_earned)
+	GameManager.next_day.connect(_on_next_day)
 
 	$OutageDialog.outage_choice.connect(_on_outage_choice)
 	$"%OutageConsequencePopup".consequence_dismissed.connect(_on_outage_consequence_dismissed)
 	$PromotionDialog.promotion_dismissed.connect(_on_promotion_dismissed)
+
+	TimedModeController.timer_expired.connect(_on_timer_expired)
 
 	# Load end game panel
 	var EndGamePanelScene = load("res://scenes/end_game_panel.tscn")
@@ -30,6 +33,10 @@ func _ready():
 	add_child(end_game_panel)
 
 	GameManager.start_game()
+
+	# Start timer if in timed mode
+	if GameManager.game_mode == GameManager.GameMode.TIMED:
+		TimedModeController.start_timer(GameManager.TIMED_MODE_DURATION)
 
 	# Debug: Load test scenario in debug builds
 	if OS.is_debug_build():
@@ -85,6 +92,17 @@ func _on_promotion_earned(new_level: int, new_title: String, new_salary: int):
 func _on_promotion_dismissed():
 	# Continue game after promotion dialog closes
 	pass
+
+func _on_timer_expired():
+	"""Handle timer expiration in timed mode - auto-advance with WORK action."""
+	if GameManager.game_mode == GameManager.GameMode.TIMED:
+		print("⏱️ Timer expired - auto-advancing with WORK action")
+		GameManager.process_turn("work")
+
+func _on_next_day(_day: int):
+	"""Reset timer when advancing to next day in timed mode."""
+	if GameManager.game_mode == GameManager.GameMode.TIMED:
+		TimedModeController.reset_timer(GameManager.TIMED_MODE_DURATION)
 
 func _setup_test_scenario():
 	"""Debug: Setup test scenario for production outage testing"""
