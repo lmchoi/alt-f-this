@@ -58,6 +58,7 @@ signal clean_code_tokens_changed(count)
 signal promotion_earned(new_level: int, new_title: String, new_salary: int)
 signal optics_warning_shown(message: String)
 signal critical_warning_shown(message: String)
+signal tech_debt_warning_shown(message: String)
 
 var game_mode := GameMode.CLASSIC  # Current game mode (classic turn-based or timed)
 
@@ -91,6 +92,7 @@ var job_level := 0  # Index into JOB_TITLES/JOB_SALARIES
 var completed_tasks := 0
 var first_optics_shown := false  # Track if optics warning has been shown
 var first_critical_shown := false  # Track if critical warning has been shown
+var first_tech_debt_shown := false  # Track if tech_debt warning has been shown
 
 var money := 0:
 	set(value):
