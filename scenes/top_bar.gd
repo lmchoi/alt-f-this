@@ -29,7 +29,14 @@ func _update_day(day: int):
 
 func _update_timer(time_left: float):
 	"""Update timer display with current countdown value."""
-	timer_value.text = str(int(ceil(time_left))) + "s"
+	var seconds = int(ceil(time_left))
+	timer_value.text = str(seconds) + "s"
+
+	# Visual warning when timer is low (< 10 seconds)
+	if seconds <= 10 and seconds > 0:
+		timer_value.add_theme_color_override("font_color", UIColors.STATUS_RED)
+	else:
+		timer_value.add_theme_color_override("font_color", Color(0.9, 0.75, 0.3, 1))
 
 func _update_timer_visibility():
 	"""Show/hide timer based on game mode."""
