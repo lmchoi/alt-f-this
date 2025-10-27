@@ -17,10 +17,12 @@ func _ready():
 	GameManager.next_day.connect(_update_payday)
 	GameManager.payday_occurred.connect(_on_payday)
 	GameManager.pip_warnings_changed.connect(_update_pip_indicator)
+	GameManager.promotion_earned.connect(_update_job_title)
 
 	_update_bugs(GameManager.bugs)
 	_update_payday(GameManager.day)
 	_update_pip_indicator(GameManager.pip_warnings)
+	_update_job_title(GameManager.job_level, GameManager.get_job_title(), GameManager.get_current_salary())
 
 func _update_bugs(amount: int):
 	bugs_value.text = str(amount)
@@ -33,10 +35,15 @@ func _update_pip_indicator(warnings: int):
 
 func _update_payday(_day: int):
 	var days = GameManager.days_until_payday - 1
+	var salary = GameManager.get_current_salary()
 	if days == 1:
-		salary_label.text = "Payday: Tomorrow (£500)"
+		salary_label.text = "Payday: Tomorrow ($%d)" % salary
 	else:
-		salary_label.text = "Payday: %d days (£500)" % days
+		salary_label.text = "Payday: %d days ($%d)" % [days, salary]
 
 func _on_payday(_amount: int):
-	salary_label.text = "Payday: Today!!! (£500)"
+	var salary = GameManager.get_current_salary()
+	salary_label.text = "Payday: Today!!! ($%d)" % salary
+
+func _update_job_title(new_level: int, new_title: String, new_salary: int):
+	job_title.text = "🐵 JOB (%s)" % new_title
