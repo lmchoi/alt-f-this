@@ -77,6 +77,11 @@ var current_task: Task:
 				first_critical_shown = true
 				var message = category_warnings["critical"]["message"]
 				critical_warning_shown.emit(message)
+			# Show tech_debt warning on first tech_debt task encounter
+			if not first_tech_debt_shown and current_task.categories.has("tech_debt"):
+				first_tech_debt_shown = true
+				var message = category_warnings["tech_debt"]["message"]
+				tech_debt_warning_shown.emit(message)
 
 var days_at_100_percent := 0  # Track how long task has been sitting at 100%
 

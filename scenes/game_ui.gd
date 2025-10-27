@@ -23,6 +23,7 @@ func _ready():
 	GameManager.promotion_earned.connect(_on_promotion_earned)
 	GameManager.optics_warning_shown.connect(_on_optics_warning)
 	GameManager.critical_warning_shown.connect(_on_critical_warning)
+	GameManager.tech_debt_warning_shown.connect(_on_tech_debt_warning)
 	GameManager.next_day.connect(_on_next_day)
 
 	$OutageDialog.outage_choice.connect(_on_outage_choice)
@@ -129,8 +130,12 @@ func _on_critical_warning(message: String):
 	TimedModeController.pause_timer()
 	$OpticsWarningDialog.show_optics_warning(message)
 
+func _on_tech_debt_warning(message: String):
+	TimedModeController.pause_timer()
+	$OpticsWarningDialog.show_optics_warning(message)
+
 func _on_category_warning_acknowledged():
-	# Resume timer after acknowledging category warning (optics/critical)
+	# Resume timer after acknowledging category warning (optics/critical/tech_debt)
 	TimedModeController.resume_timer()
 
 func _on_timer_expired():
