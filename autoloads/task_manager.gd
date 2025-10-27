@@ -4,6 +4,7 @@ var _tasks: Array = []
 var _tutorial_tasks: Array = []
 var _next_task_id: int = 1000  # Start at ALT-1000
 var _current_tutorial_index: int = 0
+var _categories_encountered: Array[String] = []  # Track which categories player has seen
 
 func _ready() -> void:
 	load_tasks()
@@ -65,3 +66,13 @@ func get_random_task(today_date: int = 1, job_level: int = 0) -> Task:
 	new_task.categories = categories_array
 
 	return new_task
+
+func has_encountered_category(category: String) -> bool:
+	"""Check if player has encountered this category before."""
+	return _categories_encountered.has(category)
+
+func mark_category_encountered(category: String) -> void:
+	"""Mark a category as encountered by the player."""
+	if not _categories_encountered.has(category):
+		_categories_encountered.append(category)
+		print("Category encountered: %s" % category)
