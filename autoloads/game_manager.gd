@@ -46,6 +46,7 @@ signal task_completed_awaiting_choice()
 signal side_project_updated(side_project_data)
 signal pip_warnings_changed(count)
 signal clean_code_tokens_changed(count)
+signal promotion_earned(new_level: int, new_title: String, new_salary: int)
 
 var current_task: Task:
 	set(value):
@@ -335,6 +336,12 @@ func pick_up_new_task():
 	completed_tasks += 1
 	overdue_days = 0
 	days_at_100_percent = 0
+
+	# Check for promotion (every 10 tasks)
+	if completed_tasks % TASKS_PER_PROMOTION == 0 and job_level < JOB_TITLES.size() - 1:
+		job_level += 1
+		promotion_earned.emit(job_level, get_job_title(), get_current_salary())
+
 	current_task = TaskManager.get_random_task(day, job_level)
 
 func hustle() -> ActionOutcome:
