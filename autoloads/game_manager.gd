@@ -1,5 +1,11 @@
 extends Node
 
+# Game mode types
+enum GameMode {
+	CLASSIC,    # Turn-based: player clicks to advance
+	TIMED       # Real-time: auto-advance after timer expires
+}
+
 # Action outcome types
 enum ActionOutcome {
 	NORMAL,              # Advance turn normally
@@ -22,6 +28,9 @@ const MAX_OVERDUE_DAYS = 3
 const TECH_DEBT_BUG_MULTIPLIER = 3.0
 const CRITICAL_OUTAGE_THRESHOLD = 80.0
 const OPTICS_MAX_OVERDUE_DAYS = 1
+
+# Timed mode constants
+const TIMED_MODE_DURATION = 45.0  # Seconds per day in timed mode
 
 # Job level constants
 const JOB_TITLES = ["Junior Dev", "Mid-Level Dev", "Senior Dev"]
@@ -47,6 +56,8 @@ signal side_project_updated(side_project_data)
 signal pip_warnings_changed(count)
 signal clean_code_tokens_changed(count)
 signal promotion_earned(new_level: int, new_title: String, new_salary: int)
+
+var game_mode := GameMode.CLASSIC  # Current game mode (classic turn-based or timed)
 
 var current_task: Task:
 	set(value):
