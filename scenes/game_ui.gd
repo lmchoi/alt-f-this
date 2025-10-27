@@ -26,6 +26,7 @@ func _ready():
 	$OutageDialog.outage_choice.connect(_on_outage_choice)
 	$"%OutageConsequencePopup".consequence_dismissed.connect(_on_outage_consequence_dismissed)
 	$PromotionDialog.promotion_dismissed.connect(_on_promotion_dismissed)
+	$CompletionDialog.popup_hide.connect(_on_completion_dialog_dismissed)
 
 	TimedModeController.timer_expired.connect(_on_timer_expired)
 
@@ -52,12 +53,15 @@ func _ready():
 
 func _on_work_button_pressed():
 	GameManager.process_turn("work")
+	# Timer will reset via _on_next_day after turn processes
 
 func _on_slack_button_pressed():
 	GameManager.process_turn("hustle")
+	# Timer will reset via _on_next_day after turn processes
 
 func _on_ship_it_button_pressed():
 	GameManager.process_turn("ship")
+	# Timer will reset via _on_next_day after turn processes
 
 func _on_event_occurred(event: Dictionary):
 	if event.text != "":
@@ -108,6 +112,10 @@ func _on_promotion_earned(new_level: int, new_title: String, new_salary: int):
 
 func _on_promotion_dismissed():
 	# Continue game after promotion dialog closes
+	TimedModeController.resume_timer()
+
+func _on_completion_dialog_dismissed():
+	# Resume timer after dismissing gold-plating warning
 	TimedModeController.resume_timer()
 
 func _on_timer_expired():
