@@ -1,0 +1,49 @@
+{
+  "tutorial_tasks": [
+    {
+      "title": "Update Slack Status",
+      "description": "Set your Slack status to 'thriving' and upload a professional headshot to the company portal.",
+      "allowed_time": 2,
+      "complexity": 1,
+      "flavor": "Onboarding Ritual",
+      "categories": [],
+      "completion_text": "Profile updated. HR sends a congratulatory GIF. You are now officially Corporate."
+    },
+    {
+      "title": "Stop Reply-All Chain",
+      "description": "Someone replied-all to a company-wide email about free donuts. Now there are 147 replies. Make it stop.",
+      "allowed_time": 2,
+      "complexity": 1,
+      "flavor": "Email Purgatory",
+      "categories": [],
+      "completion_text": "Chain stopped. You sent reply #148 asking people to stop replying-all. Nobody sees the irony."
+    },
+    {
+      "title": "CEO Nephew's Website",
+      "description": "The CEO's nephew made a website in 2003. It needs to 'work on mobile.' The CEO will personally review your work.",
+      "allowed_time": 3,
+      "complexity": 2,
+      "flavor": "Nepotism Special",
+      "categories": ["optics"],
+      "completion_text": "Site now responsive. CEO's nephew gets credit for 'his vision.' You get a thank-you email (not from the CEO)."
+    },
+    {
+      "title": "Migrate Legacy Database",
+      "description": "Migrate the 15-year-old user database to the new system. Previous developer left comments like 'DO NOT TOUCH' and 'I'M SO SORRY.'",
+      "allowed_time": 4,
+      "complexity": 2,
+      "flavor": "Ominous Legacy Code",
+      "categories": ["tech_debt"],
+      "completion_text": "Migration complete. You didn't read all the warnings. Surely it's fine."
+    },
+    {
+      "title": "Payment Bug (Black Friday)",
+      "description": "The checkout sometimes charges customers twice. Sometimes not at all. Black Friday starts in 2 days. Legal is 'concerned.'",
+      "allowed_time": 3,
+      "complexity": 2,
+      "flavor": "High-Stakes Bug",
+      "categories": ["critical"],
+      "completion_text": "Bug patched. You tested it 47 times. Black Friday goes smoothly. Finance doesn't thank you."
+    }
+  ]
+}
