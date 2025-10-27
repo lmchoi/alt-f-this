@@ -15,7 +15,7 @@
       "allowed_time": 2,
       "complexity": 1,
       "flavor": "Trivial Busywork",
-      "categories": ["optics"],
+      "categories": [],
       "completion_text": "New password is 'password124'. You have achieved security."
     },
     {
@@ -24,7 +24,7 @@
       "allowed_time": 2,
       "complexity": 1,
       "flavor": "Pedantic Corrections",
-      "categories": ["optics"],
+      "categories": [],
       "completion_text": "Footer now says 'Copyright 2024'. Legal sends a thumbs-up emoji."
     },
     {
@@ -33,7 +33,7 @@
       "allowed_time": 4,
       "complexity": 2,
       "flavor": "Pixel-Perfect Hell",
-      "categories": ["optics"],
+      "categories": [],
       "completion_text": "Logo centered. Designer sleeps. You wonder if this is what your CS degree was for."
     },
     {
@@ -51,7 +51,7 @@
       "allowed_time": 4,
       "complexity": 2,
       "flavor": "IT Nightmares",
-      "categories": ["optics"],
+      "categories": [],
       "completion_text": "Found Jim from Accounting feeding the printer memes. He got a promotion for 'security awareness.'"
     },
     {
@@ -60,7 +60,7 @@
       "allowed_time": 2,
       "complexity": 1,
       "flavor": "Buzzword Compliance",
-      "categories": ["optics"],
+      "categories": [],
       "completion_text": "Button now says 'Go'. Conversion rate unchanged. PM claims victory anyway."
     },
     {
@@ -69,7 +69,7 @@
       "allowed_time": 4,
       "complexity": 2,
       "flavor": "UX Theater",
-      "categories": ["optics"],
+      "categories": [],
       "completion_text": "Spinner added. Users now watch a spinny circle instead of a blank screen. Problem solved."
     },
     {
@@ -87,7 +87,7 @@
       "allowed_time": 2,
       "complexity": 1,
       "flavor": "Marketing Lies",
-      "categories": ["optics"],
+      "categories": [],
       "completion_text": "Badge added. It's a PNG. Marketing sends champagne to the office."
     },
     {
@@ -141,7 +141,7 @@
       "allowed_time": 4,
       "complexity": 4,
       "flavor": "Fake AI",
-      "categories": ["optics"],
+      "categories": [],
       "completion_text": "Stickers now 'magically' appear when clicked. Client is thrilled. You feel dirty."
     },
     {
@@ -159,7 +159,7 @@
       "allowed_time": 6,
       "complexity": 5,
       "flavor": "Buzzword Compliance",
-      "categories": ["optics"],
+      "categories": [],
       "completion_text": "Added a button that says 'Blockchain Enabled!' It just plays mining sounds."
     },
     {
@@ -168,7 +168,7 @@
       "allowed_time": 6,
       "complexity": 5,
       "flavor": "Spreadsheet Suffering",
-      "categories": ["optics"],
+      "categories": [],
       "completion_text": "Macro works. CEO now wants it to also brew coffee. Your soul leaves your body."
     },
     {
