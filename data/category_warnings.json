@@ -1,5 +1,8 @@
 {
   "optics": {
     "message": "⚠️ OPTICS TASK\n\nThis task is being watched by management.\n\nPolitically sensitive work has tighter deadlines.\n\nYou have 3 days grace at your level.\nAt higher levels: only 1 day.\n\nProceed carefully."
+  },
+  "critical": {
+    "message": "🔥 CRITICAL TASK\n\nThis system is user-facing and mission-critical.\n\nShipping below 80% quality will cause production outages.\n\nAt your level: no consequences yet.\nAt Senior level: outages trigger blame cascades.\n\nDon't rush this."
   }
 }
