@@ -56,9 +56,7 @@ signal side_project_updated(side_project_data)
 signal pip_warnings_changed(count)
 signal clean_code_tokens_changed(count)
 signal promotion_earned(new_level: int, new_title: String, new_salary: int)
-signal optics_warning_shown(message: String)
-signal critical_warning_shown(message: String)
-signal tech_debt_warning_shown(message: String)
+signal category_warning_shown(message: String)
 
 var game_mode := GameMode.CLASSIC  # Current game mode (classic turn-based or timed)
 
@@ -73,14 +71,7 @@ var current_task: Task:
 					TaskManager.mark_category_encountered(category)
 					if category_warnings.has(category):
 						var message = category_warnings[category]["message"]
-						# Emit appropriate signal based on category
-						match category:
-							"optics":
-								optics_warning_shown.emit(message)
-							"critical":
-								critical_warning_shown.emit(message)
-							"tech_debt":
-								tech_debt_warning_shown.emit(message)
+						category_warning_shown.emit(message)
 
 var days_at_100_percent := 0  # Track how long task has been sitting at 100%
 
