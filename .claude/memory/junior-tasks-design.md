@@ -147,3 +147,53 @@ This approach:
 - Teaches mechanics through play
 - Fits the "junior protection" narrative
 - Creates smooth learning curve
+
+---
+
+## Management Promotion Ending
+
+**After Senior level (30 tasks total):** Instead of another promotion, player gets "promoted to management" = game over.
+
+### The Golden Handcuffs Ending
+
+**Type:** Bittersweet loss condition
+**Message:** "Promoted to Management"
+
+**Narrative:**
+- You completed 30 tasks and proved yourself as a Senior Dev
+- Company promotes you to Engineering Manager
+- You're now making $XXXX but can't code anymore
+- You're trapped in meetings, performance reviews, and corporate politics
+- You failed to escape before becoming "the man"
+
+**Flavor text ideas:**
+- "Congratulations! You're now responsible for OTHER people's bugs."
+- "Welcome to management. Your first meeting starts in 5 minutes. And never ends."
+- "You've become the very thing you swore to destroy."
+- "Golden handcuffs secured. The salary is great. The soul is dead."
+
+### Implementation Notes
+
+**Current state:**
+- Jr (0): Tasks 0-9 → Promote to Mid at task 10
+- Mid (1): Tasks 10-19 → Promote to Senior at task 20
+- Senior (2): Tasks 20-29 → ??? at task 30
+
+**Proposed:**
+- Senior (2): Tasks 20-29 → Management ending at task 30
+- Progress bar still shows at Senior level (different meaning now)
+- At 30 tasks: trigger `game_over("promoted_to_management", stats)` instead of promotion
+
+**Code changes needed:**
+- Modify promotion check to detect Senior → Management transition
+- Add "promoted_to_management" ending type to [scenes/end_game_panel.gd](scenes/end_game_panel.gd)
+- Write ending message for management trap
+- Keep progress bar visible at Senior (shows trap approaching)
+
+### Design Philosophy
+
+Fits the game's dark comedy:
+- **Papers Please parallel:** The "good ending" trap (like getting the nicer apartment but still trapped in Arstotzka)
+- **Corporate satire:** Success = becoming part of the problem
+- **True escape:** Must hit $5K + side project BEFORE 30 tasks
+- **Tension:** Racing against both money goal AND management promotion
