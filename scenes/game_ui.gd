@@ -57,41 +57,50 @@ func _on_event_occurred(event: Dictionary):
 
 func _on_outage_consequence(text: String):
 	# Show outage-specific consequence popup (with red styling)
+	TimedModeController.pause_timer()
 	$"%OutageConsequencePopup".show_consequence(text)
 
 func _on_pip_warning(text: String):
 	# Show PIP warning with dramatic outage styling
+	TimedModeController.pause_timer()
 	$"%PipWarningPopup".show_warning(text)
 
 func _on_outage_consequence_dismissed():
 	# Clean up outage UI and advance the day
 	$"%OutageRedOverlay".visible = false
 	GameManager.finish_outage_turn()
+	TimedModeController.resume_timer()
 
 func _on_game_over(ending_type: String, stats: Dictionary):
+	TimedModeController.stop_timer()
 	end_game_panel.show_game_over(ending_type, stats)
 
 func _on_victory(stats: Dictionary):
+	TimedModeController.stop_timer()
 	end_game_panel.show_victory(stats)
 
 func _on_production_outage(task_name: String):
+	TimedModeController.pause_timer()
 	$"%OutageRedOverlay".visible = true
 	$OutageDialog.show_outage(task_name)
 
 func _on_outage_choice(choice: String):
 	# Keep red overlay visible - will hide after consequence popup dismissed
+	# Timer stays paused until consequence is dismissed
 	GameManager.handle_outage_choice(choice)
 	$OutageDialog.hide()
 
 func _on_task_completed():
+	TimedModeController.pause_timer()
 	$CompletionDialog.show_completion()
 
 func _on_promotion_earned(new_level: int, new_title: String, new_salary: int):
+	TimedModeController.pause_timer()
 	$PromotionDialog.show_promotion(new_title, new_salary)
 
 func _on_promotion_dismissed():
 	# Continue game after promotion dialog closes
-	pass
+	TimedModeController.resume_timer()
 
 func _on_timer_expired():
 	"""Handle timer expiration in timed mode - auto-advance with WORK action."""
