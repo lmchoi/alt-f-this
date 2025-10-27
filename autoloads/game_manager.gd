@@ -23,6 +23,11 @@ const TECH_DEBT_BUG_MULTIPLIER = 3.0
 const CRITICAL_OUTAGE_THRESHOLD = 80.0
 const OPTICS_MAX_OVERDUE_DAYS = 1
 
+# Job level constants
+const JOB_TITLES = ["Junior Dev", "Mid-Level Dev", "Senior Dev"]
+const JOB_SALARIES = [300, 500, 800]
+const TASKS_PER_PROMOTION = 10
+
 signal next_day(nth)
 signal money_changed(amount)
 signal salary_changed(amount)
@@ -136,6 +141,14 @@ func get_bug_multiplier() -> float:
 	Each bug = 1% slower
 	"""
 	return 1.0 + (bugs * 0.01)
+
+func get_current_salary() -> int:
+	"""Returns salary for current job level."""
+	return JOB_SALARIES[job_level]
+
+func get_job_title() -> String:
+	"""Returns job title for current job level."""
+	return JOB_TITLES[job_level]
 
 func add_bugs(amount: int) -> void:
 	"""Add bugs from rushing or other sources."""
@@ -274,8 +287,9 @@ func advance_turn():
 	days_until_payday -= 1
 	if days_until_payday <= 0:
 		days_until_payday = PAYDAY_INTERVAL
-		money += PAYDAY_SALARY
-		payday_occurred.emit(PAYDAY_SALARY)
+		var salary_amount = get_current_salary()
+		money += salary_amount
+		payday_occurred.emit(salary_amount)
 
 	# Check for production outages (time bombs)
 	check_time_bombs()
