@@ -21,12 +21,14 @@ func _ready():
 	GameManager.outage_consequence.connect(_on_outage_consequence)
 	GameManager.pip_warning_occurred.connect(_on_pip_warning)
 	GameManager.promotion_earned.connect(_on_promotion_earned)
+	GameManager.optics_warning_shown.connect(_on_optics_warning)
 	GameManager.next_day.connect(_on_next_day)
 
 	$OutageDialog.outage_choice.connect(_on_outage_choice)
 	$"%OutageConsequencePopup".consequence_dismissed.connect(_on_outage_consequence_dismissed)
 	$PromotionDialog.promotion_dismissed.connect(_on_promotion_dismissed)
 	$CompletionDialog.popup_hide.connect(_on_completion_dialog_dismissed)
+	$OpticsWarningDialog.warning_acknowledged.connect(_on_optics_warning_acknowledged)
 
 	TimedModeController.timer_expired.connect(_on_timer_expired)
 
@@ -116,6 +118,14 @@ func _on_promotion_dismissed():
 
 func _on_completion_dialog_dismissed():
 	# Resume timer after dismissing gold-plating warning
+	TimedModeController.resume_timer()
+
+func _on_optics_warning(message: String):
+	TimedModeController.pause_timer()
+	$OpticsWarningDialog.show_optics_warning(message)
+
+func _on_optics_warning_acknowledged():
+	# Resume timer after acknowledging optics warning
 	TimedModeController.resume_timer()
 
 func _on_timer_expired():
