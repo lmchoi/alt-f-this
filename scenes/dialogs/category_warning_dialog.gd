@@ -2,7 +2,7 @@ extends PopupPanel
 
 signal warning_acknowledged()
 
-func show_optics_warning(message: String):
+func show_warning(message: String):
 	$WarningMessage.text = message
 	popup()
 

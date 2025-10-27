@@ -14,7 +14,7 @@
 [ext_resource type="Script" uid="uid://c21qcpvp6sbak" path="res://scenes/dialogs/completion_dialog.gd" id="7_completion"]
 [ext_resource type="PackedScene" uid="uid://tcn5yq8brhx1" path="res://scenes/dialogs/outage_dialog.tscn" id="7_outage_dialog"]
 [ext_resource type="PackedScene" path="res://scenes/dialogs/promotion_dialog.tscn" id="8_promotion_dialog"]
-[ext_resource type="PackedScene" uid="uid://optics_warning_dialog" path="res://scenes/dialogs/optics_warning_dialog.tscn" id="9_optics_warning"]
+[ext_resource type="PackedScene" uid="uid://category_warning_dialog" path="res://scenes/dialogs/category_warning_dialog.tscn" id="9_category_warning"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hustle_normal"]
 bg_color = Color(0.06, 0.06, 0.06, 1)
@@ -278,7 +278,7 @@ color = Color(1, 0, 0, 0.3)
 
 [node name="PromotionDialog" parent="." instance=ExtResource("8_promotion_dialog")]
 
-[node name="OpticsWarningDialog" parent="." instance=ExtResource("9_optics_warning")]
+[node name="CategoryWarningDialog" parent="." instance=ExtResource("9_category_warning")]
 
 [node name="DebugModeToggle" type="CheckButton" parent="."]
 unique_name_in_owner = true

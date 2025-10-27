@@ -28,7 +28,7 @@ func _ready():
 	$"%OutageConsequencePopup".consequence_dismissed.connect(_on_outage_consequence_dismissed)
 	$PromotionDialog.promotion_dismissed.connect(_on_promotion_dismissed)
 	$CompletionDialog.popup_hide.connect(_on_completion_dialog_dismissed)
-	$OpticsWarningDialog.warning_acknowledged.connect(_on_category_warning_acknowledged)
+	$CategoryWarningDialog.warning_acknowledged.connect(_on_category_warning_acknowledged)
 
 	TimedModeController.timer_expired.connect(_on_timer_expired)
 
@@ -122,7 +122,7 @@ func _on_completion_dialog_dismissed():
 
 func _on_category_warning(message: String):
 	TimedModeController.pause_timer()
-	$OpticsWarningDialog.show_optics_warning(message)
+	$CategoryWarningDialog.show_warning(message)
 
 func _on_category_warning_acknowledged():
 	# Resume timer after acknowledging category warning
