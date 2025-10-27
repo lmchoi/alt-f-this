@@ -1,7 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://dhs52b5767yn3"]
+[gd_scene load_steps=5 format=3 uid="uid://dhs52b5767yn3"]
 
 [ext_resource type="Script" uid="uid://cuftearj87vqs" path="res://scenes/job_info.gd" id="1_job_info"]
 [ext_resource type="Theme" uid="uid://buaicsh0r3xyc" path="res://themes/main_theme.tres" id="2_main_theme"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_progress_bg"]
+bg_color = Color(0.08, 0.08, 0.1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.6, 0.8, 0.9, 0.4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_progress_fill"]
+bg_color = Color(0.6, 0.8, 0.9, 0.6)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.6, 0.8, 0.9, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_job_panel"]
 bg_color = Color(0.12, 0.12, 0.15, 1)
@@ -33,32 +49,43 @@ theme_override_constants/margin_bottom = 12
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 6
 
 [node name="JobTitleLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 22
 text = "🐵 JOB (Jr. Dev)"
+
+[node name="PromotionProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_progress_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_progress_fill")
+max_value = 10.0
+show_percentage = false
 
 [node name="SalaryLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Salary: £100"
 
-[node name="BugsContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="StatusContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 15
 
-[node name="BugsIcon" type="Label" parent="MarginContainer/VBoxContainer/BugsContainer"]
+[node name="BugsIcon" type="Label" parent="MarginContainer/VBoxContainer/StatusContainer"]
 layout_mode = 2
 text = "🐛"
 
-[node name="BugsValue" type="Label" parent="MarginContainer/VBoxContainer/BugsContainer"]
+[node name="BugsValue" type="Label" parent="MarginContainer/VBoxContainer/StatusContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "0"
 
-[node name="PIPIndicator" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="PIPIndicator" type="Label" parent="MarginContainer/VBoxContainer/StatusContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 text = "⚠️ ON PIP"
 modulate = Color(1, 1, 1, 0)
