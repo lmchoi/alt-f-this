@@ -338,7 +338,13 @@ func pick_up_new_task():
 	days_at_100_percent = 0
 
 	# Check for promotion (every 10 tasks)
-	if completed_tasks % TASKS_PER_PROMOTION == 0 and job_level < JOB_TITLES.size() - 1:
+	if completed_tasks % TASKS_PER_PROMOTION == 0:
+		# At Senior level (30 tasks): Management trap ending
+		if job_level >= JOB_TITLES.size() - 1:
+			game_over.emit("promoted_to_management", get_game_stats())
+			return  # Don't assign new task, game is over
+
+		# Normal promotion (Jr → Mid, Mid → Senior)
 		job_level += 1
 		promotion_earned.emit(job_level, get_job_title(), get_current_salary())
 

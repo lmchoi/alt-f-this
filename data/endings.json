@@ -23,6 +23,10 @@
     "title": "Company Collapse",
     "message": "You blamed the system too many times.\n\nNothing changed.\n\nThe company collapsed under technical debt."
   },
+  "promoted_to_management": {
+    "title": "Promoted to Management",
+    "message": "Congratulations! You're now an Engineering Manager.\n\nYou'll never write code again.\n\nYour calendar is 47 hours of meetings per week.\n\nThe golden handcuffs are secure.\n\nYou've become the very thing you swore to destroy."
+  },
   "victory_escape": {
     "title": "ESCAPED!",
     "message": "You saved £5,000. Your side project is complete.\n\nYou quit with a dramatic email.\n\nNo more corporate bullshit.\n\nYou're free."

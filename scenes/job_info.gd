@@ -48,19 +48,14 @@ func _on_payday(_amount: int):
 	var salary = GameManager.get_current_salary()
 	salary_label.text = "Payday: Today!!! ($%d)" % salary
 
-func _update_job_title(new_level: int, new_title: String, new_salary: int):
+func _update_job_title(_new_level: int, new_title: String, _new_salary: int):
 	job_title.text = "🐵 JOB (%s)" % new_title
 	_update_promotion_progress(null)  # Refresh after promotion
 
 func _update_promotion_progress(_task):
 	var tasks = GameManager.completed_tasks
-	var max_level = GameManager.JOB_TITLES.size() - 1
 
-	# Hide progress bar if at max level
-	if GameManager.job_level >= max_level:
-		promotion_progress_bar.visible = false
-		return
-
+	# Always show progress bar (even at Senior - shows countdown to management trap)
 	promotion_progress_bar.visible = true
 
 	# Calculate progress within current level (0-10)
