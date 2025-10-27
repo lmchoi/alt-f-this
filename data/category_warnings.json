@@ -4,5 +4,8 @@
   },
   "critical": {
     "message": "🔥 CRITICAL TASK\n\nThis system is user-facing and mission-critical.\n\nShipping below 80% quality will cause production outages.\n\nAt your level: no consequences yet.\nAt Senior level: outages trigger blame cascades.\n\nDon't rush this."
+  },
+  "tech_debt": {
+    "message": "⚙️ TECH DEBT TASK\n\nLegacy systems, migrations, refactoring.\n\nShipping incomplete creates 3× more bugs.\n\nAt your level: no multiplier yet.\nAt Mid+ level: incomplete tech debt compounds exponentially.\n\nFinish what you start."
   }
 }
