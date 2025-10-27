@@ -67,21 +67,20 @@ var current_task: Task:
 		current_task = value
 		if current_task:
 			current_task_updated.emit(current_task)
-			# Show optics warning on first optics task encounter
-			if not first_optics_shown and current_task.categories.has("optics"):
-				first_optics_shown = true
-				var message = category_warnings["optics"]["message"]
-				optics_warning_shown.emit(message)
-			# Show critical warning on first critical task encounter
-			if not first_critical_shown and current_task.categories.has("critical"):
-				first_critical_shown = true
-				var message = category_warnings["critical"]["message"]
-				critical_warning_shown.emit(message)
-			# Show tech_debt warning on first tech_debt task encounter
-			if not first_tech_debt_shown and current_task.categories.has("tech_debt"):
-				first_tech_debt_shown = true
-				var message = category_warnings["tech_debt"]["message"]
-				tech_debt_warning_shown.emit(message)
+			# Show category warnings on first encounter
+			for category in current_task.categories:
+				if not TaskManager.has_encountered_category(category):
+					TaskManager.mark_category_encountered(category)
+					if category_warnings.has(category):
+						var message = category_warnings[category]["message"]
+						# Emit appropriate signal based on category
+						match category:
+							"optics":
+								optics_warning_shown.emit(message)
+							"critical":
+								critical_warning_shown.emit(message)
+							"tech_debt":
+								tech_debt_warning_shown.emit(message)
 
 var days_at_100_percent := 0  # Track how long task has been sitting at 100%
 
@@ -95,9 +94,6 @@ var overdue_days := 0  # Track how many days past deadline
 
 var job_level := 0  # Index into JOB_TITLES/JOB_SALARIES
 var completed_tasks := 0
-var first_optics_shown := false  # Track if optics warning has been shown
-var first_critical_shown := false  # Track if critical warning has been shown
-var first_tech_debt_shown := false  # Track if tech_debt warning has been shown
 
 var money := 0:
 	set(value):
