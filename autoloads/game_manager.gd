@@ -289,6 +289,10 @@ func process_game_tick(delta: float) -> void:
 	"""Called every frame by TimedModeController to apply incremental work progress.
 	GameManager decides what to do based on current game state.
 	"""
+	# Only apply incremental work in timed mode
+	if game_mode != GameMode.TIMED:
+		return
+
 	if current_task == null:
 		return
 
@@ -361,6 +365,12 @@ func do_work() -> ActionOutcome:
 		task_completed_awaiting_choice.emit()
 		return ActionOutcome.DO_NOTHING
 
+	# In timed mode, work is applied incrementally via process_game_tick()
+	# This action just advances the day
+	if game_mode == GameMode.TIMED:
+		return ActionOutcome.NORMAL
+
+	# Classic mode: apply full day's work immediately
 	# _trigger_random_work_event():
 	# wait response to work_event
 
