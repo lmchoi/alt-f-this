@@ -289,8 +289,18 @@ func process_game_tick(delta: float) -> void:
 	"""Called every frame by TimedModeController to apply incremental work progress.
 	GameManager decides what to do based on current game state.
 	"""
-	# TODO: Add logic for incremental work progress
-	pass
+	if current_task == null:
+		return
+
+	# Calculate how much work would be done in a full day
+	var bug_multiplier = get_bug_multiplier()
+	var daily_work = 100.0 / (current_task.complexity * bug_multiplier)
+
+	# Scale to this tick: (work_per_second) * (seconds_elapsed)
+	var work_per_second = daily_work / TIMED_MODE_DURATION
+	var work_this_tick = work_per_second * delta
+
+	current_task.do_work(work_this_tick)
 
 func advance_turn():
 	"""Advance day and check all daily events."""
