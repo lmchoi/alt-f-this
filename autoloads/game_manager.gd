@@ -6,6 +6,13 @@ enum GameMode {
 	TIMED       # Real-time: auto-advance after timer expires
 }
 
+# Player action types (for timed mode)
+enum PlayerAction {
+	NONE,       # No action selected
+	WORKING,    # Player chose WORK action
+	HUSTLING    # Player chose HUSTLE action
+}
+
 # Action outcome types
 enum ActionOutcome {
 	NORMAL,              # Advance turn normally
@@ -58,6 +65,9 @@ signal promotion_earned(new_level: int, new_title: String, new_salary: int)
 signal category_warning_shown(message: String)
 
 var game_mode := GameMode.CLASSIC  # Current game mode (classic turn-based or timed)
+
+# Timed mode player action (what the player is currently doing)
+var current_action := PlayerAction.NONE
 
 var current_task: Task:
 	set(value):
@@ -296,15 +306,25 @@ func process_game_tick(delta: float) -> void:
 	if current_task == null:
 		return
 
-	# Calculate how much work would be done in a full day
-	var bug_multiplier = get_bug_multiplier()
-	var daily_work = 100.0 / (current_task.complexity * bug_multiplier)
+	# Apply work based on current action
+	match current_action:
+		PlayerAction.WORKING:
+			var bug_multiplier = get_bug_multiplier()
+			var daily_work = 100.0 / (current_task.complexity * bug_multiplier)
+			var work_per_second = daily_work / TIMED_MODE_DURATION
+			var work_this_tick = work_per_second * delta
+			current_task.do_work(work_this_tick)
 
-	# Scale to this tick: (work_per_second) * (seconds_elapsed)
-	var work_per_second = daily_work / TIMED_MODE_DURATION
-	var work_this_tick = work_per_second * delta
+		PlayerAction.HUSTLING:
+			# 5% progress per day, scaled to per-second rate
+			var daily_hustle = 5.0
+			var hustle_per_second = daily_hustle / TIMED_MODE_DURATION
+			var hustle_this_tick = hustle_per_second * delta
+			side_project.progress = min(100, side_project.progress + hustle_this_tick)
+			side_project_updated.emit(side_project)
 
-	current_task.do_work(work_this_tick)
+		PlayerAction.NONE:
+			pass  # Do nothing
 
 func advance_turn():
 	"""Advance day and check all daily events."""
@@ -366,9 +386,10 @@ func do_work() -> ActionOutcome:
 		return ActionOutcome.DO_NOTHING
 
 	# In timed mode, work is applied incrementally via process_game_tick()
-	# This action just advances the day
+	# Set the action so work happens over time, but don't advance the day
 	if game_mode == GameMode.TIMED:
-		return ActionOutcome.NORMAL
+		current_action = PlayerAction.WORKING
+		return ActionOutcome.DO_NOTHING
 
 	# Classic mode: apply full day's work immediately
 	# _trigger_random_work_event():
@@ -408,7 +429,13 @@ func hustle() -> ActionOutcome:
 		event_occurred.emit({"text": "Side project is complete!\n\nNow you just need the money to escape...", "money": 0, "ducks": 0})
 		return ActionOutcome.DO_NOTHING
 
-	# Progress side project (5% per hustle)
+	# In timed mode, hustle is applied incrementally via process_game_tick()
+	# Set the action so hustle happens over time, but don't advance the day
+	if game_mode == GameMode.TIMED:
+		current_action = PlayerAction.HUSTLING
+		return ActionOutcome.DO_NOTHING
+
+	# Classic mode: apply full day's hustle immediately (5% per hustle)
 	var progress_gain = 5
 	side_project.progress = min(100, side_project.progress + progress_gain)
 	side_project_updated.emit(side_project)
