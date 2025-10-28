@@ -49,7 +49,6 @@ signal production_outage_occurred(task_name)
 signal outage_consequence(text)
 signal pip_warning_occurred(text)
 signal current_task_updated(task)
-signal task_progress_changed(progress)
 signal payday_occurred(amount)
 signal task_completed_awaiting_choice()
 signal side_project_updated(side_project_data)
@@ -358,8 +357,7 @@ func do_work() -> ActionOutcome:
 	var bug_multiplier = get_bug_multiplier()
 	# 100 / complexity = days to complete (1 complexity = 1 day)
 	var work = 100.0 / (current_task.complexity * bug_multiplier)
-	current_task.do_work(work)
-	task_progress_changed.emit(current_task.progress)
+	current_task.do_work(work)  # Task will emit progress_changed signal
 	print("Progress: +%.1f%% (complexity: %d, bugs: %d)" % [work, current_task.complexity, bugs])
 
 	return ActionOutcome.NORMAL

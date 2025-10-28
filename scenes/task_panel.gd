@@ -49,13 +49,15 @@ func _ready():
 
 	GameManager.current_task_updated.connect(_on_current_task_updated)
 	GameManager.next_day.connect(_on_next_day)
-	GameManager.task_progress_changed.connect(_update_progress)
 	ship_it_button.pressed.connect(_on_ship_it_pressed)
 
 func _on_ship_it_pressed():
 	ship_it_pressed.emit()
 
 func _on_current_task_updated(current_task: Task):
+	# Connect to the new task's progress signal
+	current_task.progress_changed.connect(_update_progress)
+
 	task_id_label.text = current_task.task_id
 	task_label.text = current_task.title
 	description_label.text = current_task.description
