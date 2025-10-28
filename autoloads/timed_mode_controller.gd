@@ -16,6 +16,9 @@ func _process(delta: float) -> void:
 	time_remaining -= delta
 	timer_updated.emit(time_remaining)
 
+	# Pass delta to GameManager for incremental work processing
+	GameManager.process_game_tick(delta)
+
 	if time_remaining <= 0.0:
 		time_remaining = 0.0
 		is_running = false

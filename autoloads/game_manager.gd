@@ -30,7 +30,7 @@ const CRITICAL_OUTAGE_THRESHOLD = 80.0
 const OPTICS_MAX_OVERDUE_DAYS = 1
 
 # Timed mode constants
-const TIMED_MODE_DURATION = 45.0  # Seconds per day in timed mode
+const TIMED_MODE_DURATION = 60.0  # Seconds per day in timed mode
 
 # Job level constants
 const JOB_TITLES = ["Junior Dev", "Mid-Level Dev", "Senior Dev"]
@@ -285,6 +285,13 @@ func _trigger_random_work_event():
 		money += event_result.money
 		ducks += event_result.ducks
 		event_occurred.emit(event_result)
+
+func process_game_tick(delta: float) -> void:
+	"""Called every frame by TimedModeController to apply incremental work progress.
+	GameManager decides what to do based on current game state.
+	"""
+	# TODO: Add logic for incremental work progress
+	pass
 
 func advance_turn():
 	"""Advance day and check all daily events."""
