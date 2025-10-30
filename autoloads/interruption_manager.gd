@@ -9,6 +9,7 @@ var _events: Array = []
 var _active_interruptions: Array[Dictionary] = []  # Stack of active interruptions
 var _time_until_next: float = 0.0
 var _is_active: bool = false  # Only active in timed mode
+var current_interruption: String = ""  # ID of interruption currently being viewed (blocks progress)
 
 # Timing constants
 const BASE_INTERRUPTION_INTERVAL = 10.0  # Base time in seconds

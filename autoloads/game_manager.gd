@@ -310,8 +310,8 @@ func process_game_tick(delta: float) -> void:
 	if current_task == null:
 		return
 
-	# Block progress if interruptions are pending
-	if InterruptionManager.has_active_interruptions():
+	# Block progress if player is viewing an interruption popup
+	if InterruptionManager.current_interruption != "":
 		return
 
 	# Apply work based on current action

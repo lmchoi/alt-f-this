@@ -6,8 +6,10 @@ extends Node
 @onready var task_panel := $"%TaskPanel"
 @onready var debug_mode_toggle := $"%DebugModeToggle"
 @onready var top_bar := $MainThemeContainer/VBoxContainer/TopBar
+@onready var interruption_stack := $"%InterruptionStack"
 
 var end_game_panel: Panel
+var interruption_card_scene := preload("res://scenes/interruption_card.tscn")
 
 func _ready():
 	work_button.pressed.connect(_on_work_button_pressed)
@@ -142,12 +144,33 @@ func _on_next_day(_day: int):
 			TimedModeController.reset_timer(GameManager.TIMED_MODE_DURATION)
 
 func _on_interruption_triggered(event_data: Dictionary):
-	"""Show interruption popup when triggered."""
-	$InterruptionPopup.show_interruption(event_data)
+	"""Add new interruption card to the stack."""
+	var card = interruption_card_scene.instantiate()
+	card.card_clicked.connect(_on_interruption_card_clicked)
+	interruption_stack.add_child(card)
+	card.setup(event_data)  # Call setup AFTER adding to scene tree
+
+func _on_interruption_card_clicked(event_id: String):
+	"""Open popup when player clicks an interruption card."""
+	# Find the event data from InterruptionManager
+	for event in InterruptionManager.get_active_interruptions():
+		if event["id"] == event_id:
+			# Mark this interruption as being handled (blocks progress)
+			InterruptionManager.current_interruption = event_id
+			$InterruptionPopup.show_interruption(event)
+			break
 
 func _on_interruption_dismissed(event_id: String):
-	"""Handle interruption dismissal."""
+	"""Handle interruption dismissal and remove card."""
 	InterruptionManager.dismiss_interruption(event_id)
+	# Clear the current interruption (unblocks progress)
+	InterruptionManager.current_interruption = ""
+
+	# Remove the card from the stack
+	for card in interruption_stack.get_children():
+		if card.event_data["id"] == event_id:
+			card.queue_free()
+			break
 
 func _on_debug_mode_toggled(enabled: bool):
 	"""Debug: Toggle between classic and timed mode."""
