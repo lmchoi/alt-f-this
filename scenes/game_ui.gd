@@ -113,11 +113,9 @@ func _on_promotion_earned(new_level: int, new_title: String, new_salary: int):
 	$PromotionDialog.show_promotion(new_title, new_salary)
 
 func _on_promotion_dismissed():
-	# Continue game after promotion dialog closes
 	TimedModeController.resume_timer()
 
 func _on_completion_dialog_dismissed():
-	# Resume timer after dismissing gold-plating warning
 	TimedModeController.resume_timer()
 
 func _on_category_warning(message: String):
@@ -125,7 +123,6 @@ func _on_category_warning(message: String):
 	$CategoryWarningDialog.show_warning(message)
 
 func _on_category_warning_acknowledged():
-	# Resume timer after acknowledging category warning
 	TimedModeController.resume_timer()
 
 func _on_timer_expired():
