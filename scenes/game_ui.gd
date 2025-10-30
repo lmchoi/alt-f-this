@@ -29,8 +29,10 @@ func _ready():
 	$PromotionDialog.promotion_dismissed.connect(_on_promotion_dismissed)
 	$CompletionDialog.completion_dismissed.connect(_on_completion_dialog_dismissed)
 	$CategoryWarningDialog.warning_acknowledged.connect(_on_category_warning_acknowledged)
+	$InterruptionPopup.interruption_dismissed.connect(_on_interruption_dismissed)
 
 	TimedModeController.timer_expired.connect(_on_timer_expired)
+	InterruptionManager.interruption_triggered.connect(_on_interruption_triggered)
 
 	# Debug: Show mode toggle in debug builds
 	if OS.is_debug_build():
@@ -45,9 +47,10 @@ func _ready():
 
 	GameManager.start_game()
 
-	# Start timer if in timed mode
+	# Start timer and interruptions if in timed mode
 	if GameManager.game_mode == GameManager.GameMode.TIMED:
 		TimedModeController.start_timer(GameManager.TIMED_MODE_DURATION)
+		InterruptionManager.start_interruptions()
 
 	# Debug: Load test scenario in debug builds
 	if OS.is_debug_build():
@@ -138,15 +141,25 @@ func _on_next_day(_day: int):
 		if not GameManager.outage_in_progress:
 			TimedModeController.reset_timer(GameManager.TIMED_MODE_DURATION)
 
+func _on_interruption_triggered(event_data: Dictionary):
+	"""Show interruption popup when triggered."""
+	$InterruptionPopup.show_interruption(event_data)
+
+func _on_interruption_dismissed(event_id: String):
+	"""Handle interruption dismissal."""
+	InterruptionManager.dismiss_interruption(event_id)
+
 func _on_debug_mode_toggled(enabled: bool):
 	"""Debug: Toggle between classic and timed mode."""
 	if enabled:
 		GameManager.game_mode = GameManager.GameMode.TIMED
 		TimedModeController.start_timer(GameManager.TIMED_MODE_DURATION)
+		InterruptionManager.start_interruptions()
 		print("🎮 Switched to TIMED mode")
 	else:
 		GameManager.game_mode = GameManager.GameMode.CLASSIC
 		TimedModeController.stop_timer()
+		InterruptionManager.stop_interruptions()
 		print("🎮 Switched to CLASSIC mode")
 
 	# Update top bar timer visibility

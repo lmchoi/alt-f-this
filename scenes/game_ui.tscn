@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bkcqc3g6mk6ky"]
+[gd_scene load_steps=22 format=3 uid="uid://bkcqc3g6mk6ky"]
 
 [ext_resource type="Script" uid="uid://ccibd5kcuisnk" path="res://scenes/game_ui.gd" id="1_yubou"]
 [ext_resource type="Theme" uid="uid://buaicsh0r3xyc" path="res://themes/main_theme.tres" id="2_main_theme"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://tcn5yq8brhx1" path="res://scenes/dialogs/outage_dialog.tscn" id="7_outage_dialog"]
 [ext_resource type="PackedScene" path="res://scenes/dialogs/promotion_dialog.tscn" id="8_promotion_dialog"]
 [ext_resource type="PackedScene" uid="uid://category_warning_dialog" path="res://scenes/dialogs/category_warning_dialog.tscn" id="9_category_warning"]
+[ext_resource type="PackedScene" uid="uid://b7h3n8p2q9r4s" path="res://scenes/dialogs/interruption_popup.tscn" id="10_interruption_popup"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hustle_normal"]
 bg_color = Color(0.06, 0.06, 0.06, 1)
@@ -279,6 +280,8 @@ color = Color(1, 0, 0, 0.3)
 [node name="PromotionDialog" parent="." instance=ExtResource("8_promotion_dialog")]
 
 [node name="CategoryWarningDialog" parent="." instance=ExtResource("9_category_warning")]
+
+[node name="InterruptionPopup" parent="." instance=ExtResource("10_interruption_popup")]
 
 [node name="DebugModeToggle" type="CheckButton" parent="."]
 unique_name_in_owner = true
