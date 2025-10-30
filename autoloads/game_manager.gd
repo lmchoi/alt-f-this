@@ -386,7 +386,6 @@ func do_work() -> ActionOutcome:
 		return ActionOutcome.DO_NOTHING
 
 	# In timed mode, work is applied incrementally via process_game_tick()
-	# Set the action so work happens over time, but don't advance the day
 	if game_mode == GameMode.TIMED:
 		current_action = PlayerAction.WORKING
 		return ActionOutcome.DO_NOTHING
@@ -430,7 +429,6 @@ func hustle() -> ActionOutcome:
 		return ActionOutcome.DO_NOTHING
 
 	# In timed mode, hustle is applied incrementally via process_game_tick()
-	# Set the action so hustle happens over time, but don't advance the day
 	if game_mode == GameMode.TIMED:
 		current_action = PlayerAction.HUSTLING
 		return ActionOutcome.DO_NOTHING
@@ -505,8 +503,7 @@ func ship_it() -> ActionOutcome:
 	pick_up_new_task()
 
 	# In timed mode, don't advance the day - the timer handles that
-	# In classic mode, advance the day normally
 	if game_mode == GameMode.TIMED:
 		return ActionOutcome.DO_NOTHING
-	else:
-		return ActionOutcome.NORMAL
+
+	return ActionOutcome.NORMAL

@@ -129,10 +129,10 @@ func _on_category_warning_acknowledged():
 	TimedModeController.resume_timer()
 
 func _on_timer_expired():
-	"""Handle timer expiration in timed mode - advance to next day."""
-	if GameManager.game_mode == GameManager.GameMode.TIMED:
-		print("⏱️ Timer expired - advancing to next day")
-		GameManager.advance_turn()
+	"""Handle timer expiration in timed mode."""
+	# TimedModeController handles advancing the turn
+	# UI can react to the timer expiration signal if needed
+	pass
 
 func _on_next_day(_day: int):
 	"""Reset timer when advancing to next day in timed mode."""

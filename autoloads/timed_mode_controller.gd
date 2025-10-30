@@ -23,6 +23,8 @@ func _process(delta: float) -> void:
 		time_remaining = 0.0
 		is_running = false
 		timer_expired.emit()
+		# Advance to next day when timer expires
+		GameManager.advance_turn()
 
 func start_timer(duration: float) -> void:
 	"""Start a new timer countdown."""
