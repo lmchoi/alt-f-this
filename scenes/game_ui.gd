@@ -27,7 +27,7 @@ func _ready():
 	$OutageDialog.outage_choice.connect(_on_outage_choice)
 	$"%OutageConsequencePopup".consequence_dismissed.connect(_on_outage_consequence_dismissed)
 	$PromotionDialog.promotion_dismissed.connect(_on_promotion_dismissed)
-	$CompletionDialog.popup_hide.connect(_on_completion_dialog_dismissed)
+	$CompletionDialog.completion_dismissed.connect(_on_completion_dialog_dismissed)
 	$CategoryWarningDialog.warning_acknowledged.connect(_on_category_warning_acknowledged)
 
 	TimedModeController.timer_expired.connect(_on_timer_expired)

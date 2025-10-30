@@ -363,8 +363,8 @@ func advance_turn():
 
 func process_turn(action: String):
 	"""Complete turn cycle: execute action, advance day, check events."""
-	# Resume timer if paused (e.g., by a dialog) - player is taking action
-	if game_mode == GameMode.TIMED and TimedModeController.is_paused:
+	# Resume timer in timed mode - player is taking action
+	if game_mode == GameMode.TIMED:
 		TimedModeController.resume_timer()
 
 	# 1. Execute player action (returns outcome)

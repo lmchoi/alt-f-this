@@ -1,5 +1,10 @@
 extends PopupPanel
 
+signal completion_dismissed()
+
+func _ready():
+	popup_hide.connect(_on_popup_hide)
+
 func get_gold_plating_message() -> String:
 	"""Get random message for trying to work at 100% progress."""
 	var messages = [
@@ -15,3 +20,6 @@ func get_gold_plating_message() -> String:
 func show_completion():
 	$CompletionMessage.text = get_gold_plating_message()
 	popup()
+
+func _on_popup_hide():
+	completion_dismissed.emit()
