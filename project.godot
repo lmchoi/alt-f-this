@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 GameManager="*res://autoloads/game_manager.gd"
 TaskManager="*res://autoloads/task_manager.gd"
 TimedModeController="*res://autoloads/timed_mode_controller.gd"
+InterruptionManager="*res://autoloads/interruption_manager.gd"
 
 [display]
 
