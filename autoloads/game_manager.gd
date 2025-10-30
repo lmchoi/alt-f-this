@@ -504,4 +504,9 @@ func ship_it() -> ActionOutcome:
 
 	pick_up_new_task()
 
-	return ActionOutcome.NORMAL
+	# In timed mode, don't advance the day - the timer handles that
+	# In classic mode, advance the day normally
+	if game_mode == GameMode.TIMED:
+		return ActionOutcome.DO_NOTHING
+	else:
+		return ActionOutcome.NORMAL
