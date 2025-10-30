@@ -249,8 +249,12 @@ func handle_outage_choice(choice: String):
 
 func finish_outage_turn():
 	"""Called after outage consequence popup is dismissed to advance the day."""
-	outage_in_progress = false
+	# In timed mode, reset player action so they stop working/hustling
+	if game_mode == GameMode.TIMED:
+		current_action = PlayerAction.NONE
 	advance_turn()
+	# Clear outage flag AFTER advancing (so timer doesn't auto-resume)
+	outage_in_progress = false
 
 func check_game_over() -> bool:
 	"""Check if player has reached victory or game over condition. Returns true if game ended."""

@@ -83,7 +83,7 @@ func _on_outage_consequence_dismissed():
 	# Clean up outage UI and advance the day
 	$"%OutageRedOverlay".visible = false
 	GameManager.finish_outage_turn()
-	TimedModeController.resume_timer()
+	# Timer stays paused in timed mode - player needs to choose new action
 
 func _on_game_over(ending_type: String, stats: Dictionary):
 	TimedModeController.stop_timer()
@@ -134,7 +134,9 @@ func _on_timer_expired():
 func _on_next_day(_day: int):
 	"""Reset timer when advancing to next day in timed mode."""
 	if GameManager.game_mode == GameManager.GameMode.TIMED:
-		TimedModeController.reset_timer(GameManager.TIMED_MODE_DURATION)
+		# Don't reset timer during outage - keep it paused until player chooses action
+		if not GameManager.outage_in_progress:
+			TimedModeController.reset_timer(GameManager.TIMED_MODE_DURATION)
 
 func _on_debug_mode_toggled(enabled: bool):
 	"""Debug: Toggle between classic and timed mode."""
