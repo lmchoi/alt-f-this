@@ -14,6 +14,9 @@ var interruption_card_scene := preload("res://scenes/interruption_card.tscn")
 func _ready():
 	work_button.pressed.connect(_on_work_button_pressed)
 	slack_button.pressed.connect(_on_slack_button_pressed)
+
+	# TaskPanelV2 has buttons inside, connect its signals
+	task_panel.work_pressed.connect(_on_work_button_pressed)
 	task_panel.ship_it_pressed.connect(_on_ship_it_button_pressed)
 	GameManager.event_occurred.connect(_on_event_occurred)
 	GameManager.task_completed_awaiting_choice.connect(_on_task_completed)
