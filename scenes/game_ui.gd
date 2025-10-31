@@ -2,7 +2,7 @@ extends Node
 
 @onready var work_button := $"%WorkButton" as ActionButton
 @onready var slack_button := $"%SlackButton" as ActionButton
-@onready var ship_it_button := $"%ShipItButton" as ActionButton
+# ship_it_button is now inside TaskPanelV2, not in game_ui
 @onready var task_panel := $"%TaskPanel"
 @onready var debug_mode_toggle := $"%DebugModeToggle"
 @onready var top_bar := $MainThemeContainer/VBoxContainer/TopBar
@@ -18,6 +18,7 @@ func _ready():
 	# TaskPanelV2 has buttons inside, connect its signals
 	task_panel.work_pressed.connect(_on_work_button_pressed)
 	task_panel.ship_it_pressed.connect(_on_ship_it_button_pressed)
+	task_panel.hustle_pressed.connect(_on_slack_button_pressed)
 	GameManager.event_occurred.connect(_on_event_occurred)
 	GameManager.task_completed_awaiting_choice.connect(_on_task_completed)
 	GameManager.game_over.connect(_on_game_over)

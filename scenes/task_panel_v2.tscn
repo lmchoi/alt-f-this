@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://c8xqy4n5pqr7w"]
+[gd_scene load_steps=6 format=3 uid="uid://c8xqy4n5pqr7w"]
 
 [ext_resource type="Theme" uid="uid://buaicsh0r3xyc" path="res://themes/main_theme.tres" id="1_theme"]
 [ext_resource type="Script" path="res://scenes/task_panel_v2.gd" id="2_script"]
@@ -19,6 +19,20 @@ shadow_color = Color(0.4, 0.4, 0.45, 0.3)
 shadow_size = 4
 shadow_offset = Vector2(0, 2)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_escape_theme"]
+bg_color = Color(0.12, 0.12, 0.15, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.9, 0.75, 0.3, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0.9, 0.75, 0.3, 0.2)
+shadow_size = 6
+
 [node name="TaskPanelV2" type="PanelContainer"]
 custom_minimum_size = Vector2(360, 0)
 theme = ExtResource("1_theme")
@@ -35,6 +49,24 @@ theme_override_constants/margin_bottom = 16
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 12
+
+[node name="TabBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="JobTab" type="Button" parent="MarginContainer/VBoxContainer/TabBar"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 22
+text = "💼 JOB"
+
+[node name="EscapeTab" type="Button" parent="MarginContainer/VBoxContainer/TabBar"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 22
+text = "🚀 ESCAPE"
 
 [node name="HeaderRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -131,3 +163,12 @@ size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 script = ExtResource("3_action_button")
 text = "🚢 SHIP IT"
+
+[node name="HustleButton" type="Button" parent="MarginContainer/VBoxContainer/ActionButtons"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+visible = false
+script = ExtResource("3_action_button")
+text = "⚙️ HUSTLE"
