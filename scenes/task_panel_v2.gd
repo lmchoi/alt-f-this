@@ -39,6 +39,12 @@ func _on_ship_it_pressed() -> void:
 	ship_it_pressed.emit()
 
 func _on_task_updated(task: Task) -> void:
+	# Connect to the new task's progress_changed signal
+	task.progress_changed.connect(_on_progress_changed)
+	_update_display()
+
+func _on_progress_changed(new_progress: float) -> void:
+	# Update display when task progress changes
 	_update_display()
 
 func _update_display() -> void:
