@@ -36,10 +36,19 @@ theme_override_constants/margin_bottom = 16
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="TaskTitle" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="HeaderRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TaskTitle" type="Label" parent="MarginContainer/VBoxContainer/HeaderRow"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 28
 text = "Update Slack Status"
+
+[node name="BadgeContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HeaderRow"]
+layout_mode = 2
+theme_override_constants/separation = 4
 
 [node name="MetadataRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -55,13 +64,6 @@ layout_mode = 2
 [node name="ComplexityLabel" type="Label" parent="MarginContainer/VBoxContainer/MetadataRow"]
 layout_mode = 2
 text = "🍝🍝"
-
-[node name="VSeparator2" type="VSeparator" parent="MarginContainer/VBoxContainer/MetadataRow"]
-layout_mode = 2
-
-[node name="BugLabel" type="Label" parent="MarginContainer/VBoxContainer/MetadataRow"]
-layout_mode = 2
-text = "🔧 0"
 
 [node name="ProgressSection" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2

@@ -4,11 +4,21 @@ extends PanelContainer
 signal work_pressed
 signal ship_it_pressed
 
+# Category badge theme mapping
+const BADGE_THEME = preload("res://themes/badge_theme.tres")
+const CATEGORY_STYLES = {
+	"critical": "CriticalBadge",
+	"optics": "OpticsBadge",
+	"tech_debt": "TechDebtBadge",
+	"technical": "TechnicalBadge",
+	"urgent": "UrgentBadge"
+}
+
 # Node references
-@onready var task_title := $MarginContainer/VBoxContainer/TaskTitle as Label
+@onready var task_title := $MarginContainer/VBoxContainer/HeaderRow/TaskTitle as Label
+@onready var badge_container := $MarginContainer/VBoxContainer/HeaderRow/BadgeContainer as HBoxContainer
 @onready var due_label := $MarginContainer/VBoxContainer/MetadataRow/DueLabel as Label
 @onready var complexity_label := $MarginContainer/VBoxContainer/MetadataRow/ComplexityLabel as Label
-@onready var bug_label := $MarginContainer/VBoxContainer/MetadataRow/BugLabel as Label
 @onready var progress_bar := $MarginContainer/VBoxContainer/ProgressSection/ProgressBar as ProgressBar
 @onready var progress_percent := $MarginContainer/VBoxContainer/ProgressSection/ProgressPercent as Label
 @onready var quality_label := $MarginContainer/VBoxContainer/ProgressSection/QualityLabel as Label
@@ -57,7 +67,9 @@ func _update_display() -> void:
 	var days_until_due = task.due_day - GameManager.day
 	due_label.text = "Due: %dd" % days_until_due
 	complexity_label.text = _get_complexity_emoji(task.complexity)
-	bug_label.text = "🔧 %d" % GameManager.bugs
+
+	# Update category badges
+	_update_category_badges(task.categories)
 
 	# Progress
 	progress_bar.value = task.progress
@@ -100,3 +112,27 @@ func _update_progress_bar_color(progress: float) -> void:
 
 	# Update progress bar modulate to tint the fill color
 	progress_bar.modulate = color
+
+func _create_badge(category: String) -> Label:
+	var badge = Label.new()
+	badge.text = " " + category.to_upper() + " "
+	badge.theme = BADGE_THEME
+	badge.add_theme_color_override("font_color", Color(0, 0, 0, 1))  # Black text
+
+	# Apply category-specific style from theme
+	var cat_lower = category.to_lower()
+	var style_name = CATEGORY_STYLES.get(cat_lower, "CriticalBadge")
+	var style = BADGE_THEME.get_stylebox(style_name, "Label")
+	if style:
+		badge.add_theme_stylebox_override("normal", style)
+
+	return badge
+
+func _update_category_badges(categories: Array[String]) -> void:
+	# Clear existing badges
+	for child in badge_container.get_children():
+		child.queue_free()
+
+	# Create new badges
+	for category in categories:
+		badge_container.add_child(_create_badge(category))
