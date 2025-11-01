@@ -31,7 +31,7 @@ const CRITICAL_OUTAGE_THRESHOLD = 80.0
 const OPTICS_MAX_OVERDUE_DAYS = 1
 
 # Timer constants
-const TIMED_MODE_DURATION = 60.0  # Seconds per day
+const TIMED_MODE_DURATION = 10.0  # Seconds per day
 
 # Job level constants
 const JOB_TITLES = ["Junior Dev", "Mid-Level Dev", "Senior Dev"]
@@ -57,9 +57,16 @@ signal pip_warnings_changed(count)
 signal clean_code_tokens_changed(count)
 signal promotion_earned(new_level: int, new_title: String, new_salary: int)
 signal category_warning_shown(message: String)
+signal tasks_changed(task_list: Array[Task])
 
 # Player action (what the player is currently doing)
 var current_action := PlayerAction.NONE
+
+# Task management
+var tasks: Array[Task] = []:  # List of all active tasks
+	set(value):
+		tasks = value
+		tasks_changed.emit(tasks)
 
 var current_task: Task:
 	set(value):
@@ -183,7 +190,12 @@ func add_bugs(amount: int) -> void:
 	print("Bugs added: +%d (total: %d)" % [amount, bugs])
 
 func start_game():
-	current_task = TaskManager.get_random_task(day, job_level)
+	# Initialize empty task list
+	tasks = []
+	# Add first task
+	var new_task = TaskManager.get_random_task(day, job_level)
+	add_task(new_task)
+	current_task = new_task
 
 func check_time_bombs():
 	"""Check for production outages based on bugs and poorly shipped tasks."""
@@ -342,6 +354,8 @@ func advance_turn():
 		pip_warnings += 1
 		var days_text = "1 day" if max_days == 1 else "3+ days"
 		pip_warning_occurred.emit("Task deadline missed by %s.\n\n⚠️ PERFORMANCE IMPROVEMENT PLAN\n\nManagement is watching you closely.\n\nOne more violation = terminated.\n\n(Starting new task)" % days_text)
+		# Remove failed task from list before picking up new one
+		remove_task(current_task)
 		pick_up_new_task()
 
 	# Check for payday
@@ -403,7 +417,31 @@ func pick_up_new_task():
 		job_level += 1
 		promotion_earned.emit(job_level, get_job_title(), get_current_salary())
 
-	current_task = TaskManager.get_random_task(day, job_level)
+	var new_task = TaskManager.get_random_task(day, job_level)
+	add_task(new_task)
+	current_task = new_task
+
+func add_task(task: Task) -> void:
+	"""Add a new task to the active task list."""
+	var updated_tasks = tasks.duplicate()
+	updated_tasks.append(task)
+	tasks = updated_tasks
+	print("Task added: %s (total tasks: %d)" % [task.title, tasks.size()])
+
+func remove_task(task: Task) -> void:
+	"""Remove a task from the active task list."""
+	var updated_tasks = tasks.duplicate()
+	updated_tasks.erase(task)
+	tasks = updated_tasks
+	print("Task removed: %s (total tasks: %d)" % [task.title, tasks.size()])
+
+func switch_task(task: Task) -> void:
+	"""Switch the current active task."""
+	if not tasks.has(task):
+		push_error("Cannot switch to task that's not in the task list")
+		return
+	current_task = task
+	print("Switched to task: %s" % task.title)
 
 func hustle() -> ActionOutcome:
 	print('hustle')
@@ -477,6 +515,8 @@ func ship_it() -> ActionOutcome:
 		var threshold = int(CRITICAL_OUTAGE_THRESHOLD) if is_critical else POOR_QUALITY_THRESHOLD
 		print("⚠️ Poor quality ship: '%s' added to outage risk pool (critical: %s, threshold: %d%%)" % [current_task.title, is_critical, threshold])
 
+	# Remove shipped task from list before picking up new one
+	remove_task(current_task)
 	pick_up_new_task()
 
 	# Don't advance the day - the timer handles that
