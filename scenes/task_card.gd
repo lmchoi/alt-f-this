@@ -136,38 +136,20 @@ func _update_card_style(days_until_due: int) -> void:
 	var style = StyleBoxFlat.new()
 	style.bg_color = Color(0.12, 0.12, 0.15, 1)
 
-	# Thicker border if active
-	var border_width = 3 if is_active else 2
-	style.border_width_left = border_width
-	style.border_width_top = border_width
-	style.border_width_right = border_width
-	style.border_width_bottom = border_width
+	# Standard border width (removed green border for active state - active label is enough)
+	style.border_width_left = 2
+	style.border_width_top = 2
+	style.border_width_right = 2
+	style.border_width_bottom = 2
 
 	style.corner_radius_top_left = 4
 	style.corner_radius_top_right = 4
 	style.corner_radius_bottom_right = 4
 	style.corner_radius_bottom_left = 4
 
-	# Color-code by urgency (or green if active)
-	if is_active:
-		# Active task - green
-		style.border_color = Color(0.3, 1.0, 0.3, 1.0)
-	elif days_until_due < 0:
-		# Overdue - bright red
-		style.border_color = Color(1.0, 0.2, 0.2, 1.0)
-		style.border_width_left = 3
-		style.border_width_top = 3
-		style.border_width_right = 3
-		style.border_width_bottom = 3
-	elif days_until_due == 0:
-		# Due today - red
-		style.border_color = Color(1.0, 0.3, 0.3, 1.0)
-	elif days_until_due <= 2:
-		# Due soon - yellow
-		style.border_color = Color(1.0, 0.9, 0.3, 1.0)
-	else:
-		# Normal - gray
-		style.border_color = Color(0.3, 0.3, 0.3, 1.0)
+	# Consistent gray border for all tasks
+	# (Urgency is shown through the due date text color instead)
+	style.border_color = Color(0.3, 0.3, 0.3, 1.0)
 
 	add_theme_stylebox_override("panel", style)
 
