@@ -38,6 +38,7 @@ const CATEGORY_STYLES = {
 @onready var progress_bar := $MarginContainer/VBoxContainer/ProgressSection/ProgressBar as ProgressBar
 @onready var progress_percent := $MarginContainer/VBoxContainer/ProgressSection/ProgressPercent as Label
 @onready var quality_label := $MarginContainer/VBoxContainer/ProgressSection/QualityLabel as Label
+@onready var quality_guide := $MarginContainer/VBoxContainer/ProgressSection/QualityGuide as HBoxContainer
 @onready var work_button := $MarginContainer/VBoxContainer/ActionButtons/WorkButton as Button
 @onready var ship_it_button := $MarginContainer/VBoxContainer/ActionButtons/ShipItButton as Button
 @onready var hustle_button := $MarginContainer/VBoxContainer/ActionButtons/HustleButton as Button
@@ -134,6 +135,8 @@ func _show_job_task() -> void:
 	progress_bar.value = task.progress
 	progress_percent.text = "%d%%" % int(task.progress)
 	quality_label.text = _get_quality_label(task.progress)
+	quality_label.visible = true
+	quality_guide.visible = true
 
 	# Update progress bar color based on quality
 	_update_progress_bar_color(task.progress)
@@ -157,7 +160,10 @@ func _show_escape_task() -> void:
 	# Progress
 	progress_bar.value = escape.progress
 	progress_percent.text = "%d%%" % int(escape.progress)
-	quality_label.text = "$%d / $%d" % [GameManager.money, GameManager.VICTORY_MONEY_GOAL]
+
+	# Hide quality elements (not relevant for escape)
+	quality_label.visible = false
+	quality_guide.visible = false
 
 	# Color based on escape progress
 	_update_progress_bar_color(escape.progress)
