@@ -53,10 +53,11 @@ func set_task(new_task: Task) -> void:
 			task.progress_changed.connect(_on_task_progress_changed)
 		update_display()
 
-func set_active(active: bool) -> void:
-	"""Set whether this task is the active one."""
+func set_active(active: bool, is_progressing: bool = false) -> void:
+	"""Set whether this task is the active one and if it's currently progressing.
+	Active label only shows when task is actually being worked on."""
 	is_active = active
-	active_label.visible = is_active
+	active_label.visible = is_active and is_progressing
 	# Make active task visually distinct
 	_update_card_style_for_active()
 

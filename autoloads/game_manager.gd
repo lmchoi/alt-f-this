@@ -527,5 +527,8 @@ func ship_it() -> ActionOutcome:
 	remove_task(current_task)
 	pick_up_new_task()
 
+	# Stop working - player needs to choose what to do with new task
+	current_action = PlayerAction.NONE
+
 	# Don't advance the day - the timer handles that
 	return ActionOutcome.DO_NOTHING

@@ -14,6 +14,9 @@ signal hustle_pressed
 # Current task type being displayed
 var current_task_type := TaskType.JOB
 
+# Track the last active task (for multi-task switching)
+var last_active_job_task: Task = null
+
 # Theme styles
 var job_theme_style: StyleBox
 var escape_theme_style: StyleBox
@@ -34,6 +37,7 @@ var task_cards: Array = []  # Keep references to instantiated cards
 @onready var due_label := $MarginContainer/VBoxContainer/EscapeContent/MetadataRow/DueLabel as Label
 @onready var progress_bar := $MarginContainer/VBoxContainer/EscapeContent/ProgressSection/ProgressBar as ProgressBar
 @onready var progress_percent := $MarginContainer/VBoxContainer/EscapeContent/ProgressSection/ProgressPercent as Label
+@onready var escape_active_label := $MarginContainer/VBoxContainer/EscapeContent/EscapeActiveLabel as Label
 
 func _ready() -> void:
 	print("TaskPanelV2: Ready")
@@ -61,10 +65,13 @@ func _ready() -> void:
 	escape_tab.pressed.connect(_on_escape_tab_pressed)
 	hustle_button.pressed.connect(_on_hustle_pressed)
 
-	# Connect to GameManager signals
+# Connect to GameManager signals
 	GameManager.current_task_updated.connect(_on_task_updated)
 	GameManager.side_project_updated.connect(_on_side_project_updated)
 	GameManager.tasks_changed.connect(_on_tasks_changed)
+
+	# Connect to action changes to update active indicators
+	GameManager.connect("money_changed", _on_game_state_changed)  # Proxy for any state change
 
 	# Initial update
 	_update_display()
@@ -77,6 +84,11 @@ func _on_task_updated(task: Task) -> void:
 	# Connect to the new task's progress_changed signal
 	if task and not task.progress_changed.is_connected(_on_progress_changed):
 		task.progress_changed.connect(_on_progress_changed)
+
+	# When a new task is assigned (e.g., after shipping), clear last_active if it's not in the list
+	if last_active_job_task and not GameManager.tasks.has(last_active_job_task):
+		last_active_job_task = null
+
 	_update_display()
 
 func _on_progress_changed(new_progress: float) -> void:
@@ -87,6 +99,13 @@ func _on_side_project_updated(_side_project_data: Dictionary) -> void:
 	# Update display when side project progress changes (only if showing ESCAPE tab)
 	if current_task_type == TaskType.ESCAPE:
 		_update_display()
+
+func _on_game_state_changed(_value) -> void:
+	"""Called on any game state change to refresh active indicators."""
+	if current_task_type == TaskType.JOB:
+		_update_task_list()
+	elif current_task_type == TaskType.ESCAPE:
+		_show_escape_task()
 
 func _update_display() -> void:
 	if current_task_type == TaskType.JOB:
@@ -107,6 +126,19 @@ func _update_task_list() -> void:
 	"""Update task cards to match GameManager.tasks using update-in-place pattern."""
 	var tasks = GameManager.tasks
 
+	# Auto-select logic when switching to job tab
+	if last_active_job_task == null or not tasks.has(last_active_job_task):
+		# No last active task or it's gone - pick the first task or current_task
+		if tasks.size() == 1:
+			last_active_job_task = tasks[0]
+		elif GameManager.current_task and tasks.has(GameManager.current_task):
+			last_active_job_task = GameManager.current_task
+		elif tasks.size() > 0:
+			last_active_job_task = tasks[0]
+
+	# Check if we're currently progressing on job tasks
+	var is_working_on_jobs = GameManager.current_action == GameManager.PlayerAction.WORKING
+
 	# Update existing cards or create new ones
 	for i in tasks.size():
 		var card = null
@@ -125,8 +157,9 @@ func _update_task_list() -> void:
 			card.ship_it_pressed.connect(_on_task_ship_it_pressed)
 
 		# Update card with task data
+		var is_active = tasks[i] == last_active_job_task
 		card.set_task(tasks[i])
-		card.set_active(tasks[i] == GameManager.current_task)
+		card.set_active(is_active, is_working_on_jobs and is_active)
 		card.visible = true
 
 	# Hide excess cards
@@ -137,10 +170,16 @@ func _on_task_work_pressed(task: Task) -> void:
 	"""Handle WORK button pressed on a task card."""
 	print("TaskPanelV2: Work pressed on task: ", task.title)
 
-	# Switch to this task if it's not already active
+	# Set this as the last active job task
+	last_active_job_task = task
+
+	# Switch to this task in GameManager
 	if task != GameManager.current_task:
 		GameManager.switch_task(task)
 		print("TaskPanelV2: Switched to task: ", task.title)
+
+	# Update active indicators immediately
+	_update_task_list()
 
 	# Emit work signal with task parameter
 	work_pressed.emit(task)
@@ -149,7 +188,10 @@ func _on_task_ship_it_pressed(task: Task) -> void:
 	"""Handle SHIP IT button pressed on a task card."""
 	print("TaskPanelV2: Ship It pressed on task: ", task.title)
 
-	# Switch to this task if it's not already active
+	# Set this as the last active job task (even though we're shipping it)
+	last_active_job_task = task
+
+	# Switch to this task in GameManager
 	if task != GameManager.current_task:
 		GameManager.switch_task(task)
 		print("TaskPanelV2: Switched to task: ", task.title)
@@ -169,6 +211,10 @@ func _show_escape_task() -> void:
 	# Progress
 	progress_bar.value = escape.progress
 	progress_percent.text = "%d%%" % int(escape.progress)
+
+	# Show active indicator only when actually hustling
+	var is_hustling = GameManager.current_action == GameManager.PlayerAction.HUSTLING
+	escape_active_label.visible = is_hustling
 
 	# Color based on escape progress
 	var color: Color
