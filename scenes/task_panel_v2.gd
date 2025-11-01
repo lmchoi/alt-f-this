@@ -18,12 +18,15 @@ var current_task_type := TaskType.JOB
 var job_theme_style: StyleBox
 var escape_theme_style: StyleBox
 
+# Task card management
+const TaskCardScene = preload("res://scenes/task_card.tscn")
+var task_cards: Array = []  # Keep references to instantiated cards
+
 # Node references
 @onready var job_tab := $MarginContainer/VBoxContainer/TabBar/JobTab as Button
 @onready var escape_tab := $MarginContainer/VBoxContainer/TabBar/EscapeTab as Button
 @onready var job_content := $MarginContainer/VBoxContainer/JobContent as VBoxContainer
 @onready var escape_content := $MarginContainer/VBoxContainer/EscapeContent as VBoxContainer
-@onready var task_card := $MarginContainer/VBoxContainer/JobContent/TaskCard
 @onready var hustle_button := $MarginContainer/VBoxContainer/EscapeContent/ActionButtons/HustleButton as Button
 
 # Legacy single-task nodes (for ESCAPE tab)
@@ -58,13 +61,10 @@ func _ready() -> void:
 	escape_tab.pressed.connect(_on_escape_tab_pressed)
 	hustle_button.pressed.connect(_on_hustle_pressed)
 
-	# Connect TaskCard signals
-	task_card.work_pressed.connect(_on_task_work_pressed)
-	task_card.ship_it_pressed.connect(_on_task_ship_it_pressed)
-
 	# Connect to GameManager signals
 	GameManager.current_task_updated.connect(_on_task_updated)
 	GameManager.side_project_updated.connect(_on_side_project_updated)
+	GameManager.tasks_changed.connect(_on_tasks_changed)
 
 	# Initial update
 	_update_display()
@@ -99,11 +99,39 @@ func _update_display() -> void:
 		escape_content.visible = true
 	_apply_theme(current_task_type)
 
+func _on_tasks_changed(tasks: Array[Task]) -> void:
+	"""Handle tasks list changes from GameManager."""
+	_update_task_list()
+
 func _update_task_list() -> void:
-	"""Update the task card with current_task."""
-	if GameManager.current_task:
-		task_card.set_task(GameManager.current_task)
-		task_card.set_active(true)  # Single task is always active
+	"""Update task cards to match GameManager.tasks using update-in-place pattern."""
+	var tasks = GameManager.tasks
+
+	# Update existing cards or create new ones
+	for i in tasks.size():
+		var card = null
+
+		if i < task_cards.size():
+			# Reuse existing card
+			card = task_cards[i]
+		else:
+			# Need more cards - create new one
+			card = TaskCardScene.instantiate()
+			job_content.add_child(card)
+			task_cards.append(card)
+
+			# Connect signals from the new card
+			card.work_pressed.connect(_on_task_work_pressed)
+			card.ship_it_pressed.connect(_on_task_ship_it_pressed)
+
+		# Update card with task data
+		card.set_task(tasks[i])
+		card.set_active(tasks[i] == GameManager.current_task)
+		card.visible = true
+
+	# Hide excess cards
+	for i in range(tasks.size(), task_cards.size()):
+		task_cards[i].visible = false
 
 func _on_task_work_pressed(task: Task) -> void:
 	"""Handle WORK button pressed on a task card."""

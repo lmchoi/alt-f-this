@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://c8xqy4n5pqr7w"]
+[gd_scene load_steps=6 format=3 uid="uid://c8xqy4n5pqr7w"]
 
 [ext_resource type="Theme" uid="uid://buaicsh0r3xyc" path="res://themes/main_theme.tres" id="1_theme"]
 [ext_resource type="Script" path="res://scenes/task_panel_v2.gd" id="2_script"]
 [ext_resource type="Script" path="res://scripts/ui/action_button.gd" id="3_action_button"]
-[ext_resource type="PackedScene" uid="uid://d2uw2sgfwjw0a" path="res://scenes/task_card.tscn" id="4_task_card"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(0.12, 0.12, 0.15, 1)
@@ -72,9 +71,6 @@ text = "🚀 ESCAPE"
 [node name="JobContent" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 12
-
-[node name="TaskCard" parent="MarginContainer/VBoxContainer/JobContent" instance=ExtResource("4_task_card")]
-layout_mode = 2
 
 [node name="EscapeContent" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
 visible = false
