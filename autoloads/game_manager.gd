@@ -1,12 +1,6 @@
 extends Node
 
-# Game mode types
-enum GameMode {
-	CLASSIC,    # Turn-based: player clicks to advance
-	TIMED       # Real-time: auto-advance after timer expires
-}
-
-# Player action types (for timed mode)
+# Player action types
 enum PlayerAction {
 	NONE,       # No action selected
 	WORKING,    # Player chose WORK action
@@ -36,8 +30,8 @@ const TECH_DEBT_BUG_MULTIPLIER = 3.0
 const CRITICAL_OUTAGE_THRESHOLD = 80.0
 const OPTICS_MAX_OVERDUE_DAYS = 1
 
-# Timed mode constants
-const TIMED_MODE_DURATION = 60.0  # Seconds per day in timed mode
+# Timer constants
+const TIMED_MODE_DURATION = 60.0  # Seconds per day
 
 # Job level constants
 const JOB_TITLES = ["Junior Dev", "Mid-Level Dev", "Senior Dev"]
@@ -64,9 +58,7 @@ signal clean_code_tokens_changed(count)
 signal promotion_earned(new_level: int, new_title: String, new_salary: int)
 signal category_warning_shown(message: String)
 
-var game_mode := GameMode.CLASSIC  # Current game mode (classic turn-based or timed)
-
-# Timed mode player action (what the player is currently doing)
+# Player action (what the player is currently doing)
 var current_action := PlayerAction.NONE
 
 var current_task: Task:
@@ -249,9 +241,8 @@ func handle_outage_choice(choice: String):
 
 func finish_outage_turn():
 	"""Called after outage consequence popup is dismissed to advance the day."""
-	# In timed mode, reset player action so they stop working/hustling
-	if game_mode == GameMode.TIMED:
-		current_action = PlayerAction.NONE
+	# Reset player action so they stop working/hustling
+	current_action = PlayerAction.NONE
 	advance_turn()
 	# Clear outage flag AFTER advancing (so timer doesn't auto-resume)
 	outage_in_progress = false
@@ -303,10 +294,6 @@ func process_game_tick(delta: float) -> void:
 	"""Called every frame by TimedModeController to apply incremental work progress.
 	GameManager decides what to do based on current game state.
 	"""
-	# Only apply incremental work in timed mode
-	if game_mode != GameMode.TIMED:
-		return
-
 	if current_task == null:
 		return
 
@@ -371,9 +358,8 @@ func advance_turn():
 
 func process_turn(action: String):
 	"""Complete turn cycle: execute action, advance day, check events."""
-	# Resume timer in timed mode - player is taking action
-	if game_mode == GameMode.TIMED:
-		TimedModeController.resume_timer()
+	# Resume timer - player is taking action
+	TimedModeController.resume_timer()
 
 	# 1. Execute player action (returns outcome)
 	var outcome = ActionOutcome.NORMAL
@@ -397,22 +383,9 @@ func do_work() -> ActionOutcome:
 		task_completed_awaiting_choice.emit()
 		return ActionOutcome.DO_NOTHING
 
-	# In timed mode, work is applied incrementally via process_game_tick()
-	if game_mode == GameMode.TIMED:
-		current_action = PlayerAction.WORKING
-		return ActionOutcome.DO_NOTHING
-
-	# Classic mode: apply full day's work immediately
-	# _trigger_random_work_event():
-	# wait response to work_event
-
-	var bug_multiplier = get_bug_multiplier()
-	# 100 / complexity = days to complete (1 complexity = 1 day)
-	var work = 100.0 / (current_task.complexity * bug_multiplier)
-	current_task.do_work(work)  # Task will emit progress_changed signal
-	print("Progress: +%.1f%% (complexity: %d, bugs: %d)" % [work, current_task.complexity, bugs])
-
-	return ActionOutcome.NORMAL
+	# Work is applied incrementally via process_game_tick()
+	current_action = PlayerAction.WORKING
+	return ActionOutcome.DO_NOTHING
 
 func pick_up_new_task():
 	completed_tasks += 1
@@ -440,17 +413,9 @@ func hustle() -> ActionOutcome:
 		event_occurred.emit({"text": "Side project is complete!\n\nNow you just need the money to escape...", "money": 0, "ducks": 0})
 		return ActionOutcome.DO_NOTHING
 
-	# In timed mode, hustle is applied incrementally via process_game_tick()
-	if game_mode == GameMode.TIMED:
-		current_action = PlayerAction.HUSTLING
-		return ActionOutcome.DO_NOTHING
-
-	# Classic mode: apply full day's hustle immediately (5% per hustle)
-	var progress_gain = 5
-	side_project.progress = min(100, side_project.progress + progress_gain)
-	side_project_updated.emit(side_project)
-
-	return ActionOutcome.NORMAL
+	# Hustle is applied incrementally via process_game_tick()
+	current_action = PlayerAction.HUSTLING
+	return ActionOutcome.DO_NOTHING
 
 func get_ship_quality_message(progress: int) -> String:
 	"""Get random quality flavor text based on progress percentage."""
@@ -514,8 +479,5 @@ func ship_it() -> ActionOutcome:
 
 	pick_up_new_task()
 
-	# In timed mode, don't advance the day - the timer handles that
-	if game_mode == GameMode.TIMED:
-		return ActionOutcome.DO_NOTHING
-
-	return ActionOutcome.NORMAL
+	# Don't advance the day - the timer handles that
+	return ActionOutcome.DO_NOTHING

@@ -301,17 +301,3 @@ color = Color(1, 0, 0, 0.3)
 [node name="CategoryWarningDialog" parent="." instance=ExtResource("9_category_warning")]
 
 [node name="InterruptionPopup" parent="." instance=ExtResource("10_interruption_popup")]
-
-[node name="DebugModeToggle" type="CheckButton" parent="."]
-unique_name_in_owner = true
-visible = false
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -200.0
-offset_top = 100.0
-offset_right = -10.0
-offset_bottom = 150.0
-grow_horizontal = 0
-theme = ExtResource("2_main_theme")
-text = "Timed Mode (45s)"

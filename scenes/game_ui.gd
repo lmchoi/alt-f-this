@@ -39,13 +39,6 @@ func _ready():
 	TimedModeController.timer_expired.connect(_on_timer_expired)
 	InterruptionManager.interruption_triggered.connect(_on_interruption_triggered)
 
-	# Debug: Show mode toggle in debug builds
-	if OS.is_debug_build():
-		var debug_mode_toggle = $DebugModeToggle
-		debug_mode_toggle.visible = true
-		debug_mode_toggle.toggled.connect(_on_debug_mode_toggled)
-		debug_mode_toggle.button_pressed = (GameManager.game_mode == GameManager.GameMode.TIMED)
-
 	# Load end game panel
 	var EndGamePanelScene = load("res://scenes/end_game_panel.tscn")
 	end_game_panel = EndGamePanelScene.instantiate()
@@ -53,10 +46,9 @@ func _ready():
 
 	GameManager.start_game()
 
-	# Start timer and interruptions if in timed mode
-	if GameManager.game_mode == GameManager.GameMode.TIMED:
-		TimedModeController.start_timer(GameManager.TIMED_MODE_DURATION)
-		InterruptionManager.start_interruptions()
+	# Start timer and interruptions
+	TimedModeController.start_timer(GameManager.TIMED_MODE_DURATION)
+	InterruptionManager.start_interruptions()
 
 	# Debug: Load test scenario in debug builds
 	if OS.is_debug_build():
@@ -141,11 +133,10 @@ func _on_timer_expired():
 	pass
 
 func _on_next_day(_day: int):
-	"""Reset timer when advancing to next day in timed mode."""
-	if GameManager.game_mode == GameManager.GameMode.TIMED:
-		# Don't reset timer during outage - keep it paused until player chooses action
-		if not GameManager.outage_in_progress:
-			TimedModeController.reset_timer(GameManager.TIMED_MODE_DURATION)
+	"""Reset timer when advancing to next day."""
+	# Don't reset timer during outage - keep it paused until player chooses action
+	if not GameManager.outage_in_progress:
+		TimedModeController.reset_timer(GameManager.TIMED_MODE_DURATION)
 
 func _on_interruption_triggered(event_data: Dictionary):
 	"""Add new interruption card to the stack."""
@@ -175,22 +166,6 @@ func _on_interruption_dismissed(event_id: String):
 		if card.event_data["id"] == event_id:
 			card.queue_free()
 			break
-
-func _on_debug_mode_toggled(enabled: bool):
-	"""Debug: Toggle between classic and timed mode."""
-	if enabled:
-		GameManager.game_mode = GameManager.GameMode.TIMED
-		TimedModeController.start_timer(GameManager.TIMED_MODE_DURATION)
-		InterruptionManager.start_interruptions()
-		print("🎮 Switched to TIMED mode")
-	else:
-		GameManager.game_mode = GameManager.GameMode.CLASSIC
-		TimedModeController.stop_timer()
-		InterruptionManager.stop_interruptions()
-		print("🎮 Switched to CLASSIC mode")
-
-	# Update top bar timer visibility
-	top_bar._update_timer_visibility()
 
 func _setup_test_scenario():
 	"""Debug: Setup test scenario for production outage testing"""

@@ -39,5 +39,5 @@ func _update_timer(time_left: float):
 		timer_value.add_theme_color_override("font_color", Color(0.9, 0.75, 0.3, 1))
 
 func _update_timer_visibility():
-	"""Show/hide timer based on game mode."""
-	timer_container.visible = (GameManager.game_mode == GameManager.GameMode.TIMED)
+	"""Timer is always visible."""
+	timer_container.visible = true
