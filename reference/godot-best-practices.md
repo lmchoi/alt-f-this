@@ -60,6 +60,35 @@ signal production_outage(severity)   # Good - what happened
 # Not: signal update()  # Bad - vague
 ```
 
+### ✅ Type Signal Parameters (Prevent Bugs)
+```gdscript
+# ✅ Good - explicit about what data is sent
+signal work_pressed(task: Task)
+signal item_selected(item: Item)
+
+# ❌ Bad - unclear what data is sent
+signal work_pressed
+signal item_selected
+
+# Bug example:
+signal action_pressed  # No parameter declared
+
+func _on_button_pressed(item: Item):
+    action_pressed.emit()  # Forgot to pass item - silent bug!
+
+# With typed signal, the mismatch is visible:
+signal action_pressed(item: Item)  # Requires parameter
+
+func _on_button_pressed(item: Item):
+    action_pressed.emit()  # Obvious error - missing argument!
+```
+
+**Why this matters:**
+- Makes intent explicit in signal declaration
+- Easier to spot when parameters are dropped
+- Better IDE autocomplete and error detection
+- Self-documenting code
+
 ---
 
 ## Node References & Performance
