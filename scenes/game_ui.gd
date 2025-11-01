@@ -1,8 +1,6 @@
 extends Node
 
-@onready var work_button := $"%WorkButton" as ActionButton
-@onready var slack_button := $"%SlackButton" as ActionButton
-# ship_it_button is now inside TaskPanelV2, not in game_ui
+# Bottom action buttons removed - task cards have their own buttons now
 @onready var task_panel := $"%TaskPanel"
 @onready var top_bar := $MainThemeContainer/VBoxContainer/TopBar
 @onready var interruption_stack := $"%InterruptionStack"
@@ -11,9 +9,6 @@ var end_game_panel: Panel
 var interruption_card_scene := preload("res://scenes/interruption_card.tscn")
 
 func _ready():
-	work_button.pressed.connect(_on_work_button_pressed)
-	slack_button.pressed.connect(_on_slack_button_pressed)
-
 	# TaskPanelV2 has buttons inside, connect its signals
 	task_panel.work_pressed.connect(_on_work_button_pressed)
 	task_panel.ship_it_pressed.connect(_on_ship_it_button_pressed)
