@@ -5,7 +5,7 @@
 
 [node name="InterruptionPopup" type="PopupPanel"]
 initial_position = 1
-size = Vector2i(400, 180)
+size = Vector2i(450, 320)
 transparent_bg = false
 visible = false
 transparent = false
@@ -15,18 +15,68 @@ script = ExtResource("1")
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 384.0
-offset_bottom = 164.0
+offset_right = 434.0
+offset_bottom = 304.0
 theme_override_constants/separation = 12
+
+[node name="SourceLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Interruption"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 24
 
 [node name="MessageLabel" type="Label" parent="VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 3
 horizontal_alignment = 1
-vertical_alignment = 1
 autowrap_mode = 2
 text = "Something needs your attention"
+
+[node name="TaskDetailsPanel" type="VBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 4
+visible = false
+
+[node name="TaskTitleLabel" type="Label" parent="VBoxContainer/TaskDetailsPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Task: Build Status Dashboard"
+
+[node name="DueLabel" type="Label" parent="VBoxContainer/TaskDetailsPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "• Due: TODAY"
+
+[node name="ComplexityLabel" type="Label" parent="VBoxContainer/TaskDetailsPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "• Complexity: 🍝🍝🍝"
+
+[node name="CategoriesLabel" type="Label" parent="VBoxContainer/TaskDetailsPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "• Categories: URGENT, OPTICS"
+
+[node name="ButtonContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 12
+
+[node name="AcceptButton" type="Button" parent="VBoxContainer/ButtonContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "ACCEPT"
+visible = false
+
+[node name="DeclineButton" type="Button" parent="VBoxContainer/ButtonContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "DECLINE"
+visible = false
 
 [node name="DismissButton" type="Button" parent="VBoxContainer"]
 unique_name_in_owner = true
@@ -34,3 +84,11 @@ custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "OK"
+
+[node name="ConsequenceLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Decline: -15 ducks"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 18
+visible = false

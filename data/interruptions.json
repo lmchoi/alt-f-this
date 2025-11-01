@@ -1,0 +1,100 @@
+{
+  "task_offers": [
+    {
+      "id": "ceo_status_dashboard",
+      "source": "CEO",
+      "messages": [
+        "Board meeting tomorrow. Need real-time metrics dashboard.",
+        "Investors are asking questions. Status page. Now.",
+        "Where's that dashboard I asked for?"
+      ],
+      "task": {
+        "title": "Build Status Dashboard",
+        "complexity": 3,
+        "due_in_days": 0,
+        "categories": ["urgent", "optics"]
+      },
+      "decline_consequences": {
+        "ducks": -15,
+        "message": "CEO is not happy..."
+      }
+    },
+    {
+      "id": "prod_down_hotfix",
+      "source": "PagerDuty",
+      "messages": [
+        "🚨 PROD DOWN: Login service unresponsive",
+        "🚨 Database migration failed - users can't access data",
+        "🚨 Payment processing down - losing revenue"
+      ],
+      "task": {
+        "title": "Fix Production Outage",
+        "complexity": 2,
+        "due_in_days": 0,
+        "categories": ["critical"]
+      },
+      "decline_consequences": {
+        "ducks": -20,
+        "message": "Production is still down. Users are complaining..."
+      }
+    },
+    {
+      "id": "pm_feature_request",
+      "source": "Product Manager",
+      "messages": [
+        "Quick win - just add a 'share to TikTok' button",
+        "Client demo in 2 days. Need this one feature.",
+        "Marketing promised this would be ready. Can you squeeze it in?"
+      ],
+      "task": {
+        "title": "Add 'Quick Win' Feature",
+        "complexity": 4,
+        "due_in_days": 2,
+        "categories": ["optics"]
+      },
+      "decline_consequences": {
+        "ducks": -10,
+        "message": "PM adds you to more meetings to 'sync up'"
+      }
+    },
+    {
+      "id": "security_patch",
+      "source": "Security Team",
+      "messages": [
+        "Critical CVE in dependency. Needs immediate patch.",
+        "Penetration test found SQL injection vulnerability",
+        "Compliance audit flagged unencrypted data"
+      ],
+      "task": {
+        "title": "Apply Security Patch",
+        "complexity": 2,
+        "due_in_days": 1,
+        "categories": ["critical", "tech_debt"]
+      },
+      "decline_consequences": {
+        "ducks": -25,
+        "bugs": 5,
+        "message": "Security risks accumulate..."
+      }
+    },
+    {
+      "id": "tech_debt_refactor",
+      "source": "Senior Dev",
+      "messages": [
+        "This code is a house of cards. We need to refactor now.",
+        "The hack we did last week is causing issues downstream",
+        "Can you clean up the mess from that rushed feature?"
+      ],
+      "task": {
+        "title": "Refactor Legacy Code",
+        "complexity": 5,
+        "due_in_days": 3,
+        "categories": ["tech_debt"]
+      },
+      "decline_consequences": {
+        "bugs": 3,
+        "message": "Technical debt accumulates silently..."
+      }
+    }
+  ]
+}
