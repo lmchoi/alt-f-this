@@ -18,35 +18,22 @@ var current_task_type := TaskType.JOB
 var job_theme_style: StyleBox
 var escape_theme_style: StyleBox
 
-# Category badge theme mapping
-const BADGE_THEME = preload("res://themes/badge_theme.tres")
-const CATEGORY_STYLES = {
-	"critical": "CriticalBadge",
-	"optics": "OpticsBadge",
-	"tech_debt": "TechDebtBadge",
-	"technical": "TechnicalBadge",
-	"urgent": "UrgentBadge"
-}
-
 # Node references
 @onready var job_tab := $MarginContainer/VBoxContainer/TabBar/JobTab as Button
 @onready var escape_tab := $MarginContainer/VBoxContainer/TabBar/EscapeTab as Button
-@onready var task_title := $MarginContainer/VBoxContainer/HeaderRow/TaskTitle as Label
-@onready var badge_container := $MarginContainer/VBoxContainer/HeaderRow/BadgeContainer as HBoxContainer
-@onready var due_label := $MarginContainer/VBoxContainer/MetadataRow/DueLabel as Label
-@onready var complexity_label := $MarginContainer/VBoxContainer/MetadataRow/ComplexityLabel as Label
-@onready var progress_bar := $MarginContainer/VBoxContainer/ProgressSection/ProgressBar as ProgressBar
-@onready var progress_percent := $MarginContainer/VBoxContainer/ProgressSection/ProgressPercent as Label
-@onready var quality_label := $MarginContainer/VBoxContainer/ProgressSection/QualityLabel as Label
-@onready var quality_guide := $MarginContainer/VBoxContainer/ProgressSection/QualityGuide as HBoxContainer
-@onready var work_button := $MarginContainer/VBoxContainer/ActionButtons/WorkButton as Button
-@onready var ship_it_button := $MarginContainer/VBoxContainer/ActionButtons/ShipItButton as Button
-@onready var hustle_button := $MarginContainer/VBoxContainer/ActionButtons/HustleButton as Button
+@onready var job_content := $MarginContainer/VBoxContainer/JobContent as VBoxContainer
+@onready var escape_content := $MarginContainer/VBoxContainer/EscapeContent as VBoxContainer
+@onready var task_card := $MarginContainer/VBoxContainer/JobContent/TaskCard
+@onready var hustle_button := $MarginContainer/VBoxContainer/EscapeContent/ActionButtons/HustleButton as Button
+
+# Legacy single-task nodes (for ESCAPE tab)
+@onready var task_title := $MarginContainer/VBoxContainer/EscapeContent/HeaderRow/TaskTitle as Label
+@onready var due_label := $MarginContainer/VBoxContainer/EscapeContent/MetadataRow/DueLabel as Label
+@onready var progress_bar := $MarginContainer/VBoxContainer/EscapeContent/ProgressSection/ProgressBar as ProgressBar
+@onready var progress_percent := $MarginContainer/VBoxContainer/EscapeContent/ProgressSection/ProgressPercent as Label
 
 func _ready() -> void:
 	print("TaskPanelV2: Ready")
-	print("Work button: ", work_button)
-	print("Ship It button: ", ship_it_button)
 
 	# Store theme styles
 	job_theme_style = get_theme_stylebox("panel")
@@ -69,26 +56,18 @@ func _ready() -> void:
 	# Connect tab buttons
 	job_tab.pressed.connect(_on_job_tab_pressed)
 	escape_tab.pressed.connect(_on_escape_tab_pressed)
-
-	work_button.pressed.connect(_on_work_pressed)
-	ship_it_button.pressed.connect(_on_ship_it_pressed)
 	hustle_button.pressed.connect(_on_hustle_pressed)
 
-	# Connect to GameManager signals (same as v1)
+	# Connect TaskCard signals
+	task_card.work_pressed.connect(_on_task_work_pressed)
+	task_card.ship_it_pressed.connect(_on_task_ship_it_pressed)
+
+	# Connect to GameManager signals
 	GameManager.current_task_updated.connect(_on_task_updated)
 	GameManager.side_project_updated.connect(_on_side_project_updated)
 
 	# Initial update
-	if GameManager.current_task:
-		_update_display()
-
-func _on_work_pressed() -> void:
-	print("TaskPanelV2: Work button pressed")
-	work_pressed.emit()
-
-func _on_ship_it_pressed() -> void:
-	print("TaskPanelV2: Ship It button pressed")
-	ship_it_pressed.emit()
+	_update_display()
 
 func _on_hustle_pressed() -> void:
 	print("TaskPanelV2: Hustle button pressed")
@@ -96,7 +75,8 @@ func _on_hustle_pressed() -> void:
 
 func _on_task_updated(task: Task) -> void:
 	# Connect to the new task's progress_changed signal
-	task.progress_changed.connect(_on_progress_changed)
+	if task and not task.progress_changed.is_connected(_on_progress_changed):
+		task.progress_changed.connect(_on_progress_changed)
 	_update_display()
 
 func _on_progress_changed(new_progress: float) -> void:
@@ -110,39 +90,32 @@ func _on_side_project_updated(_side_project_data: Dictionary) -> void:
 
 func _update_display() -> void:
 	if current_task_type == TaskType.JOB:
-		_show_job_task()
+		_update_task_list()
+		job_content.visible = true
+		escape_content.visible = false
 	else:
 		_show_escape_task()
-	_update_button_visibility(current_task_type)
+		job_content.visible = false
+		escape_content.visible = true
 	_apply_theme(current_task_type)
 
-func _show_job_task() -> void:
-	var task = GameManager.current_task
-	if not task:
-		return
+func _update_task_list() -> void:
+	"""Update the task card with current_task."""
+	if GameManager.current_task:
+		task_card.set_task(GameManager.current_task)
+		task_card.set_active(true)  # Single task is always active
 
-	# Task info
-	task_title.text = task.title
-	var days_until_due = task.due_day - GameManager.day
-	due_label.text = "Due: %dd" % days_until_due
-	complexity_label.text = _get_complexity_emoji(task.complexity)
-	complexity_label.visible = true
+func _on_task_work_pressed(task: Task) -> void:
+	"""Handle WORK button pressed on a task card."""
+	print("TaskPanelV2: Work pressed on task: ", task.title)
+	# Emit work signal so game_ui can process it
+	work_pressed.emit()
 
-	# Update category badges
-	_update_category_badges(task.categories)
-
-	# Progress
-	progress_bar.value = task.progress
-	progress_percent.text = "%d%%" % int(task.progress)
-	quality_label.text = _get_quality_label(task.progress)
-	quality_label.visible = true
-	quality_guide.visible = true
-
-	# Update progress bar color based on quality
-	_update_progress_bar_color(task.progress)
-
-	# Ship It button state
-	ship_it_button.disabled = task.progress < GameManager.MIN_SHIP_PROGRESS
+func _on_task_ship_it_pressed(task: Task) -> void:
+	"""Handle SHIP IT button pressed on a task card."""
+	print("TaskPanelV2: Ship It pressed on task: ", task.title)
+	# Emit ship signal so game_ui can process it
+	ship_it_pressed.emit()
 
 func _show_escape_task() -> void:
 	var escape = GameManager.side_project
@@ -152,87 +125,24 @@ func _show_escape_task() -> void:
 
 	# Metadata
 	due_label.text = "Goal: $5K"
-	complexity_label.visible = false
-
-	# Clear badges
-	_update_category_badges([])
 
 	# Progress
 	progress_bar.value = escape.progress
 	progress_percent.text = "%d%%" % int(escape.progress)
 
-	# Hide quality elements (not relevant for escape)
-	quality_label.visible = false
-	quality_guide.visible = false
-
 	# Color based on escape progress
-	_update_progress_bar_color(escape.progress)
-
-func _get_complexity_emoji(complexity: int) -> String:
-	var emoji = ""
-	for i in complexity:
-		emoji += "🍝"
-	return emoji
-
-func _get_quality_label(progress: float) -> String:
-	if progress < 20:
-		return "VERY RISKY"
-	elif progress < 50:
-		return "HALF-BAKED"
-	elif progress < 90:
-		return "ACCEPTABLE"
-	else:
-		return "READY TO SHIP"
-
-func _update_progress_bar_color(progress: float) -> void:
 	var color: Color
-
-	if progress < 20:
-		color = Color(1.0, 0.3, 0.3, 0.8)  # Red
-	elif progress < 50:
-		color = Color(1.0, 0.6, 0.2, 0.8)  # Orange
-	elif progress < 90:
-		color = Color(1.0, 0.9, 0.3, 0.8)  # Yellow
+	if escape.progress < 50:
+		color = Color(1.0, 0.9, 0.3, 0.8)  # Gold/Yellow
 	else:
-		color = Color(0.3, 1.0, 0.3, 0.8)  # Green
-
-	# Update progress bar modulate to tint the fill color
+		color = Color(0.9, 0.75, 0.3, 0.8)  # Brighter gold
 	progress_bar.modulate = color
-
-func _create_badge(category: String) -> Label:
-	var badge = Label.new()
-	badge.text = " " + category.to_upper() + " "
-	badge.theme = BADGE_THEME
-	badge.add_theme_color_override("font_color", Color(0, 0, 0, 1))  # Black text
-
-	# Apply category-specific style from theme
-	var cat_lower = category.to_lower()
-	var style_name = CATEGORY_STYLES.get(cat_lower, "CriticalBadge")
-	var style = BADGE_THEME.get_stylebox(style_name, "Label")
-	if style:
-		badge.add_theme_stylebox_override("normal", style)
-
-	return badge
-
-func _update_category_badges(categories: Array[String]) -> void:
-	# Clear existing badges
-	for child in badge_container.get_children():
-		child.queue_free()
-
-	# Create new badges
-	for category in categories:
-		badge_container.add_child(_create_badge(category))
 
 func _apply_theme(task_type: TaskType) -> void:
 	if task_type == TaskType.JOB:
 		add_theme_stylebox_override("panel", job_theme_style)
 	else:
 		add_theme_stylebox_override("panel", escape_theme_style)
-
-func _update_button_visibility(task_type: TaskType) -> void:
-	work_button.visible = (task_type == TaskType.JOB)
-	ship_it_button.visible = (task_type == TaskType.JOB)
-	hustle_button.visible = (task_type == TaskType.ESCAPE)
 
 func _on_job_tab_pressed() -> void:
 	print("TaskPanelV2: JOB tab pressed")

@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://c8xqy4n5pqr7w"]
+[gd_scene load_steps=7 format=3 uid="uid://c8xqy4n5pqr7w"]
 
 [ext_resource type="Theme" uid="uid://buaicsh0r3xyc" path="res://themes/main_theme.tres" id="1_theme"]
 [ext_resource type="Script" path="res://scenes/task_panel_v2.gd" id="2_script"]
 [ext_resource type="Script" path="res://scripts/ui/action_button.gd" id="3_action_button"]
+[ext_resource type="PackedScene" uid="uid://d2uw2sgfwjw0a" path="res://scenes/task_card.tscn" id="4_task_card"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(0.12, 0.12, 0.15, 1)
@@ -68,107 +69,60 @@ size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 22
 text = "🚀 ESCAPE"
 
-[node name="HeaderRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="JobContent" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TaskCard" parent="MarginContainer/VBoxContainer/JobContent" instance=ExtResource("4_task_card")]
+layout_mode = 2
+
+[node name="EscapeContent" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="HeaderRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer/EscapeContent"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="TaskTitle" type="Label" parent="MarginContainer/VBoxContainer/HeaderRow"]
+[node name="TaskTitle" type="Label" parent="MarginContainer/VBoxContainer/EscapeContent/HeaderRow"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 28
-text = "Update Slack Status"
+text = "Side Project"
 
-[node name="BadgeContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HeaderRow"]
-layout_mode = 2
-theme_override_constants/separation = 4
-
-[node name="MetadataRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="MetadataRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer/EscapeContent"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="DueLabel" type="Label" parent="MarginContainer/VBoxContainer/MetadataRow"]
+[node name="DueLabel" type="Label" parent="MarginContainer/VBoxContainer/EscapeContent/MetadataRow"]
 layout_mode = 2
-text = "Due: 2d"
+text = "Goal: $5K"
 
-[node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/MetadataRow"]
-layout_mode = 2
-
-[node name="ComplexityLabel" type="Label" parent="MarginContainer/VBoxContainer/MetadataRow"]
-layout_mode = 2
-text = "🍝🍝"
-
-[node name="ProgressSection" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="ProgressSection" type="VBoxContainer" parent="MarginContainer/VBoxContainer/EscapeContent"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/ProgressSection"]
-custom_minimum_size = Vector2(0, 100)
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/EscapeContent/ProgressSection"]
+custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 max_value = 100.0
 show_percentage = false
 
-[node name="ProgressPercent" type="Label" parent="MarginContainer/VBoxContainer/ProgressSection"]
+[node name="ProgressPercent" type="Label" parent="MarginContainer/VBoxContainer/EscapeContent/ProgressSection"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 48
-text = "41%"
+theme_override_font_sizes/font_size = 24
+text = "0%"
 horizontal_alignment = 1
 
-[node name="QualityLabel" type="Label" parent="MarginContainer/VBoxContainer/ProgressSection"]
+[node name="ActionButtons" type="HBoxContainer" parent="MarginContainer/VBoxContainer/EscapeContent"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "HALF-BAKED"
-horizontal_alignment = 1
+theme_override_constants/separation = 8
 
-[node name="QualityGuide" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ProgressSection"]
-layout_mode = 2
-theme_override_constants/separation = 16
-alignment = 1
-
-[node name="Red" type="Label" parent="MarginContainer/VBoxContainer/ProgressSection/QualityGuide"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "🔴 20%"
-
-[node name="Orange" type="Label" parent="MarginContainer/VBoxContainer/ProgressSection/QualityGuide"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "🟠 50%"
-
-[node name="Yellow" type="Label" parent="MarginContainer/VBoxContainer/ProgressSection/QualityGuide"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "🟡 90%"
-
-[node name="Green" type="Label" parent="MarginContainer/VBoxContainer/ProgressSection/QualityGuide"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "🟢"
-
-[node name="ActionButtons" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 12
-
-[node name="WorkButton" type="Button" parent="MarginContainer/VBoxContainer/ActionButtons"]
-custom_minimum_size = Vector2(0, 60)
+[node name="HustleButton" type="Button" parent="MarginContainer/VBoxContainer/EscapeContent/ActionButtons"]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 22
+text = "HUSTLE"
 script = ExtResource("3_action_button")
-text = "⚙️ WORK"
-
-[node name="ShipItButton" type="Button" parent="MarginContainer/VBoxContainer/ActionButtons"]
-custom_minimum_size = Vector2(0, 60)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 24
-script = ExtResource("3_action_button")
-text = "🚢 SHIP IT"
-
-[node name="HustleButton" type="Button" parent="MarginContainer/VBoxContainer/ActionButtons"]
-custom_minimum_size = Vector2(0, 60)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 24
-visible = false
-script = ExtResource("3_action_button")
-text = "⚙️ HUSTLE"

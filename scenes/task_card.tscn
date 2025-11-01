@@ -1,0 +1,92 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2uw2sgfwjw0a"]
+
+[ext_resource type="Theme" uid="uid://buaicsh0r3xyc" path="res://themes/main_theme.tres" id="1_theme"]
+[ext_resource type="Script" path="res://scenes/task_card.gd" id="2_script"]
+
+[node name="TaskCard" type="PanelContainer"]
+custom_minimum_size = Vector2(0, 100)
+theme = ExtResource("1_theme")
+script = ExtResource("2_script")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HeaderRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TaskTitle" type="Label" parent="MarginContainer/VBoxContainer/HeaderRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 22
+text = "Task Title"
+text_overrun_behavior = 3
+
+[node name="BadgeContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HeaderRow"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="MetadataRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="DueLabel" type="Label" parent="MarginContainer/VBoxContainer/MetadataRow"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Due: 2d"
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/MetadataRow"]
+layout_mode = 2
+
+[node name="ComplexityLabel" type="Label" parent="MarginContainer/VBoxContainer/MetadataRow"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "🍝🍝"
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+max_value = 100.0
+value = 60.0
+show_percentage = false
+
+[node name="ProgressLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "60%"
+horizontal_alignment = 1
+
+[node name="ActiveLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0.3, 1, 0.3, 1)
+text = "▶ ACTIVE"
+horizontal_alignment = 1
+
+[node name="ActionButtons" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="WorkButton" type="Button" parent="MarginContainer/VBoxContainer/ActionButtons"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "WORK"
+
+[node name="ShipItButton" type="Button" parent="MarginContainer/VBoxContainer/ActionButtons"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+disabled = true
+text = "SHIP IT"
