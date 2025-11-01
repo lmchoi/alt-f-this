@@ -13,6 +13,9 @@ enum ActionOutcome {
 	DO_NOTHING,
 }
 
+# Debug settings
+const DEBUG_START_WITH_EXTRA_TASKS = true  # Add extra tasks on game start (only in debug builds)
+
 # Game balance constants
 const MAX_PIP_WARNINGS = 2
 const MAX_BLAMES = 3
@@ -196,6 +199,11 @@ func start_game():
 	var new_task = TaskManager.get_random_task(day, job_level)
 	add_task(new_task)
 	current_task = new_task
+
+	# Debug mode: Start with extra tasks to test multi-task UI
+	if OS.is_debug_build() and DEBUG_START_WITH_EXTRA_TASKS:
+		add_task(TaskManager.get_random_task(day + 2, job_level))
+		print("DEBUG: Added extra task for testing")
 
 func check_time_bombs():
 	"""Check for production outages based on bugs and poorly shipped tasks."""
