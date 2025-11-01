@@ -279,6 +279,74 @@ func test_switch_task_emits_current_task_updated():
 # GUT doesn't have a good way to test expected errors (push_error counts as unexpected)
 # The validation logic is simple enough to verify manually
 
+# === SHIP IT TESTS ===
+
+func test_ship_it_clears_current_action():
+	"""Test that shipping a task stops the player action (prevents auto-progress on new task)."""
+	var task = _create_mock_task()
+	task.progress = 50
+	game_manager.current_task = task
+	var initial_tasks: Array[Task] = [task]
+	game_manager.tasks = initial_tasks
+	game_manager.current_action = GameManager.PlayerAction.WORKING
+
+	game_manager.ship_it()
+
+	assert_eq(game_manager.current_action, GameManager.PlayerAction.NONE,
+		"current_action should be NONE after shipping to prevent auto-progress")
+
+func test_ship_it_removes_task_from_list():
+	"""Test that shipping removes the task from active tasks."""
+	var task = _create_mock_task()
+	task.progress = 50
+	game_manager.current_task = task
+	var initial_tasks: Array[Task] = [task]
+	game_manager.tasks = initial_tasks
+
+	game_manager.ship_it()
+
+	assert_false(game_manager.tasks.has(task), "Shipped task should be removed from task list")
+
+func test_ship_it_adds_bugs_based_on_incomplete_progress():
+	"""Test that shipping at <100% adds bugs proportional to incompleteness."""
+	var task = _create_mock_task()
+	task.progress = 70  # 30% incomplete
+	game_manager.current_task = task
+	var initial_tasks: Array[Task] = [task]
+	game_manager.tasks = initial_tasks
+	game_manager.bugs = 0
+
+	game_manager.ship_it()
+
+	# Expected bugs: (100 - 70) / 10 = 3
+	assert_eq(game_manager.bugs, 3, "Should add 3 bugs for 70% progress")
+
+func test_ship_it_adds_no_bugs_at_100_percent():
+	"""Test that shipping at 100% adds no bugs."""
+	var task = _create_mock_task()
+	task.progress = 100
+	game_manager.current_task = task
+	var initial_tasks: Array[Task] = [task]
+	game_manager.tasks = initial_tasks
+	game_manager.bugs = 0
+
+	game_manager.ship_it()
+
+	assert_eq(game_manager.bugs, 0, "Should add no bugs when shipping at 100%")
+
+func test_ship_it_awards_clean_code_token_at_100_percent():
+	"""Test that shipping at 100% gives clean code token."""
+	var task = _create_mock_task()
+	task.progress = 100
+	game_manager.current_task = task
+	var initial_tasks: Array[Task] = [task]
+	game_manager.tasks = initial_tasks
+	game_manager.clean_code_tokens = 0
+
+	game_manager.ship_it()
+
+	assert_eq(game_manager.clean_code_tokens, 1, "Should award 1 clean code token for 100% ship")
+
 # === HELPER FUNCTIONS ===
 
 func _create_mock_task(due_day: int = 5, complexity: int = 1, categories: Array = []) -> Task:
