@@ -45,12 +45,20 @@ Move to next commit.
 After EVERY commit, verify the game runs:
 
 ```bash
+# Run unit tests (GUT framework)
+godot -d -s --path "$PWD" addons/gut/gut_cmdln.gd -gexit
+
 # Quick test - does the game load without errors?
 godot --headless --quit 2>&1 | grep -i error
 
 # Full test - run the game and manually verify
 godot  # Press F5 to run, test the feature
 ```
+
+**Testing priority:**
+1. **Unit tests first** - Run GUT tests to catch logic errors
+2. **Quick load test** - Verify no startup errors
+3. **Manual test** - Play the game to verify visual/interaction behavior
 
 **Common errors to watch for:**
 - UID collisions (see [godot-best-practices.md](godot-best-practices.md))
