@@ -215,6 +215,65 @@ func _process(delta):
 
 ## Godot-Specific Gotchas
 
+### ⚠️ UID Collisions (Critical!)
+```bash
+# Godot auto-generates .uid files for ALL resources (.gd, .tscn, .gdshader, etc.)
+# IMPORTANT: Always commit .uid files to version control!
+
+# UID collision happens when .gd and .tscn accidentally get the SAME UID
+# This can happen during file operations or scene creation
+
+# ❌ Bad - causes "No loader found for resource" errors
+scenes/my_popup.gd          uid://abc123
+scenes/my_popup.gd.uid      uid://abc123  # Same UID!
+scenes/my_popup.tscn        uid://abc123  # COLLISION!
+
+# ✅ Good - each file has unique UID
+scenes/my_popup.gd          uid://abc123
+scenes/my_popup.gd.uid      uid://abc123
+scenes/my_popup.tscn        uid://def456  # Different UID
+```
+
+**Fix UID collisions when they occur:**
+```bash
+# 1. Clear Godot cache to force regeneration
+rm -rf .godot
+
+# 2. Reopen project - Godot will regenerate unique UIDs
+godot --headless --editor --quit
+
+# 3. Commit the regenerated .uid files
+git add **/*.uid
+git commit -m "Fix UID collisions"
+```
+
+**Important:**
+- **DO commit** `.uid` files to version control
+- **DO NOT** add `*.uid` to `.gitignore`
+- Without committed `.uid` files, clones will break references
+
+### ⚠️ NEVER Manually Create .uid Files
+```bash
+# ❌ WRONG - manually creating .uid files causes collisions
+# When using Write tool to create both .gd and .tscn:
+Write("popup.gd", "extends PopupPanel...")
+Write("popup.tscn", "[gd_scene uid='uid://abc123']...")
+Write("popup.gd.uid", "uid://abc123")  # ← COLLISION!
+
+# ✅ RIGHT - let Godot generate .uid files
+Write("popup.gd", "extends PopupPanel...")
+Write("popup.tscn", "[gd_scene uid='uid://abc123']...")
+# DON'T create .gd.uid manually!
+# Run: godot --headless --editor --quit
+# Godot generates popup.gd.uid with unique UID
+# Then commit the generated .uid file
+```
+
+**Workflow:**
+1. Use Write tool for `.gd` and `.tscn` files only
+2. Run `godot --headless --editor --quit` to generate `.uid` files
+3. Commit all generated `.uid` files
+
 ### ⚠️ Setter Order Matters
 ```gdscript
 var money := 0:

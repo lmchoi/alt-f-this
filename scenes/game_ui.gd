@@ -4,7 +4,6 @@ extends Node
 @onready var slack_button := $"%SlackButton" as ActionButton
 # ship_it_button is now inside TaskPanelV2, not in game_ui
 @onready var task_panel := $"%TaskPanel"
-@onready var debug_mode_toggle := $"%DebugModeToggle"
 @onready var top_bar := $MainThemeContainer/VBoxContainer/TopBar
 @onready var interruption_stack := $"%InterruptionStack"
 
@@ -42,6 +41,7 @@ func _ready():
 
 	# Debug: Show mode toggle in debug builds
 	if OS.is_debug_build():
+		var debug_mode_toggle = $DebugModeToggle
 		debug_mode_toggle.visible = true
 		debug_mode_toggle.toggled.connect(_on_debug_mode_toggled)
 		debug_mode_toggle.button_pressed = (GameManager.game_mode == GameManager.GameMode.TIMED)

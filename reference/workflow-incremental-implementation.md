@@ -31,12 +31,32 @@ Example: "Add escape progress system"
 
 ### Step 2: Implement One at a Time
 - Write code for ONE commit
-- Test immediately
+- Test immediately (run game to verify it works)
 - Fix issues
 - Commit with clear message
 
 ### Step 3: Repeat
 Move to next commit.
+
+---
+
+## Testing Checklist
+
+After EVERY commit, verify the game runs:
+
+```bash
+# Quick test - does the game load without errors?
+godot --headless --quit 2>&1 | grep -i error
+
+# Full test - run the game and manually verify
+godot  # Press F5 to run, test the feature
+```
+
+**Common errors to watch for:**
+- UID collisions (see [godot-best-practices.md](godot-best-practices.md))
+- Missing node references (`Node not found`)
+- Signal connection errors
+- Type mismatches
 
 ---
 
