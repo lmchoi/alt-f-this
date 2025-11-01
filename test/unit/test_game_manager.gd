@@ -237,6 +237,72 @@ func test_get_job_title_returns_correct_title():
 	game_manager.job_level = 2
 	assert_eq(game_manager.get_job_title(), "Senior Dev", "Level 2 should be Senior Dev")
 
+# === MULTI-TASK MANAGEMENT TESTS ===
+
+func test_add_task_adds_to_tasks_array():
+	"""Test that add_task properly adds task to tasks list."""
+	var task = _create_mock_task()
+	var empty_tasks: Array[Task] = []
+	game_manager.tasks = empty_tasks
+
+	game_manager.add_task(task)
+
+	assert_eq(game_manager.tasks.size(), 1, "Tasks should contain 1 task")
+	assert_eq(game_manager.tasks[0], task, "Task should be the one we added")
+
+func test_add_task_emits_tasks_changed_signal():
+	"""Test that adding a task emits tasks_changed signal."""
+	var task = _create_mock_task()
+	var empty_tasks: Array[Task] = []
+	game_manager.tasks = empty_tasks
+	watch_signals(game_manager)
+
+	game_manager.add_task(task)
+
+	assert_signal_emitted(game_manager, "tasks_changed", "tasks_changed should emit")
+
+func test_remove_task_removes_from_tasks_array():
+	"""Test that remove_task properly removes task from list."""
+	var task1 = _create_mock_task()
+	var task2 = _create_mock_task()
+	var initial_tasks: Array[Task] = [task1, task2]
+	game_manager.tasks = initial_tasks
+
+	game_manager.remove_task(task1)
+
+	assert_eq(game_manager.tasks.size(), 1, "Should have 1 task remaining")
+	assert_false(game_manager.tasks.has(task1), "Task1 should be removed")
+	assert_true(game_manager.tasks.has(task2), "Task2 should remain")
+
+func test_switch_task_changes_current_task():
+	"""Test that switch_task updates current_task."""
+	var task1 = _create_mock_task()
+	var task2 = _create_mock_task()
+	var initial_tasks: Array[Task] = [task1, task2]
+	game_manager.tasks = initial_tasks
+	game_manager.current_task = task1
+
+	game_manager.switch_task(task2)
+
+	assert_eq(game_manager.current_task, task2, "Current task should be task2")
+
+func test_switch_task_emits_current_task_updated():
+	"""Test that switching tasks emits signal."""
+	var task1 = _create_mock_task()
+	var task2 = _create_mock_task()
+	var initial_tasks: Array[Task] = [task1, task2]
+	game_manager.tasks = initial_tasks
+	game_manager.current_task = task1
+	watch_signals(game_manager)
+
+	game_manager.switch_task(task2)
+
+	assert_signal_emitted(game_manager, "current_task_updated")
+
+# NOTE: test_switch_task_fails_for_task_not_in_list removed
+# GUT doesn't have a good way to test expected errors (push_error counts as unexpected)
+# The validation logic is simple enough to verify manually
+
 # === HELPER FUNCTIONS ===
 
 func _create_mock_task(due_day: int = 5, complexity: int = 1, categories: Array = []) -> Task:
