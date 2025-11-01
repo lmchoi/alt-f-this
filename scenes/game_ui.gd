@@ -54,7 +54,9 @@ func _ready():
 	if OS.is_debug_build():
 		_setup_test_scenario()
 
-func _on_work_button_pressed():
+func _on_work_button_pressed(task: Task = null):
+	# task parameter is optional - only used when clicking task cards
+	# If null, GameManager will use current_task
 	GameManager.process_turn("work")
 	# Timer will reset via _on_next_day after turn processes
 
@@ -62,7 +64,9 @@ func _on_slack_button_pressed():
 	GameManager.process_turn("hustle")
 	# Timer will reset via _on_next_day after turn processes
 
-func _on_ship_it_button_pressed():
+func _on_ship_it_button_pressed(task: Task = null):
+	# task parameter is optional - only used when clicking task cards
+	# If null, GameManager will use current_task
 	GameManager.process_turn("ship")
 	# Timer will reset via _on_next_day after turn processes
 

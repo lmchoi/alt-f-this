@@ -6,9 +6,9 @@ enum TaskType {
 	ESCAPE   # Side project / escape plan
 }
 
-# Signals (same as v1 for compatibility)
-signal work_pressed
-signal ship_it_pressed
+# Signals - emit task parameter for multi-task support
+signal work_pressed(task: Task)
+signal ship_it_pressed(task: Task)
 signal hustle_pressed
 
 # Current task type being displayed
@@ -142,8 +142,8 @@ func _on_task_work_pressed(task: Task) -> void:
 		GameManager.switch_task(task)
 		print("TaskPanelV2: Switched to task: ", task.title)
 
-	# Emit work signal so game_ui can process it
-	work_pressed.emit()
+	# Emit work signal with task parameter
+	work_pressed.emit(task)
 
 func _on_task_ship_it_pressed(task: Task) -> void:
 	"""Handle SHIP IT button pressed on a task card."""
@@ -154,8 +154,8 @@ func _on_task_ship_it_pressed(task: Task) -> void:
 		GameManager.switch_task(task)
 		print("TaskPanelV2: Switched to task: ", task.title)
 
-	# Emit ship signal so game_ui can process it
-	ship_it_pressed.emit()
+	# Emit ship signal with task parameter
+	ship_it_pressed.emit(task)
 
 func _show_escape_task() -> void:
 	var escape = GameManager.side_project
