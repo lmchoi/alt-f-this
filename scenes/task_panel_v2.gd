@@ -136,12 +136,24 @@ func _update_task_list() -> void:
 func _on_task_work_pressed(task: Task) -> void:
 	"""Handle WORK button pressed on a task card."""
 	print("TaskPanelV2: Work pressed on task: ", task.title)
+
+	# Switch to this task if it's not already active
+	if task != GameManager.current_task:
+		GameManager.switch_task(task)
+		print("TaskPanelV2: Switched to task: ", task.title)
+
 	# Emit work signal so game_ui can process it
 	work_pressed.emit()
 
 func _on_task_ship_it_pressed(task: Task) -> void:
 	"""Handle SHIP IT button pressed on a task card."""
 	print("TaskPanelV2: Ship It pressed on task: ", task.title)
+
+	# Switch to this task if it's not already active
+	if task != GameManager.current_task:
+		GameManager.switch_task(task)
+		print("TaskPanelV2: Switched to task: ", task.title)
+
 	# Emit ship signal so game_ui can process it
 	ship_it_pressed.emit()
 
