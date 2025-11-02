@@ -25,32 +25,34 @@ You're a dev trapped in corporate hell, building a startup in secret. Every day,
 
 ---
 
-## Core Loop (60-90 seconds per day)
+## Core Loop (45-60 seconds per day)
 
 ```
-Morning: Allocate 8 ducks across tasks
+Morning: Allocate 8 ducks
          ↓
-         Job Task A: 3 ducks
-         Job Task B: 2 ducks
-         Startup Feature: 3 ducks
+         Job (current task): 5 ducks
+         Startup: 3 ducks
          ↓
-Day starts: Events interrupt
+Day starts: Interruptions pop up
          ↓
-         "Boss wants demo!" (cost: 2 ducks or relationship)
-         "Production outage!" (cost: 3 ducks or lose users)
-         "Coworker needs help" (cost: 1 duck or favor)
+         "Boss wants meeting" (accept = slows progress, ignore = risky)
+         "Coworker needs help" (accept = slows progress, ignore = relationship)
+         "Production alert" (accept = slows progress, ignore = bugs)
          ↓
 End of day: See results
          ↓
-         Task A: 60% → 75%
-         Task B: 20% → 35%
-         Startup: +50 users
+         Job task: 40% → 65% (wanted 75%, but interruptions)
+         Startup: +30 users (wanted +50, but interrupted)
          ↓
-Ship decisions: For each task
+Ship decision: (if job task ready OR deadline hit)
          ↓
-         "Task A at 75% - ship buggy or wait?"
+         "Task at 65% - ship buggy or wait?"
          ↓
 Next day: Consequences ripple
+         ↓
+         New task appears (if shipped)
+         Bugs added (if shipped poorly)
+         Caught hustling? (if allocated to startup)
 ```
 
 ---
@@ -58,36 +60,60 @@ Next day: Consequences ripple
 ## Key Mechanics
 
 ### 8 Ducks = 8 Hours
-Every day, allocate 8 "ducks" (hours/energy) across:
-- **Job tasks** (assigned, deadlines, get paid)
-- **Startup features** (your choice, builds users/revenue)
+Every day, allocate 8 "ducks" (hours/energy):
+- **Job** (current task, assigned, has deadline)
+- **Startup** (your choice, builds users/revenue)
 
-### Events = Forced Decisions
-2-4 random events per day steal your time:
-- Boss demanding demos
-- Production outages
-- Coworker drama
-- Caught hustling
-- Code review finds bugs
+**Simple choice:** How many hours on job vs startup today?
 
-**Choice:** Spend ducks to handle OR accept consequences
+### Interruptions = Slow You Down
+2-4 random interruptions per day:
+- Boss wants meeting
+- Coworker needs help
+- Production alerts
+- Random distractions
+
+**Choice:** Handle it (slows progress) OR Ignore it (risky consequences)
+
+**Key:** Interruptions DON'T steal ducks, they reduce efficiency
+- Accept interruption = progress reduced by 20-40%
+- Ignore interruption = risk (relationship damage, bugs, caught)
+
+### Caught Hustling
+Random chance when you allocate ducks to startup:
+- **Low allocation (1-2 ducks):** 10% chance caught
+- **Medium allocation (3-5 ducks):** 30% chance caught
+- **High allocation (6-8 ducks):** 60% chance caught
+
+**Consequences:**
+1. First time: Warning ("Focus on your job")
+2. Second time: PIP warning (Performance Improvement Plan)
+3. Third time: Fired
 
 ### Ship or Wait
-When tasks hit certain % (or deadline hits):
-- **Ship early** = Bugs added, might get paid, deadline met
-- **Wait** = Risk missing deadline, pressure builds
+When job task ready (or deadline hits):
+- **Ship early** = Bugs added, task complete, get next task
+- **Wait** = Risk missing deadline, more progress
 
-### Dual Win Conditions
+**Important:** More tasks shipped = closer to promotion (golden handcuffs)
+
+### Salary System
+- Fixed weekly salary based on job level (junior/mid/senior)
+- NOT based on individual tasks
+- Payday every 5 days (like V1)
+- Promotion happens after X tasks completed
+
+### Win Conditions
 **Escape via:**
-1. **Money** - Save $5K to quit (pure grind)
-2. **Startup** - 1000 users + $2K (balanced path)
+1. **App Complete + $X saved** - Enough runway to quit
+2. **App Complete + $Y/day revenue** - Self-sustaining, can quit
 
-### Dual Lose Conditions
+### Lose Conditions
 **Fail via:**
-1. **Burnout** - 0 ducks remaining (exhaustion)
-2. **Fired** - Miss too many deadlines
-3. **Caught** - Boss catches you hustling too often
-4. **Golden Handcuffs** - Promoted to management (you become the villain)
+1. **Fired (deadlines)** - Missed too many deadlines → PIP → Fired
+2. **Fired (caught hustling)** - Caught 3 times → PIP → Fired
+3. **Golden Handcuffs** - Promoted to management (become the villain)
+4. **Stuck** - Completed many tasks, still mid-level, app not done (burnout ending)
 
 ---
 

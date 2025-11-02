@@ -55,53 +55,54 @@ A darkly comedic allocation strategy game where you escape corporate hell by bui
 
 ## Core Loop
 
-### Day Structure (60-90 seconds)
+### Day Structure (45-60 seconds)
 
 ```
 ┌─────────────────────────────────────┐
-│ 1. MORNING - ALLOCATION (15 sec)   │
-│    Look at tasks, plan duck split  │
-│    Job Task A: 3 ducks              │
-│    Job Task B: 2 ducks              │
+│ 1. MORNING - ALLOCATION (10 sec)   │
+│    Simple choice: Job vs Startup    │
+│    Job (current task): 5 ducks      │
 │    Startup: 3 ducks                 │
 └─────────────────────────────────────┘
                 ↓
 ┌─────────────────────────────────────┐
-│ 2. DAY SIMULATION (30-45 sec)      │
-│    Events interrupt, force choices  │
-│    - Boss wants demo (2 ducks)      │
-│    - Outage! (3 ducks or users)     │
-│    - Coworker needs help (1 duck)   │
+│ 2. DAY SIMULATION (25-35 sec)      │
+│    Interruptions pop up (2-4)       │
+│    - Boss meeting (handle/ignore)   │
+│    - Coworker help (handle/ignore)  │
+│    - Production alert (handle/ignore)│
+│    Each reduces progress if handled │
 └─────────────────────────────────────┘
                 ↓
 ┌─────────────────────────────────────┐
 │ 3. RESULTS (10 sec)                 │
-│    See progress on all tasks        │
-│    Task A: 60% → 75%                │
-│    Task B: 20% → 35%                │
-│    Startup: +50 users               │
+│    See actual progress made         │
+│    Job: 40% → 65% (interruptions!)  │
+│    Startup: +30 users (wanted +50)  │
+│    Caught hustling? (roll dice)     │
 └─────────────────────────────────────┘
                 ↓
 ┌─────────────────────────────────────┐
-│ 4. SHIP DECISIONS (15-30 sec)      │
-│    For each ready task:             │
-│    - Ship at 75%? (bugs)            │
+│ 4. SHIP DECISION (10-15 sec)       │
+│    If job task ready OR deadline:   │
+│    - Ship at 65%? (bugs + new task) │
 │    - Wait? (deadline risk)          │
 └─────────────────────────────────────┘
                 ↓
 ┌─────────────────────────────────────┐
-│ 5. CONSEQUENCES (5-10 sec)         │
-│    Bugs added, payment earned       │
-│    New tasks appear, events trigger │
+│ 5. CONSEQUENCES (5 sec)            │
+│    Bugs added, salary (if payday)   │
+│    New task assigned (if shipped)   │
 └─────────────────────────────────────┘
                 ↓
            NEXT DAY
 ```
 
 ### Engagement Points Per Day
-- **3-5 active decisions** (allocation, events, ship)
-- **10-20 seconds thinking** (strategic planning)
-- **40-70 seconds seeing results** (feedback)
+- **1 allocation decision** (job vs startup split)
+- **2-4 interruption responses** (handle or ignore)
+- **1 ship decision** (if task ready)
+- **Total: 4-6 decisions per day** (simple, fast)
 
 ---
 
@@ -113,53 +114,72 @@ A darkly comedic allocation strategy game where you escape corporate hell by bui
 
 #### Allocation Rules
 - **8 ducks available each morning**
-- **Minimum 1 duck per task** (if allocating)
-- **Can allocate 0** (ignore task entirely)
-- **Locked once day starts** (events may steal ducks)
+- **Binary choice:** Split between Job OR Startup
+- **One current job task** (not multiple)
+- **Locked once day starts** (interruptions reduce efficiency, not ducks)
 
-#### Duck Costs by Task Category
-| Category | Base Cost | Complexity Multiplier | Example |
-|----------|-----------|----------------------|---------|
-| Optics | Low | 0.8x | 2-duck task → 60% progress |
-| Tech Debt | High | 1.5x | 3-duck task → 30% progress |
-| Critical | Medium | 1.0x | 3-duck task → 45% progress |
+**Example Allocations:**
+- 5 job / 3 startup (balanced)
+- 8 job / 0 startup (safe, no startup progress)
+- 2 job / 6 startup (risky, high chance caught)
 
-**Formula:**
+#### Job Task Progress Formula
 ```
-Progress = (ducks_allocated × 15%) / (complexity_multiplier × bug_multiplier)
+base_progress = ducks_allocated × 12%
+actual_progress = base_progress × (1 - interruption_penalty)
+
+interruption_penalty:
+- Handled 0 interruptions: 0% (full progress)
+- Handled 1 interruption: -15%
+- Handled 2 interruptions: -30%
+- Handled 3 interruptions: -50%
+- Handled 4+ interruptions: -70%
+
 bug_multiplier = 1 + (bugs × 0.01)
+final_progress = actual_progress / bug_multiplier
 ```
 
 **Example:**
-- Task complexity: Tech Debt (1.5x)
-- Bugs: 20 (1.2x multiplier)
-- Ducks allocated: 3
-- Progress: (3 × 15%) / (1.5 × 1.2) = 45% / 1.8 = 25%
+- Allocated: 5 ducks to job
+- Base progress: 5 × 12% = 60%
+- Handled 2 interruptions: -30% = 42% progress
+- Bugs: 20 (1.2x slower) = 42% / 1.2 = 35% actual progress
 
-#### Startup Duck Efficiency
-- **Startup tasks are more efficient early game**
-- No complexity penalties (you control the scope)
-- No bug accumulation (your own code)
-- But: Interrupted more often (need to hide from boss)
+#### Startup Progress Formula
+```
+base_progress = ducks_allocated × 10%
+actual_progress = base_progress × (1 - interruption_penalty)
 
-**Formula:**
+user_gain = actual_progress × 100 × (1 + features_completed)
 ```
-Startup Progress = ducks_allocated × 12%
-User Gain = progress × 10 × (1 + features_shipped)
-```
+
+**Example:**
+- Allocated: 3 ducks to startup
+- Base progress: 3 × 10% = 30%
+- Handled 1 interruption: -15% = 25.5% progress
+- Features completed: 2
+- Users gained: 25.5 × 100 × (1 + 2) = 76 users
+
+**Key:** No bug accumulation on startup (your own code, your rules)
 
 ---
 
-### 2. Event System
+### 2. Interruption System
 
-**Concept:** Random interruptions force reactive decisions
+**Concept:** Random interruptions slow you down, must choose to handle or ignore
 
-#### Event Frequency
-| Game Phase | Events/Day | Types |
-|------------|------------|-------|
-| Week 1-2 | 1-2 | Low stakes (help coworker, meeting) |
-| Week 3-4 | 2-3 | Medium stakes (demo, code review) |
-| Week 5+ | 3-5 | High stakes (outage, caught hustling) |
+#### Interruption Frequency
+| Game Phase | Interruptions/Day | Stakes |
+|------------|-------------------|--------|
+| Week 1-2 | 1-2 | Low (meeting, question) |
+| Week 3-4 | 2-3 | Medium (demo, code review) |
+| Week 5+ | 3-4 | High (outage, caught hustling) |
+
+#### Two Types of Interruptions
+
+**Type A: Handle or Ignore (Most Common 80%)**
+- **Handle:** Reduces progress by 15-25% (helps others, looks good)
+- **Ignore:** No progress loss, but consequences (relationship, bugs, etc.)
 
 #### Event Structure (JSON)
 ```json
