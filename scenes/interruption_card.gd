@@ -7,6 +7,7 @@ var _setup_deferred: bool = false
 
 @onready var source_label := $"%SourceLabel"
 @onready var message_label := $"%MessageLabel"
+@onready var timer_label := $"%TimerLabel"
 @onready var button := $"%Button"
 
 func _ready() -> void:
@@ -15,6 +16,12 @@ func _ready() -> void:
 	# If setup was called before _ready, apply it now
 	if _setup_deferred:
 		_apply_setup()
+
+func _process(_delta: float) -> void:
+	# Update timer display every frame
+	if event_data.has("timer_remaining"):
+		var seconds_left = int(ceil(event_data["timer_remaining"]))
+		timer_label.text = "⏰ %ds" % seconds_left
 
 func setup(p_event_data: Dictionary) -> void:
 	"""Initialize card with event data."""

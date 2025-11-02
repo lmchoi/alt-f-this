@@ -33,6 +33,7 @@ func _ready():
 
 	TimedModeController.timer_expired.connect(_on_timer_expired)
 	InterruptionManager.interruption_triggered.connect(_on_interruption_triggered)
+	InterruptionManager.interruption_timed_out.connect(_on_interruption_timed_out)
 
 	# Load end game panel
 	var EndGamePanelScene = load("res://scenes/end_game_panel.tscn")
@@ -160,6 +161,14 @@ func _on_interruption_dismissed(event_id: String):
 	# Clear the current interruption (unblocks progress)
 	InterruptionManager.current_interruption = ""
 
+	# Remove the card from the stack
+	for card in interruption_stack.get_children():
+		if card.event_data["id"] == event_id:
+			card.queue_free()
+			break
+
+func _on_interruption_timed_out(event_id: String):
+	"""Handle interruption timeout - remove card from UI."""
 	# Remove the card from the stack
 	for card in interruption_stack.get_children():
 		if card.event_data["id"] == event_id:

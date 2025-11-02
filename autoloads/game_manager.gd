@@ -14,7 +14,7 @@ enum ActionOutcome {
 }
 
 # Debug settings
-const DEBUG_START_WITH_EXTRA_TASKS = true  # Add extra tasks on game start (only in debug builds)
+const DEBUG_START_WITH_EXTRA_TASKS = false  # Add extra tasks on game start (only in debug builds)
 
 # Game balance constants
 const MAX_PIP_WARNINGS = 2
@@ -34,7 +34,7 @@ const CRITICAL_OUTAGE_THRESHOLD = 80.0
 const OPTICS_MAX_OVERDUE_DAYS = 1
 
 # Timer constants
-const TIMED_MODE_DURATION = 10.0  # Seconds per day
+const TIMED_MODE_DURATION = 60.0  # Seconds per day
 
 # Job level constants
 const JOB_TITLES = ["Junior Dev", "Mid-Level Dev", "Senior Dev"]
