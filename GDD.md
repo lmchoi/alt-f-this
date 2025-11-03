@@ -55,7 +55,7 @@ A darkly comedic allocation strategy game where you escape corporate hell by bui
 
 ## Core Loop
 
-### Day Structure (45-60 seconds)
+### Day Structure (30-45 seconds)
 
 ```
 ┌─────────────────────────────────────┐
@@ -66,31 +66,37 @@ A darkly comedic allocation strategy game where you escape corporate hell by bui
 └─────────────────────────────────────┘
                 ↓
 ┌─────────────────────────────────────┐
-│ 2. DAY SIMULATION (25-35 sec)      │
-│    Interruptions pop up (2-4)       │
-│    - Boss meeting (handle/ignore)   │
-│    - Coworker help (handle/ignore)  │
-│    - Production alert (handle/ignore)│
-│    Each reduces progress if handled │
+│ 2. START DAY (instant)              │
+│    Day simulates automatically      │
 └─────────────────────────────────────┘
                 ↓
 ┌─────────────────────────────────────┐
-│ 3. RESULTS (10 sec)                 │
-│    See actual progress made         │
-│    Job: 40% → 65% (interruptions!)  │
-│    Startup: +30 users (wanted +50)  │
-│    Caught hustling? (roll dice)     │
+│ 3. SPECIAL EVENT (if triggered)    │
+│    ~20-30% of days (8-12 per game)  │
+│    - Caught hustling                │
+│    - Production outage              │
+│    - Boss demands demo              │
+│    - Coworker crisis                │
+│    (+15-30 sec when happens)        │
 └─────────────────────────────────────┘
                 ↓
 ┌─────────────────────────────────────┐
-│ 4. SHIP DECISION (10-15 sec)       │
+│ 4. RESULTS (10 sec)                 │
+│    See progress made                │
+│    Job: 40% → 60%                   │
+│    Startup: +25 users               │
+│    (No interruptions most days)     │
+└─────────────────────────────────────┘
+                ↓
+┌─────────────────────────────────────┐
+│ 5. SHIP DECISION (10-15 sec)       │
 │    If job task ready OR deadline:   │
-│    - Ship at 65%? (bugs + new task) │
+│    - Ship at 60%? (bugs + new task) │
 │    - Wait? (deadline risk)          │
 └─────────────────────────────────────┘
                 ↓
 ┌─────────────────────────────────────┐
-│ 5. CONSEQUENCES (5 sec)            │
+│ 6. CONSEQUENCES (5 sec)            │
 │    Bugs added, salary (if payday)   │
 │    New task assigned (if shipped)   │
 └─────────────────────────────────────┘
@@ -100,9 +106,11 @@ A darkly comedic allocation strategy game where you escape corporate hell by bui
 
 ### Engagement Points Per Day
 - **1 allocation decision** (job vs startup split)
-- **2-4 interruption responses** (handle or ignore)
+- **0-1 special event response** (rare, ~25% of days)
 - **1 ship decision** (if task ready)
-- **Total: 4-6 decisions per day** (simple, fast)
+- **Total: 2-3 decisions per day** (fast, focused)
+
+**Key Change:** Events are RARE (8-12 per game), not daily (60-160 per game)
 
 ---
 
@@ -126,60 +134,64 @@ A darkly comedic allocation strategy game where you escape corporate hell by bui
 #### Job Task Progress Formula
 ```
 base_progress = ducks_allocated × 12%
-actual_progress = base_progress × (1 - interruption_penalty)
-
-interruption_penalty:
-- Handled 0 interruptions: 0% (full progress)
-- Handled 1 interruption: -15%
-- Handled 2 interruptions: -30%
-- Handled 3 interruptions: -50%
-- Handled 4+ interruptions: -70%
-
 bug_multiplier = 1 + (bugs × 0.01)
-final_progress = actual_progress / bug_multiplier
+final_progress = base_progress / bug_multiplier
 ```
 
 **Example:**
 - Allocated: 5 ducks to job
 - Base progress: 5 × 12% = 60%
-- Handled 2 interruptions: -30% = 42% progress
-- Bugs: 20 (1.2x slower) = 42% / 1.2 = 35% actual progress
+- Bugs: 20 (1.2x multiplier)
+- Final progress: 60% / 1.2 = 50%
+
+**Note:** No daily interruption penalty (events are rare)
 
 #### Startup Progress Formula
 ```
 base_progress = ducks_allocated × 10%
-actual_progress = base_progress × (1 - interruption_penalty)
-
-user_gain = actual_progress × 100 × (1 + features_completed)
+user_gain = base_progress × 100 × (1 + features_completed)
 ```
 
 **Example:**
 - Allocated: 3 ducks to startup
 - Base progress: 3 × 10% = 30%
-- Handled 1 interruption: -15% = 25.5% progress
 - Features completed: 2
-- Users gained: 25.5 × 100 × (1 + 2) = 76 users
+- Users gained: 30% × 100 × (1 + 2) = 90 users
 
 **Key:** No bug accumulation on startup (your own code, your rules)
 
 ---
 
-### 2. Interruption System
+### 2. Special Event System
 
-**Concept:** Random interruptions slow you down, must choose to handle or ignore
+**Concept:** Rare, dramatic moments that interrupt your routine
 
-#### Interruption Frequency
-| Game Phase | Interruptions/Day | Stakes |
-|------------|-------------------|--------|
-| Week 1-2 | 1-2 | Low (meeting, question) |
-| Week 3-4 | 2-3 | Medium (demo, code review) |
-| Week 5+ | 3-4 | High (outage, caught hustling) |
+#### Event Frequency
+| Game Phase | Event Chance | Total Events |
+|------------|--------------|--------------|
+| Week 1-2 (Days 1-14) | ~15% per day | 2-3 events |
+| Week 3-4 (Days 15-28) | ~25% per day | 3-4 events |
+| Week 5+ (Days 29+) | ~35% per day | 3-5 events |
 
-#### Two Types of Interruptions
+**Total per playthrough:** 8-12 events (not 60-160!)
 
-**Type A: Handle or Ignore (Most Common 80%)**
-- **Handle:** Reduces progress by 15-25% (helps others, looks good)
-- **Ignore:** No progress loss, but consequences (relationship, bugs, etc.)
+#### Event Types (10 Total)
+
+**High Frequency Events (Appear 1-3 times):**
+1. **Caught Hustling** - Detection based on startup allocation
+2. **Performance Review** - Every 15 days
+3. **Team Happy Hour** - Friday, optional
+
+**Medium Frequency Events (Appear 1-2 times):**
+4. **Production Outage** - Triggered by high bugs or poor ships
+5. **Boss Demands Demo** - Task is 40-80% complete
+6. **Coworker Crisis** - Moral choice
+7. **Startup User Feedback** - 200+ users
+
+**Low Frequency Events (Appear 0-1 times):**
+8. **Recruiter Contact** - Mid-late game, good work
+9. **Competitor Launches** - Startup has momentum
+10. **Health Warning** - Worked 10 days straight
 
 #### Event Structure (JSON)
 ```json
