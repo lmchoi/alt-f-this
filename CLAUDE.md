@@ -184,7 +184,8 @@ Examples from [data/tasks.json](data/tasks.json):
 
 ### V2 Design Docs (PRIMARY - for user)
 - **One-pager**: [ONE-PAGER.md](ONE-PAGER.md) - High-level V2 pitch
-- **Game Design Document**: [GDD.md](GDD.md) - Full V2 design (source of truth)
+- **Game Design Document**: [GDD.md](GDD.md) - Full V2 design (system descriptions, flow)
+- **Balance & Tuning**: [BALANCE.md](BALANCE.md) - All exact numbers, formulas, tunable values (implementation reference)
 - **Core loop**: [CORE-LOOP-SIMPLIFIED.md](CORE-LOOP-SIMPLIFIED.md) - Final loop with rare events
 - **V2 changes summary**: [V2-KEY-CHANGES.md](V2-KEY-CHANGES.md) - What changed from V1
 - **TODO list**: [ideas/todo.md](ideas/todo.md)
