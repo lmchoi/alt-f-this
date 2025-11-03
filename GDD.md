@@ -1,8 +1,10 @@
 # Alt+F+This - Game Design Document (V2)
 
 **Version:** 2.0
-**Last Updated:** 2025-11-02
+**Last Updated:** 2025-11-03
 **Status:** Pre-production
+
+**Balance Values:** All exact numbers, formulas, and tunable values are in [BALANCE.md](BALANCE.md)
 
 ---
 
@@ -59,10 +61,10 @@ A darkly comedic allocation strategy game where you escape corporate hell by bui
 
 ```
 ┌─────────────────────────────────────┐
-│ 1. MORNING - ALLOCATION (10 sec)   │
+│ 1. MORNING - ALLOCATION (~10 sec)  │
 │    Simple choice: Job vs Startup    │
-│    Job (current task): 5 ducks      │
-│    Startup: 3 ducks                 │
+│    Job (current task): X ducks      │
+│    Startup: Y ducks                 │
 └─────────────────────────────────────┘
                 ↓
 ┌─────────────────────────────────────┐
@@ -72,7 +74,7 @@ A darkly comedic allocation strategy game where you escape corporate hell by bui
                 ↓
 ┌─────────────────────────────────────┐
 │ 3. SPECIAL EVENT (if triggered)    │
-│    ~20-30% of days (8-12 per game)  │
+│    Rare occurrences (~25% of days)  │
 │    - Caught hustling                │
 │    - Production outage              │
 │    - Boss demands demo              │
@@ -81,22 +83,22 @@ A darkly comedic allocation strategy game where you escape corporate hell by bui
 └─────────────────────────────────────┘
                 ↓
 ┌─────────────────────────────────────┐
-│ 4. RESULTS (10 sec)                 │
+│ 4. RESULTS (~10 sec)                │
 │    See progress made                │
-│    Job: 40% → 60%                   │
-│    Startup: +25 users               │
+│    Job: X% → Y%                     │
+│    Startup: +N users                │
 │    (No interruptions most days)     │
 └─────────────────────────────────────┘
                 ↓
 ┌─────────────────────────────────────┐
-│ 5. SHIP DECISION (10-15 sec)       │
+│ 5. SHIP DECISION (~10-15 sec)      │
 │    If job task ready OR deadline:   │
-│    - Ship at 60%? (bugs + new task) │
+│    - Ship at current %?             │
 │    - Wait? (deadline risk)          │
 └─────────────────────────────────────┘
                 ↓
 ┌─────────────────────────────────────┐
-│ 6. CONSEQUENCES (5 sec)            │
+│ 6. CONSEQUENCES (~5 sec)           │
 │    Bugs added, salary (if payday)   │
 │    New task assigned (if shipped)   │
 └─────────────────────────────────────┘
@@ -106,11 +108,11 @@ A darkly comedic allocation strategy game where you escape corporate hell by bui
 
 ### Engagement Points Per Day
 - **1 allocation decision** (job vs startup split)
-- **0-1 special event response** (rare, ~25% of days)
+- **0-1 special event response** (rare, see BALANCE.md for frequency)
 - **1 ship decision** (if task ready)
 - **Total: 2-3 decisions per day** (fast, focused)
 
-**Key Change:** Events are RARE (8-12 per game), not daily (60-160 per game)
+**Key Change:** Events are RARE (handful per game), not daily (dozens per game)
 
 ---
 
@@ -118,47 +120,38 @@ A darkly comedic allocation strategy game where you escape corporate hell by bui
 
 ### 1. Duck Allocation System
 
-**Concept:** "Ducks" = hours/energy/focus (8 per day)
+**Concept:** "Ducks" = hours/energy/focus (fixed amount per day)
 
 #### Allocation Rules
-- **8 ducks available each morning**
+- **Fixed ducks available each morning** (see BALANCE.md)
 - **Binary choice:** Split between Job OR Startup
 - **One current job task** (not multiple)
 - **Locked once day starts** (interruptions reduce efficiency, not ducks)
 
 **Example Allocations:**
-- 5 job / 3 startup (balanced)
-- 8 job / 0 startup (safe, no startup progress)
-- 2 job / 6 startup (risky, high chance caught)
+- X job / Y startup (balanced)
+- All job / zero startup (safe, no startup progress)
+- Few job / most startup (risky, high chance caught)
 
-#### Job Task Progress Formula
-```
-base_progress = ducks_allocated × 12%
-bug_multiplier = 1 + (bugs × 0.01)
-final_progress = base_progress / bug_multiplier
-```
+#### Job Task Progress
+Progress calculation factors in ducks allocated and bug accumulation. More bugs slow down work exponentially. See BALANCE.md for exact formula.
 
 **Example:**
-- Allocated: 5 ducks to job
-- Base progress: 5 × 12% = 60%
-- Bugs: 20 (1.2x multiplier)
-- Final progress: 60% / 1.2 = 50%
+- Allocated: X ducks to job
+- Base progress: Y%
+- Bugs: N (affects multiplier)
+- Final progress: Z%
 
 **Note:** No daily interruption penalty (events are rare)
 
-#### Startup Progress Formula
-```
-base_progress = ducks_allocated × 10%
-user_gain = base_progress × 100 × (1 + features_completed)
-```
+#### Startup Progress
+Progress calculation based on ducks allocated and features already completed. More features create compound growth. No bug accumulation on startup (your own code, your rules).
 
 **Example:**
-- Allocated: 3 ducks to startup
-- Base progress: 3 × 10% = 30%
-- Features completed: 2
-- Users gained: 30% × 100 × (1 + 2) = 90 users
-
-**Key:** No bug accumulation on startup (your own code, your rules)
+- Allocated: X ducks to startup
+- Base progress: Y%
+- Features completed: N
+- Users gained: Z users
 
 ---
 
@@ -167,31 +160,33 @@ user_gain = base_progress × 100 × (1 + features_completed)
 **Concept:** Rare, dramatic moments that interrupt your routine
 
 #### Event Frequency
+Events occur at different rates throughout the game, becoming more frequent as pressure increases. Total events per playthrough is limited (see BALANCE.md for exact frequencies).
+
 | Game Phase | Event Chance | Total Events |
 |------------|--------------|--------------|
-| Week 1-2 (Days 1-14) | ~15% per day | 2-3 events |
-| Week 3-4 (Days 15-28) | ~25% per day | 3-4 events |
-| Week 5+ (Days 29+) | ~35% per day | 3-5 events |
+| Early weeks | Lower % | Few events |
+| Mid-game | Medium % | Some events |
+| Late game | Higher % | More events |
 
-**Total per playthrough:** 8-12 events (not 60-160!)
+**Total per playthrough:** Limited number (not dozens!)
 
 #### Event Types (10 Total)
 
-**High Frequency Events (Appear 1-3 times):**
+**High Frequency Events (Appear multiple times):**
 1. **Caught Hustling** - Detection based on startup allocation
-2. **Performance Review** - Every 15 days
+2. **Performance Review** - Scheduled intervals
 3. **Team Happy Hour** - Friday, optional
 
-**Medium Frequency Events (Appear 1-2 times):**
+**Medium Frequency Events (Appear occasionally):**
 4. **Production Outage** - Triggered by high bugs or poor ships
-5. **Boss Demands Demo** - Task is 40-80% complete
+5. **Boss Demands Demo** - Task is partially complete
 6. **Coworker Crisis** - Moral choice
-7. **Startup User Feedback** - 200+ users
+7. **Startup User Feedback** - User milestone reached
 
-**Low Frequency Events (Appear 0-1 times):**
+**Low Frequency Events (Appear rarely):**
 8. **Recruiter Contact** - Mid-late game, good work
 9. **Competitor Launches** - Startup has momentum
-10. **Health Warning** - Worked 10 days straight
+10. **Health Warning** - Worked many days straight
 
 #### Event Structure (JSON)
 ```json
@@ -214,7 +209,7 @@ user_gain = base_progress × 100 × (1 + features_completed)
       }
     },
     {
-      "text": "Need 30 min (cost: 2 ducks from today)",
+      "text": "Need 30 min (cost: X ducks from today)",
       "consequences": {
         "steal_ducks": 2,
         "boss_relationship": -1
@@ -234,31 +229,31 @@ user_gain = base_progress × 100 × (1 + features_completed)
 
 #### Event Categories
 
-**1. Boss Events (30%)**
+**1. Boss Events (~30%)**
 - Demo requests
 - Meeting interruptions
 - Scope changes
 - Performance reviews
 
-**2. Technical Events (30%)**
+**2. Technical Events (~30%)**
 - Production outages
 - Code review findings
 - Bug reports
 - Security issues
 
-**3. Coworker Events (20%)**
+**3. Coworker Events (~20%)**
 - Help requests
 - Pair programming
 - Blame opportunities
 - Gossip/drama
 
-**4. Startup Events (15%)**
+**4. Startup Events (~15%)**
 - User feedback
 - Competitor launches
 - Award opportunities
 - Press inquiries
 
-**5. Meta Events (5%)**
+**5. Meta Events (~5%)**
 - Caught hustling
 - Promotion offers
 - Recruiter messages
@@ -288,7 +283,7 @@ user_gain = base_progress × 100 × (1 + features_completed)
 #### Task Categories
 
 **Optics (Political Risk)**
-- Low technical complexity (0.8x multiplier)
+- Lower technical complexity
 - High political risk (CEO might love OR hate it)
 - Short deadlines (boss wants it NOW)
 - Random outcomes (not skill-based)
@@ -299,8 +294,8 @@ user_gain = base_progress × 100 × (1 + features_completed)
 - Add "AI" to product description
 
 **Tech Debt (Long-term Consequences)**
-- High complexity (1.5x multiplier)
-- Bugs multiply if shipped early (3x bug penalty)
+- High complexity
+- Bugs multiply if shipped early (significant penalty)
 - Long deadlines (can't rush this)
 - Compounds over time
 
@@ -310,9 +305,9 @@ user_gain = base_progress × 100 × (1 + features_completed)
 - Fix race condition in payments
 
 **Critical (Immediate Stakes)**
-- Medium complexity (1.0x multiplier)
+- Medium complexity
 - High urgency (production is down)
-- Ship below 80% → guaranteed outage next day
+- Ship below threshold → guaranteed outage next day
 - Customer-facing consequences
 
 **Examples:**
@@ -326,50 +321,54 @@ user_gain = base_progress × 100 × (1 + features_completed)
 
 #### Ship Trigger Conditions
 Task becomes "shippable" when:
-1. **Progress ≥ 60%** (minimum viable)
+1. **Progress ≥ threshold** (minimum viable)
 2. **Deadline ≤ 1 day** (forced decision)
 3. **Event forces ship** (boss demands it)
 
+See BALANCE.md for exact thresholds.
+
 #### Ship Consequences by Quality
 
-| Quality | Bugs Added | Payment | Duck Change | Special |
-|---------|------------|---------|-------------|---------|
-| 90-100% | 0 | 100% | +1 duck | "Clean code token" |
-| 80-89% | 1-2 | 100% | 0 | - |
-| 70-79% | 2-4 | 100% | 0 | - |
-| 60-69% | 4-6 | 100% | -1 duck | - |
-| 50-59% | 6-10 | 80% | -1 duck | Time bomb |
-| 40-49% | 10-15 | 60% | -2 ducks | Time bomb |
-| <40% | 15-25 | 40% | -2 ducks | Guaranteed outage |
+Quality bands determine bugs added, payment received, and duck changes. Higher quality = fewer bugs and better outcomes. Lower quality = technical debt and potential consequences.
 
-**Tech Debt Multiplier:** Bugs × 3 for Tech Debt category
+**Quality Tiers:**
+- **Excellent**: Minimal/no bugs, full payment, positive effects
+- **Good**: Few bugs, full payment, neutral
+- **Acceptable**: Some bugs, full payment, neutral
+- **Poor**: Many bugs, reduced payment, negative effects
+- **Terrible**: Major bugs, minimal payment, time bombs
+- **Disaster**: Guaranteed problems, minimal payment, immediate consequences
 
-**Time Bomb:** 50% chance of outage within next 3 days
+See BALANCE.md for exact bug formulas and payment multipliers.
+
+**Tech Debt Multiplier:** Bugs multiply for Tech Debt category
+
+**Time Bomb:** Chance of outage within next few days for poor quality
 
 #### Ship Messages (by quality tier)
 
-**90-100% (Excellent)**
+**Excellent**
 ```
 "Actually good work. You remember what that feels like."
 "Tests pass. Code reviewed. Deployed with confidence."
 "This might be the best code you've written in months."
 ```
 
-**70-79% (Acceptable)**
+**Acceptable**
 ```
 "It works. Probably."
 "Good enough for government work (and you work in private sector)."
 "Shipped. You'll hear about it if there's a problem."
 ```
 
-**50-59% (Poor)**
+**Poor**
 ```
 "Barely functional MVP. Emphasis on 'barely.'"
 "You shipped TODO comments as features."
 "This is the kind of code you'd roast in a PR review."
 ```
 
-**<40% (Disaster)**
+**Disaster**
 ```
 "This is just console.log statements and duct tape."
 "You didn't even remove the debug endpoints."
@@ -382,51 +381,34 @@ Task becomes "shippable" when:
 
 #### Feature Tree
 
-**Phase 1: MVP (Days 1-10)**
-- Landing page (100 users)
-- Basic auth (200 users)
-- Core feature (500 users)
+**Phase 1: MVP (Early Days)**
+- Landing page (small user base)
+- Basic auth (growing users)
+- Core feature (user milestone)
 
-**Phase 2: Growth (Days 11-20)**
-- Choose 2 of:
-  - **Dark mode** (users +50%, no revenue)
-  - **Payments** (revenue +$50/day, users +0%)
-  - **Mobile app** (users +100%, bugs +5)
-  - **API** (users +30%, developer appeal)
+**Phase 2: Growth (Mid-Game)**
+- Choose features from:
+  - **Dark mode** (users boost, no revenue)
+  - **Payments** (revenue stream, no user boost)
+  - **Mobile app** (major users, adds bugs)
+  - **API** (moderate users, developer appeal)
 
-**Phase 3: Scale (Days 21+)**
-- Choose 1 of:
-  - **B2B pivot** (revenue ×3, lose 50% users)
-  - **Consumer focus** (users ×2, revenue +20%)
-  - **Enterprise** (revenue ×5, requires sales)
-  - **Open source** (users ×10, revenue →$0, reputation)
+**Phase 3: Scale (Late Game)**
+- Choose strategic direction:
+  - **B2B pivot** (revenue multiplier, lose users)
+  - **Consumer focus** (user multiplier, revenue boost)
+  - **Enterprise** (major revenue, requires sales)
+  - **Open source** (massive users, no revenue, reputation)
 
-#### User Growth Formula
-```
-base_growth = 10 × (1 + features_shipped)
-daily_users = base_growth × quality_multiplier × event_multiplier
+#### User Growth
+Base growth scales with features shipped. Quality of startup work affects growth multiplier. Special events can multiply or reduce growth temporarily.
 
-quality_multiplier:
-- Ship 90%+: 1.5x
-- Ship 70-89%: 1.0x
-- Ship <70%: 0.5x (users churn)
+See BALANCE.md for exact growth formulas.
 
-event_multiplier:
-- Normal: 1.0x
-- Press/Award: 2-5x
-- Competitor launch: 0.5x
-```
+#### Revenue
+Revenue scales with user count and monetization features chosen. Different features contribute different amounts to revenue generation.
 
-#### Revenue Formula
-```
-revenue_per_day = users × 0.01 × monetization_features
-
-monetization_features:
-- Payments: 1 point
-- B2B: 3 points
-- Enterprise: 5 points
-- Ads: 0.5 points
-```
+See BALANCE.md for exact revenue formulas.
 
 ---
 
@@ -435,18 +417,20 @@ monetization_features:
 #### Victory Conditions (Any)
 
 **Path 1: Pure Grind**
-- Save $5,000
+- Save target money amount
 - No startup requirement
-- Slowest path (40-50 days)
+- Slowest path (longest duration)
 
 **Path 2: Balanced**
-- Save $3,000 + Startup at 1000 users
-- Most common path (30-40 days)
+- Save partial money + Startup at moderate user count
+- Most common path (medium duration)
 
 **Path 3: Hustler**
-- Save $2,000 + Startup at 5000 users + $100/day revenue
-- Fastest path (25-35 days)
+- Save minimal money + Startup at high users + daily revenue
+- Fastest path (shortest duration)
 - Highest risk (more likely to get caught)
+
+See BALANCE.md for exact money/user/revenue targets.
 
 #### Loss Conditions (Any)
 
@@ -455,21 +439,21 @@ monetization_features:
 - "You quit mid-meeting and never came back."
 
 **Fired**
-- 3 missed deadlines
-- OR 3 PIP warnings
+- Multiple missed deadlines
+- OR multiple PIP warnings
 - "Your services are no longer required."
 
 **Caught**
-- Caught hustling 3 times
+- Caught hustling multiple times
 - "IT found your side project code on company laptop."
 
 **Golden Handcuffs**
-- Complete 15 tasks + High quality average
+- Complete many tasks at high quality average
 - Get promoted to management
 - "You became the thing you hated."
 
 **Startup Failed**
-- Shipped bad code 5 times to startup
+- Shipped bad code many times to startup
 - Users drop to 0
 - "Your side project died of technical debt."
 
@@ -486,12 +470,12 @@ Track relationship with 3-4 coworkers:
 
 **Relationship Effects:**
 ```
-High relationship (helped 3+ times):
+High relationship (helped multiple times):
 - Cover for you when caught hustling
 - Offer to pair program (bonus progress)
 - Warn you about boss mood
 
-Low relationship (ignored 3+ times):
+Low relationship (ignored multiple times):
 - Report you to boss
 - Refuse to help
 - Spread gossip (more events)
@@ -505,19 +489,19 @@ Betrayed (blamed):
 #### Hidden Mechanics (Emergent Discovery)
 
 **Combo 1: Quality Reputation**
-- Ship 90%+ quality 5 times → "Clean code reputation"
-- Effect: Tech blog writes about you → Startup users +500
+- Ship excellent quality multiple times → "Clean code reputation"
+- Effect: Tech blog writes about you → Startup users boost
 
 **Combo 2: The Grind**
-- Work 10 days straight without hustling
+- Work many days straight without hustling
 - Effect: Boss offers promotion → Can accept (golden handcuffs) or refuse
 
 **Combo 3: The Saboteur**
-- Blame coworkers 3+ times
+- Blame coworkers multiple times
 - Effect: Company culture tanks → Everyone quits → Company collapse
 
 **Combo 4: The Ghost**
-- Allocate 0 ducks to all job tasks for 3 days
+- Allocate zero ducks to all job tasks for multiple days
 - Effect: Boss forgets you exist → Can hustle freely (but no money)
 
 ---
@@ -526,161 +510,121 @@ Betrayed (blamed):
 
 ### Difficulty Curve
 
-#### Week 1-2: Tutorial / Learning (Days 1-10)
+#### Week 1-2: Tutorial / Learning (Early Days)
 **Goal:** Learn allocation, understand trade-offs
 
-- **Tasks:** 1-2 active at once
-- **Complexity:** Low (2-4)
-- **Deadlines:** Generous (5-7 days)
-- **Events:** 1-2 per day, low stakes
-- **Bugs:** Start at 0, grow slowly
+- **Tasks:** One at a time initially
+- **Complexity:** Low
+- **Deadlines:** Generous
+- **Events:** Few per day, low stakes
+- **Bugs:** Start at zero, grow slowly
 - **Startup:** Can ignore safely
 
 **Expected behavior:**
-- Ship 80-90% quality
+- Ship high quality
 - Learn event types
-- Start allocating to startup (days 5-7)
+- Start allocating to startup mid-phase
 
 ---
 
-#### Week 3-4: Juggling / Pressure (Days 11-20)
+#### Week 3-4: Juggling / Pressure (Mid-Game)
 **Goal:** Force triage, multiple priorities
 
-- **Tasks:** 2-3 active at once
-- **Complexity:** Medium (4-6)
-- **Deadlines:** Tighter (3-5 days)
-- **Events:** 2-3 per day, meaningful stakes
-- **Bugs:** 10-30 (slowing work)
+- **Tasks:** Multiple active
+- **Complexity:** Medium
+- **Deadlines:** Tighter
+- **Events:** Some per day, meaningful stakes
+- **Bugs:** Slowing work noticeably
 - **Startup:** Must allocate or fall behind
 
 **Expected behavior:**
-- Ship 60-70% quality
+- Ship medium quality
 - Miss some deadlines → Extensions or warnings
 - Start making moral compromises (blame coworkers?)
 
 ---
 
-#### Week 5-6: Desperation / Chaos (Days 21-30)
+#### Week 5-6: Desperation / Chaos (Late Game)
 **Goal:** Survival mode, ship bad code or die
 
-- **Tasks:** 3-4 active at once
-- **Complexity:** High (6-8)
-- **Deadlines:** Impossible (2-3 days)
-- **Events:** 3-5 per day, high stakes
-- **Bugs:** 30-60 (work is slow)
+- **Tasks:** Many active at once
+- **Complexity:** High
+- **Deadlines:** Impossible
+- **Events:** Many per day, high stakes
+- **Bugs:** Work is significantly slowed
 - **Startup:** Make or break point
 
 **Expected behavior:**
-- Ship 40-50% quality (just to survive)
+- Ship poor quality (just to survive)
 - Fire fighting (outages, emergencies)
-- Near burnout (1-2 ducks often)
+- Near burnout (minimal ducks often)
 
 ---
 
-#### Week 7+: Endgame / Resolution (Days 31+)
+#### Week 7+: Endgame / Resolution
 **Goal:** Race to escape or collapse
 
-- **Outcome A:** Startup takes off → Victory within 5 days
-- **Outcome B:** Death spiral → Fired/burnout within 5 days
+- **Outcome A:** Startup takes off → Victory within days
+- **Outcome B:** Death spiral → Fired/burnout within days
 - **Outcome C:** Quit → Player gives up (counts as burnout)
 
 **Fork in road:**
-- If startup is thriving (1000+ users), focus shifts
-- If job is collapsing (2 warnings, 50+ bugs), panic mode
+- If startup is thriving, focus shifts
+- If job is collapsing, panic mode
 - If balanced, nail-biting finish
 
 ---
 
 ### Balance Targets
 
+See BALANCE.md for all specific values and formulas.
+
 #### Resource Scarcity
-```
-Ducks:
-- Start: 3 (buffer for bad ships)
-- Gain: +1 for 90%+ ships (rare)
-- Lose: -1 for poor ships, bad events
-- Critical threshold: 1 (one mistake from burnout)
+**Ducks:**
+- Start with buffer
+- Gain from excellent ships (rare)
+- Lose from poor ships, bad events
+- Critical threshold leads to burnout
 
-Money:
-- Salary: $500 every 5 days
-- Task payments: $200-500 (complexity based)
-- Total earning potential: ~$6-8K over 40 days
-- Target: $5K (tight but achievable)
+**Money:**
+- Regular salary intervals
+- Task payments based on complexity
+- Total earning potential across game
+- Win target is tight but achievable
 
-Users:
-- Early: +10-50 per day (if allocating)
-- Mid: +50-200 per day (with features)
-- Late: +200-1000 per day (viral growth)
-- Target: 1000-5000 users (depends on path)
+**Users:**
+- Early: Small gains per day
+- Mid: Moderate gains with features
+- Late: Large gains with viral growth
+- Win targets depend on chosen path
 
-Bugs:
-- Ship quality 80%+: +1-2 bugs (manageable)
-- Ship quality 50-70%: +4-10 bugs (mounting)
-- Ship quality <50%: +15+ bugs (death spiral)
-- Critical threshold: 50 bugs (work takes 2x time)
-```
+**Bugs:**
+- High quality ships: Minimal bugs (manageable)
+- Medium quality: Some bugs (mounting)
+- Low quality: Many bugs (death spiral)
+- Critical threshold doubles work time
 
-#### Time to Victory (Target: 30-40 days average)
+#### Time to Victory
 
-**Speedrun Path (25-30 days):**
-- Ignore quality (40-50% ships)
+See BALANCE.md for target game lengths.
+
+**Speedrun Path:**
+- Ignore quality (low % ships)
 - High risk (likely to get caught)
 - Rush startup features
 - Need luck with events
 
-**Balanced Path (30-40 days):**
-- Maintain 60-70% quality
+**Balanced Path:**
+- Maintain medium quality
 - Split attention evenly
 - Build relationships (safety net)
 - Steady progress
 
-**Grind Path (40-50 days):**
-- Maintain 80%+ quality
+**Grind Path:**
+- Maintain high quality
 - Ignore startup until late
 - Focus on job security
 - Slow but safe
-
----
-
-### Formulas Reference
-
-#### Work Speed
-```
-daily_progress = (ducks × 15%) / (category_mult × bug_mult)
-
-category_mult:
-- Optics: 0.8
-- Critical: 1.0
-- Tech Debt: 1.5
-
-bug_mult = 1 + (bugs × 0.01)
-- 0 bugs: 1.0x (normal)
-- 20 bugs: 1.2x (20% slower)
-- 50 bugs: 1.5x (50% slower)
-- 100 bugs: 2.0x (impossible, game over)
-```
-
-#### Bug Accumulation
-```
-bugs_added = (100 - quality) / 10 × category_mult
-
-Examples:
-- 90% quality, Optics: (100-90)/10 × 0.8 = 0.8 bugs
-- 70% quality, Critical: (100-70)/10 × 1.0 = 3 bugs
-- 50% quality, Tech Debt: (100-50)/10 × 1.5 = 7.5 bugs
-```
-
-#### Payment
-```
-base_payment = complexity × 50
-payment_received = base_payment × quality_mult
-
-quality_mult:
-- 80%+: 1.0 (full payment)
-- 60-79%: 1.0 (full payment, dock pay comes later as bugs)
-- 40-59%: 0.8 (partial payment)
-- <40%: 0.6 (minimal payment)
-```
 
 ---
 
@@ -689,10 +633,10 @@ quality_mult:
 ### Required Content Counts
 
 **For Minimum Viable Product:**
-- **30-50 events** (10 boss, 10 technical, 10 coworker, 5 startup, 5 meta)
+- **30-50 events** (distributed across categories)
 - **20-30 job tasks** (across 3 categories)
 - **10-15 startup features** (MVP → growth → scale)
-- **8-10 endings** (4 victory variants, 6 loss variants)
+- **8-10 endings** (victory variants, loss variants)
 - **50-100 ship messages** (quality tiers × categories)
 - **20-30 event consequence texts**
 
@@ -701,18 +645,18 @@ quality_mult:
 Title: [Punchy, specific, recognizable]
 Description: [Dry humor, tech-specific, 1-2 sentences]
 Category: [Optics/Critical/Tech Debt]
-Complexity: [1-10, affects time/payment]
-Deadline: [3-7 days, affects pressure]
-Payment: [complexity × $50]
+Complexity: [Scale, affects time/payment]
+Deadline: [Days, affects pressure]
+Payment: [Based on complexity]
 Special: [Any unique mechanics]
 ```
 
 **Example Tasks:**
-1. "Make Logo Bigger (Again)" - Optics, 3, 4 days, $150
-2. "Add 'AI' to Every Button Label" - Optics, 2, 3 days, $100
-3. "Fix Race Condition in Payments" - Critical, 7, 3 days, $350
-4. "Migrate to Microservices (CEO Read Article)" - Tech Debt, 9, 7 days, $450
-5. "CEO's 'Simple' Excel Macro" - Critical, 8, 4 days, $400
+1. "Make Logo Bigger (Again)" - Optics, moderate complexity, short deadline
+2. "Add 'AI' to Every Button Label" - Optics, low complexity, very short deadline
+3. "Fix Race Condition in Payments" - Critical, high complexity, short deadline
+4. "Migrate to Microservices (CEO Read Article)" - Tech Debt, very high complexity, long deadline
+5. "CEO's 'Simple' Excel Macro" - Critical, high complexity, medium deadline
 
 ### Event Content Template
 ```
@@ -729,33 +673,33 @@ Consequences: [Mechanical + narrative]
 ```
 Title: "Boss Wants Demo"
 Description: "@boss: 'Can you demo PROJ-1337 in 5 minutes?'"
-Trigger: Task 30-80% complete, day 5+
+Trigger: Task partially complete, after early days
 Choices:
-1. "Demo now" → Ship at current %, boss +1
-2. "Need 30 min" → Steal 2 ducks, boss -1
-3. "It's broken" → Deadline +1 day, boss +2, 30% chance PIP
+1. "Demo now" → Ship at current %, boss improves
+2. "Need 30 min" → Steal ducks, boss worsens
+3. "It's broken" → Deadline extension, boss improves, chance of PIP
 ```
 
 **Technical Event: Code Review**
 ```
 Title: "Alice Found Security Issue"
 Description: "Senior dev Alice reviewed your code: 'This endpoint has no auth.'"
-Trigger: Shipped 50-70% quality, day 10+
+Trigger: Shipped medium quality, mid-game
 Choices:
-1. "Fix now" → Steal 2 ducks, quality +10%, Alice +1
-2. "Ship anyway" → Time bomb, Alice -2
-3. "It's a feature" → Alice laughs, relationship +1, bugs +5
+1. "Fix now" → Steal ducks, quality boost, Alice improves
+2. "Ship anyway" → Time bomb, Alice major worsens
+3. "It's a feature" → Alice laughs, relationship improves, bugs added
 ```
 
 **Coworker Event: Help Request**
 ```
 Title: "Bob Needs Pair Programming"
 Description: "Junior dev Bob: 'I'm stuck on this bug. Can you help for an hour?'"
-Trigger: Random, day 3+
+Trigger: Random, after early days
 Choices:
-1. "Sure" → Steal 1 duck, Bob +2
-2. "Not now" → Bob -1
-3. "Here's a Stack Overflow link" → Bob neutral, 50% he figures it out
+1. "Sure" → Steal ducks, Bob major improves
+2. "Not now" → Bob worsens
+3. "Here's a Stack Overflow link" → Bob neutral, random outcome
 ```
 
 ---
@@ -766,26 +710,26 @@ Choices:
 
 ```
 ╔═══════════════════════════════════════════════════════════╗
-║  💰 $2,450 / $5K  🦆⚫⚫⚪  🐛 23  📅 Day 18  💼 Mid-Level  ║
+║  💰 $X / $Y  🦆⚫⚫⚪  🐛 N  📅 Day Z  💼 Level           ║
 ╠═══════════════════════════════════════════════════════════╣
 ║                                                           ║
 ║  JOB TASKS                         STARTUP               ║
 ║  ┌─────────────────────────────┐  ┌────────────────────┐ ║
 ║  │[CRITICAL] PROJ-1337         │  │🚀 MY INDIE APP     │ ║
 ║  │Make Logo Bigger (Again)     │  │                    │ ║
-║  │                             │  │👥 342 users        │ ║
-║  │🦆🦆🦆 [ ] [ ] [ ] [ ] [ ]    │  │💵 $12 revenue      │ ║
-║  │▓▓▓▓░░░░░░ 60%              │  │                    │ ║
-║  │⏰ 2 days                    │  │Next: [Choose]      │ ║
-║  └─────────────────────────────┘  │→ Dark Mode         │ ║
-║                                    │→ Payments          │ ║
+║  │                             │  │👥 N users          │ ║
+║  │🦆🦆🦆 [ ] [ ] [ ] [ ] [ ]    │  │💵 $N revenue       │ ║
+║  │▓▓▓▓░░░░░░ X%                │  │                    │ ║
+║  │⏰ N days                     │  │Next: [Choose]      │ ║
+║  └─────────────────────────────┘  │→ Feature A         │ ║
+║                                    │→ Feature B         │ ║
 ║  ┌─────────────────────────────┐  └────────────────────┘ ║
 ║  │[TECH DEBT] PROJ-1338        │                         ║
 ║  │Migrate Auth to OAuth        │                         ║
 ║  │                             │                         ║
 ║  │🦆🦆 [ ] [ ] [ ] [ ] [ ] [ ]  │                         ║
-║  │▓░░░░░░░░░ 20%               │                         ║
-║  │⏰ 5 days                     │                         ║
+║  │▓░░░░░░░░░ Y%                │                         ║
+║  │⏰ N days                     │                         ║
 ║  └─────────────────────────────┘                         ║
 ║                                                           ║
 ║  [ALLOCATE DUCKS] [START DAY]                            ║
@@ -804,14 +748,14 @@ Choices:
 │  Can you demo current state?"          │
 │                                         │
 │ [Show demo now]                         │
-│ Ships at 60%, boss +1                   │
+│ Ships at X%, boss improves              │
 │                                         │
-│ [Buy time (2 ducks)]                    │
+│ [Buy time (N ducks)]                    │
 │ "Need 30 min to fix one thing"          │
 │                                         │
 │ [Be honest]                             │
 │ "It's not ready yet"                    │
-│ Deadline +1, boss +2, 30% chance PIP    │
+│ Deadline +1, boss improves, Y% PIP      │
 └─────────────────────────────────────────┘
 ```
 
@@ -824,11 +768,11 @@ Choices:
 │ PROJ-1337: Make Logo Bigger (Again)     │
 │                                         │
 │ Files changed: 3                        │
-│ Progress: 75% ⚠️                        │
-│ Tests: 15/20 passing ❌                 │
+│ Progress: X% ⚠️                         │
+│ Tests: N/M passing ❌                   │
 │ Code review: Not reviewed ⚠️            │
 │                                         │
-│ Shipping at 75% will add ~2-4 bugs      │
+│ Shipping at X% will add ~Y bugs         │
 │                                         │
 │ [git push --force] [Keep working]       │
 └─────────────────────────────────────────┘
@@ -840,7 +784,7 @@ Choices:
 - Progress bars animate smoothly
 - Duck icons "fly" to tasks on allocation
 - Users counter ticks up with particle effects
-- Money earned pops with $$ animation
+- Money earned pops with animation
 - Bugs "crawl" onto task cards when shipped poorly
 
 **Feedback (Clear Communication):**
@@ -877,7 +821,7 @@ Choices:
 
 **Build New:**
 - ✅ Event system (JSON-driven, popup UI)
-- ✅ Allocation UI (8 ducks, drag or click)
+- ✅ Allocation UI (ducks, drag or click)
 - ✅ Ship decision UI (per-task dialogs)
 - ✅ Relationship tracking (coworker states)
 
@@ -915,22 +859,22 @@ data/
 
 ## Development Roadmap
 
-### Phase 1: Prototype Core Loop (Week 1, ~5 days)
+### Phase 1: Prototype Core Loop (Week 1)
 
 **Goal:** Playable allocation → simulation → ship cycle
 
 **Tasks:**
-1. Allocation UI (8 ducks, click to assign)
+1. Allocation UI (ducks, click to assign)
 2. Day simulation (calculate progress, no events yet)
 3. Ship decision (basic dialog)
-4. Multiple tasks visible (2-3 cards)
+4. Multiple tasks visible (task cards)
 5. Basic startup progress bar
 
 **Milestone:** Can play one "day" and see results
 
 ---
 
-### Phase 2: Add Events (Week 2, ~5 days)
+### Phase 2: Add Events (Week 2)
 
 **Goal:** Events interrupt and create texture
 
@@ -939,13 +883,13 @@ data/
 2. Event popup UI (Slack style)
 3. Event triggering (random, condition-based)
 4. Event consequences (steal ducks, change states)
-5. Create 15 starter events
+5. Create starter events
 
 **Milestone:** Events make days feel different
 
 ---
 
-### Phase 3: Startup Features (Week 3, ~5 days)
+### Phase 3: Startup Features (Week 3)
 
 **Goal:** Startup side has depth
 
@@ -960,7 +904,7 @@ data/
 
 ---
 
-### Phase 4: Juice & Polish (Week 4, ~5 days)
+### Phase 4: Juice & Polish (Week 4)
 
 **Goal:** Game feels good to play
 
@@ -975,14 +919,14 @@ data/
 
 ---
 
-### Phase 5: Content & Balance (Week 5-6, ~10 days)
+### Phase 5: Content & Balance (Week 5-6)
 
 **Goal:** Enough content for replayability
 
 **Tasks:**
-1. Expand to 30-50 events
-2. Create 20-30 job tasks
-3. Write 8-10 endings
+1. Expand events to target count
+2. Create full task library
+3. Write all endings
 4. Balance tuning (playtesting)
 5. Hidden mechanics (coworker relationships)
 
@@ -1036,7 +980,7 @@ data/
 ## Success Metrics
 
 **Core Loop Test:**
-- Can player understand allocation in <30 seconds?
+- Can player understand allocation quickly?
 - Do players agonize over ship decisions?
 - Do events create memorable moments?
 
@@ -1054,5 +998,6 @@ data/
 
 **End of GDD v2.0**
 
+*For exact numbers and balance values, see [BALANCE.md](BALANCE.md)*
 *For implementation details, see [reference/implementation-status.md](reference/implementation-status.md)*
 *For V1 archive, see [archive/v1/](archive/v1/)*
