@@ -6,24 +6,37 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Alt+F+This** - *"Papers Please meets Office Space with duck-based emotional damage"*
+**Code Monkey** (working title: "Alt+F+This") - *"Office Space meets Universal Paperclips with duck-based resource allocation"*
 
-A darkly comedic inspection/management game built in Godot 4.5 where you're a tech worker trapped in corporate hell. Inspect work tickets, make impossible decisions, and escape with $5K before you run out of ducks to give.
+A darkly comedic time-allocation strategy game built in Godot 4.5 where you're a tech worker trapped in corporate hell. Allocate your ducks 🦆 between job tasks and your secret startup. Ship quality work or cut corners? Risk getting caught hustling? Escape with $3K or revenue before you get fired.
+
+**V2 Design Status:** Full redesign complete (see [ONE-PAGER.md](ONE-PAGER.md), [GDD.md](GDD.md), [CORE-LOOP-SIMPLIFIED.md](CORE-LOOP-SIMPLIFIED.md)). V1 prototype archived in `archive/v1/`. Reusing ~60% of architecture (signal-driven design, JSON data, GameManager/TaskManager).
 
 ---
 
 ## Game Design Vision
 
-**See [ideas/game-design.md](ideas/game-design.md) for complete design philosophy and principles.**
+**See [GDD.md](GDD.md) for complete V2 design. V1 archived in `archive/v1/game-design.md`.**
 
-### Core Concept
-Papers Please meets Office Space with duck-based emotional damage. Build $5K (or escape via side project) before bugs make work impossible.
+### Core Concept (V2)
+Office Space meets Universal Paperclips. Allocate 8 ducks 🦆 per day between job work and your secret startup. Rare special events create dramatic moments. Escape before you get caught 3 times or trapped in golden handcuffs.
 
-### Key Design Rules
-1. **Bugs NEVER decrease** - No DEBUG action, permanent consequences (death spiral is the game)
-2. **3 actions only** - WORK, HUSTLE, SHIP IT (daily choice is the core loop)
-3. **SHIP IT is the game** - Daily temptation to ship incomplete work, creates bugs
-4. **Payment on payday** - Every 5 days, creates strategic cycles (finish early = time to hustle)
+### Core Loop (30-45 seconds per day)
+1. **Allocate** 8 ducks between job task and startup (job vs startup split)
+2. **Start Day** - simulation happens automatically
+3. **Special Event** (if triggered, ~25% of days) - rare dramatic moments
+4. **Results** - see progress on job and startup
+5. **Ship Decision** (if job task ready) - ship now or wait?
+6. **Consequences** - bugs added, payment, new task
+7. **Next Day**
+
+### Key Design Principles (V2)
+1. **Simple core loop** - Allocate → Results → Ship → Repeat (30-45 sec per day)
+2. **Rare special events** - Only 8-12 events per 30-40 day game (not daily interruptions)
+3. **Caught hustling tension** - Detection chance based on allocation (10-70%), 3-strike system
+4. **Dual win conditions** - App complete + money OR app complete + revenue
+5. **Bugs NEVER decrease** - Still core tension (permanent technical debt)
+6. **"Boring" UI as satire** - Looks like real dev tools (Jira, Slack, Git)
 
 ---
 
@@ -66,38 +79,71 @@ See [reference/workflow-incremental-implementation.md](reference/workflow-increm
 - GameManager holds all state with property setters that emit signals
 - UI components connect to signals in `_ready()`
 - Never update UI directly - always emit signals from GameManager
+- **V2 Note:** Architecture remains the same, core loop logic will be rebuilt
 
 **Autoloaded Singletons:**
 - **GameManager** ([autoloads/game_manager.gd](autoloads/game_manager.gd)) - Central game state, all properties emit signals
 - **TaskManager** ([autoloads/task_manager.gd](autoloads/task_manager.gd)) - Loads tasks from JSON, handles difficulty scaling
 
-See [reference/implementation-status.md](reference/implementation-status.md) for detailed API documentation.
+**V1 → V2 Reuse (~60% of codebase):**
+- ✅ Keep: Signal-driven architecture, JSON data loading, bug system, payday system, ship quality system, end game panel
+- 🔄 Modify: Task display (single task, not panel), action UI (allocation, not WORK/HUSTLE/SHIP buttons), event system
+- ✅ Build New: Allocation UI, caught hustling system, startup feature tree, rare event popups
+
+See [reference/implementation-status.md](reference/implementation-status.md) for V1 API. See [V2-KEY-CHANGES.md](V2-KEY-CHANGES.md) for V2 changes.
 
 ---
 
-## Critical Implementation Notes
+## Critical Implementation Notes (V2)
 
 ### ⚠️ Bugs Are PERMANENT
-**NEVER implement bug reduction.** No DEBUG action. Bugs never decrease. This is the core tension.
+**NEVER implement bug reduction.** No DEBUG action. Bugs never decrease. This is still core tension in V2.
 
-### ✅ Task Complexity (IMPLEMENTED)
-Task complexity properly affects work speed:
+### ⚠️ Ducks Are Time Units (Not Health)
+- **Always 8 ducks per day** (not a depleting resource like V1)
+- Player allocates split: X ducks to job, Y ducks to startup (X + Y = 8)
+- Allocation determines progress rate AND caught hustling risk
+- More ducks to startup = faster progress but higher detection chance (10-70%)
+
+### ⚠️ V2 Core Formulas
+**Job Progress:**
 ```gdscript
-var bug_multiplier = get_bug_multiplier()  # 1.0 + (bugs * 0.01)
-var work = 100.0 / (current_task.complexity * bug_multiplier)
-current_task.do_work(work)
+base_progress = ducks × 12%
+bug_multiplier = 1 + (bugs × 0.01)
+final_progress = base_progress / bug_multiplier
 ```
-Result: 1 complexity = 1 day to complete (at 0 bugs)
 
-### ⚠️ SHIP IT Is The Core Mechanic
-Daily decision: "Is this good enough to ship?"
-- Available at 20%+ progress
-- Bugs added: `(100 - progress) / 10`
-- Duck change based on quality (see game plan for details)
-- Payment on payday (every 5 days) - creates strategic timing decisions
+**Startup Progress:**
+```gdscript
+base_progress = ducks × 10%
+users_gained = base_progress × 100 × (1 + features_completed)
+```
 
-### ⚠️ Death Spiral Is Intentional
-Bugs → slower work → can't meet deadlines → ship early → more bugs → repeat. This is **intentional game design**, not a bug to fix. The game is a race: earn $5K before bugs make it impossible.
+**Caught Hustling Detection:**
+```gdscript
+base_chance = {0: 0%, 1-2: 10%, 3-5: 30%, 6-7: 50%, 8: 70%}
+modifiers = boss_mood + coworker_relationships + recent_ship_quality
+final_chance = base_chance + modifiers
+# Roll each day you allocate >0 ducks to startup
+# Strike 1: Warning, Strike 2: PIP, Strike 3: Fired
+```
+
+**Ship Bugs (Same as V1):**
+```gdscript
+bugs_added = (100 - progress) / 10
+# 90%+: 0-1 bugs, 70-89%: 1-3 bugs, 50-69%: 3-5 bugs, <50%: 5-10 bugs
+```
+
+### ⚠️ Events Are RARE Special Moments
+- NOT daily interruptions (that was removed after design analysis)
+- Only 8-12 events per 30-40 day game (~25% of days)
+- 10 event types: Caught hustling, production outage, coworker crisis, boss demands demo, performance review, etc.
+- See [CORE-LOOP-SIMPLIFIED.md](CORE-LOOP-SIMPLIFIED.md) for full event list
+
+### ⚠️ Single Current Task (Not Multiple)
+- V1 had task panel with multiple tasks (archived)
+- V2 has ONE current job task at a time
+- When you ship, get assigned new task (closer to promotion/golden handcuffs)
 
 ---
 
@@ -136,13 +182,25 @@ Examples from [data/tasks.json](data/tasks.json):
 
 ## Key Files
 
-### Design Docs (for user)
-- **Game design philosophy**: [ideas/game-design.md](ideas/game-design.md)
+### V2 Design Docs (PRIMARY - for user)
+- **One-pager**: [ONE-PAGER.md](ONE-PAGER.md) - High-level V2 pitch
+- **Game Design Document**: [GDD.md](GDD.md) - Full V2 design (source of truth)
+- **Core loop**: [CORE-LOOP-SIMPLIFIED.md](CORE-LOOP-SIMPLIFIED.md) - Final loop with rare events
+- **V2 changes summary**: [V2-KEY-CHANGES.md](V2-KEY-CHANGES.md) - What changed from V1
 - **TODO list**: [ideas/todo.md](ideas/todo.md)
-- **Roadmap & future ideas**: [ideas/roadmap.md](ideas/roadmap.md)
+- **Roadmap**: [ideas/roadmap.md](ideas/roadmap.md)
 
-### AI Reference (for Claude)
-- **Implementation status**: [reference/implementation-status.md](reference/implementation-status.md) - What's built, what's next, formulas
+### V2 Design Analysis (for Claude)
+- **Depth without complexity**: [reference/depth-without-complexity.md](reference/depth-without-complexity.md) - 10 techniques
+- **Caught hustling mechanic**: [reference/caught-hustling-mechanic.md](reference/caught-hustling-mechanic.md) - Full detection system
+- **Game redesign assessment**: [reference/game-redesign-assessment.md](reference/game-redesign-assessment.md) - V1 vs V2 viability
+- **7-to-10 analysis**: [reference/7-to-10-analysis.md](reference/7-to-10-analysis.md) - Rating improvement path
+- **Universal Paperclips analysis**: [reference/universal-paperclips-analysis.md](reference/universal-paperclips-analysis.md) - Lessons from 9/10 game
+- **Boring UI as feature**: [reference/boring-ui-as-feature.md](reference/boring-ui-as-feature.md) - UI as satire
+
+### V1 Implementation Docs (ARCHIVED)
+- **V1 game design**: [archive/v1/game-design.md](archive/v1/game-design.md)
+- **V1 implementation status**: [reference/implementation-status.md](reference/implementation-status.md) - V1 API (still useful for reuse)
 - **Godot best practices**: [reference/godot-best-practices.md](reference/godot-best-practices.md)
 - **Project structure**: [reference/project-structure.md](reference/project-structure.md)
 - **Incremental workflow**: [reference/workflow-incremental-implementation.md](reference/workflow-incremental-implementation.md)
