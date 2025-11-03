@@ -109,6 +109,24 @@ All game text should be:
 - **Absurdist but grounded** - Corporate demands are ridiculous but recognizable
 - **Dark without being mean** - Satirical, not cruel
 
+### The "Ducks" Double Meaning
+
+**IMPORTANT:** "Ducks" 🦆 = fucks to give (subtle wordplay, NEVER explicit)
+
+- Always use "ducks" in text (never profanity)
+- Always use 🦆 emoji in UI
+- Let players discover the pun themselves
+- Examples:
+  - "Zero ducks given to PROJ-1337" ✅
+  - "You didn't give many ducks about this" ✅
+  - Achievement: "Zero Ducks Given" ✅
+  - "Zero fucks given" ❌ (too explicit)
+
+This makes the game:
+- Shareable (no profanity in screenshots)
+- Funnier (subtle > explicit)
+- Corporate-safe emoji hiding subversive meaning
+
 Examples from [data/tasks.json](data/tasks.json):
 - "Make the Logo Bigger (Again)"
 - "Fix the 'Sent with Wrong Font' Email"
