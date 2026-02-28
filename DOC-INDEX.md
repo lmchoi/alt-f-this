@@ -7,20 +7,27 @@ Docs fall into three types:
 - **Ideas** — brainfarts and exploration, not reviewed or binding
 - **Snapshots** — point-in-time captures of decisions, status, or comparisons
 
-The canonical design lives in the root-level files (GDD.md, BALANCE.md, etc).
+---
+
+## Game Modes
+
+Each mode has its own GDD.md and BALANCE.md. See [modes/README.md](modes/README.md) for the overview.
+
+| Folder | Name | Description |
+|--------|------|-------------|
+| [modes/grind/](modes/grind/) | The Daily Grind | V1: pick one action per day (WORK/HUSTLE/SHIP IT) |
+| [modes/crunch/](modes/crunch/) | Crunch Mode | Grind + 60s real-time timer, interruptions fire on clock |
+| [modes/juggle/](modes/juggle/) | Juggle | V2: allocate 8 ducks/day between job and startup |
 
 ---
 
-## Canonical Design (root)
+## Canonical (root)
 
 | File | Updated | Description |
 |------|---------|-------------|
-| [GDD.md](GDD.md) | 2025-11-03 | Full V2 game design — systems, events, tasks, UI, roadmap |
-| [BALANCE.md](BALANCE.md) | 2025-11-03 | All exact numbers and formulas |
-| [CORE-LOOP-SIMPLIFIED.md](CORE-LOOP-SIMPLIFIED.md) | 2025-11-03 | **Locked** core loop with all 10 special event types detailed |
-| [V2-KEY-CHANGES.md](V2-KEY-CHANGES.md) | 2025-11-02 | What changed from V1 → V2 and why |
 | [ONE-PAGER.md](ONE-PAGER.md) | 2025-11-02 | Pitch summary |
 | [CLAUDE.md](CLAUDE.md) | 2025-11-04 | Instructions for Claude Code |
+| [README.md](README.md) | 2026-02-28 | Human-readable project intro |
 
 ---
 

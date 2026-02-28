@@ -14,7 +14,7 @@ A darkly comedic time-allocation strategy game built in Godot 4.5 where you're a
 
 ## Game Design Vision
 
-**See [GDD.md](GDD.md) for complete V2 design. V1 archived in `archive/v1/game-design.md`.**
+**See [modes/juggle/GDD.md](modes/juggle/GDD.md) for the active V2 design (Juggle mode). All modes in [modes/](modes/).**
 
 ### Core Concept (V2)
 Office Space meets Universal Paperclips. Allocate 8 ducks 🦆 per day between job work and your secret startup. Rare special events create dramatic moments. Escape before you get caught 3 times or trapped in golden handcuffs.
@@ -113,7 +113,8 @@ All game text should be:
 
 **Notes to Claude:**
 - When creating reference docs for yourself (not tutorials for the user), save in `reference/`. Keep them concise.
-- Docs are categorised into Reference / Ideas / Snapshots — see [DOC-INDEX.md](DOC-INDEX.md)
+- Docs are categorised into Modes / Reference / Ideas / Snapshots — see [DOC-INDEX.md](DOC-INDEX.md)
+- Each game mode has its own folder under `modes/` with GDD.md and BALANCE.md
 
 ### Before Implementing a Feature — Check These First
 
