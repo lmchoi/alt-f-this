@@ -42,6 +42,7 @@ More ducks on startup = faster progress, but higher chance of getting caught (10
 
 ## Docs
 
-- **[GDD.md](GDD.md)** — full game design
-- **[BALANCE.md](BALANCE.md)** — all the numbers
+- **[modes/juggle/GDD.md](modes/juggle/GDD.md)** — full game design (active V2)
+- **[modes/juggle/BALANCE.md](modes/juggle/BALANCE.md)** — all the numbers
+- **[modes/](modes/)** — all three game modes (grind / crunch / juggle)
 - **[DOC-INDEX.md](DOC-INDEX.md)** — everything else
