@@ -113,4 +113,22 @@ All game text should be:
 
 **Notes to Claude:**
 - When creating reference docs for yourself (not tutorials for the user), save in `reference/`. Keep them concise.
+- Docs are categorised into Reference / Ideas / Snapshots — see [DOC-INDEX.md](DOC-INDEX.md)
+
+### Before Implementing a Feature — Check These First
+
+1. **Data files** (`data/*.json`) — may already have fields/structure ready but unused
+2. **GameManager** (`autoloads/game_manager.gd`) — check existing variables, signals, constants before assuming something needs building
+3. **TaskManager** (`autoloads/task_manager.gd`) — check what's already parsed from JSON
+
+### What to Ask vs What to Look Up
+
+**Don't ask — just check the code:**
+- "Does X exist?" → grep/read the files
+- "How does Y work?" → read the implementation
+
+**Do ask:**
+- Design direction ("should outages be instant or delayed?")
+- Balance tuning ("is 10x too harsh?")
+- Architecture decisions ("centralised or distributed?")
 
