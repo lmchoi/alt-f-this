@@ -179,6 +179,45 @@ if money >= 5000:  # What's 5000? Why 5000?
 
 ---
 
+## Manager Responsibilities
+
+### GameManager
+**Should contain:**
+- Core state variables (money, ducks, bugs, day, etc.)
+- State change signals
+- High-level game actions (work, hustle, ship_it)
+- Game flow (advance_day, check_game_over, check_victory)
+- Victory/game over conditions
+
+**Should NOT contain:**
+- UI update logic (use signals)
+- Detailed calculations (extract to helper if > 20 lines)
+- Event text/content (load from JSON)
+- Sound effects (use AudioManager if added)
+
+**Target size:** < 300 lines. If it exceeds this, split into separate systems (e.g. `BugSystem`, `PaydaySystem`, `OutageSystem`).
+
+### TaskManager
+- Load tasks from JSON
+- Provide `get_random_task()` with filtering
+- Task complexity scaling
+- **No game state** — that's GameManager's job
+
+---
+
+## Naming Conventions
+
+```
+Variables:        lowercase_snake_case
+Constants:        UPPER_SNAKE_CASE
+Private funcs:    _prefixed_with_underscore
+Signals (state):  money_changed, task_completed  (past tense)
+Signals (event):  production_outage, game_over   (noun/present)
+Files:            all_snake_case.gd / .tscn
+```
+
+---
+
 ## Autoloads
 
 ### ✅ Good Autoload Candidates
