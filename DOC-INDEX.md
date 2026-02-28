@@ -73,18 +73,3 @@ V1 docs kept for reference. Don't touch.
 | `ideas/archive/fun-assessment-framework.md` | Scoring framework for evaluating game fun |
 | `ideas/archive/fun-framework-validation.md` | V2 design scored against the framework |
 
----
-
-## Stale / Delete Candidates
-
-These predate V2 and are no longer accurate.
-
-| File | Why stale |
-|------|-----------|
-| [PROJECT_SUMMARY.md](PROJECT_SUMMARY.md) | V1 framing — wrong win condition, wrong actions |
-| [reference/game-formulas.md](reference/game-formulas.md) | Replaced by BALANCE.md |
-| [reference/implementation-status.md](reference/implementation-status.md) | V1 implementation status |
-| [reference/project-structure.md](reference/project-structure.md) | V1 code structure |
-| [reference/task-category-mechanics.md](reference/task-category-mechanics.md) | V1-specific mechanic detail |
-| [reference/junior-level-design.md](reference/junior-level-design.md) | V1 promotion system |
-| [reference/gdd.md](reference/gdd.md) | Duplicate/old GDD, superseded by root GDD.md |
