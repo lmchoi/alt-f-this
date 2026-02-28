@@ -14,27 +14,24 @@ A darkly comedic time-allocation strategy game built in Godot 4.5 where you're a
 
 ## Game Design Vision
 
-**See [modes/juggle/GDD.md](modes/juggle/GDD.md) for the active V2 design (Juggle mode). All modes in [modes/](modes/).**
+**Active build target: [modes/grind/GDD.md](modes/grind/GDD.md). All modes in [modes/](modes/).**
 
-### Core Concept (V2)
-Office Space meets Universal Paperclips. Allocate 8 ducks 🦆 per day between job work and your secret startup. Rare special events create dramatic moments. Escape before you get caught 3 times or trapped in golden handcuffs.
+### Core Concept (Grind)
+A darkly comedic 3-button game. Each day pick one action: WORK / HUSTLE / SHIP IT. Escape with your startup before bugs make work impossible, you get caught hustling, or golden handcuffs trap you forever. 10-15 min per run, replayable via distinct endings.
 
-### Core Loop (30-45 seconds per day)
-1. **Allocate** 8 ducks between job task and startup (job vs startup split)
-2. **Start Day** - simulation happens automatically
-3. **Special Event** (if triggered, ~25% of days) - rare dramatic moments
-4. **Results** - see progress on job and startup
-5. **Ship Decision** (if job task ready) - ship now or wait?
-6. **Consequences** - bugs added, payment, new task
-7. **Next Day**
+### Core Loop
+1. **Pick action** — WORK (safe), HUSTLE (risky), or SHIP IT (permanent)
+2. **Consequences** — bugs added, ducks lost, escape progress made
+3. **End of day** — payday, overdue check, detection roll if hustled
+4. **Next day** — same situation, slightly worse
 
-### Key Design Principles (V2)
-1. **Simple core loop** - Allocate → Results → Ship → Repeat (30-45 sec per day)
-2. **Rare special events** - Only 8-12 events per 30-40 day game (not daily interruptions)
-3. **Caught hustling tension** - Detection chance based on allocation (10-70%), 3-strike system
-4. **Dual win conditions** - App complete + money OR app complete + revenue
-5. **Bugs NEVER decrease** - Still core tension (permanent technical debt)
-6. **"Boring" UI as satire** - Looks like real dev tools (Jira, Slack, Git)
+### Key Design Principles
+1. **3 actions, all interconnected** — every action trades across bugs / ducks / escape
+2. **No forgiveness, only forward** — bugs never decrease, ducks never recover, every choice compounds
+3. **Bugs only affect WORK** — hustling feels free, but the job rots while you do it
+4. **Ducks lost through moral compromise only** — ship badly, blame coworkers
+5. **Golden handcuffs = the time limit** — play too safe and you're promoted out of the game
+6. **End-of-run recap** — Frostpunk-style, every choice surfaced, drives replay
 
 ---
 
@@ -79,18 +76,31 @@ Before implementing any feature:
 
 ---
 
-## Critical Implementation Notes (V2)
+## Critical Implementation Rules
 
-### ⚠️ Ducks Are Time Units (Not Health)
-- **Always 8 ducks per day** (not a depleting resource like V1)
-- Player allocates split: X ducks to job, Y ducks to startup (X + Y = 8)
-- Allocation determines progress rate AND caught hustling risk
-- More ducks to startup = faster progress but higher detection chance (10-70%)
+### ⚠️ Balance Values Live in JSON, Not Code
+If a number affects feel or balance, it belongs in a data file — not hardcoded in GDScript.
 
-### ⚠️ Events Are RARE Special Moments
-- NOT daily interruptions (that was removed after design analysis)
-- Only 8-12 events per 30-40 day game (~25% of days)
-- 10 event types: Caught hustling, production outage, coworker crisis, boss demands demo, performance review, etc.
+**In `data/balance.json` (single source of truth):**
+- Task completion rates, complexity scaling
+- Duck loss thresholds (e.g. ship quality threshold)
+- Promotion trigger (tasks to golden handcuffs)
+- Detection chance, strike consequences
+- Payday interval, salary amounts
+- Escape progress per hustle
+
+**In code:** logic only — never magic numbers.
+
+This means balance can be tuned without opening Godot or touching any `.gd` files.
+
+### ⚠️ Bugs Only Affect WORK
+Bugs slow down job task progress. They do not affect HUSTLE or SHIP IT speed. This is intentional — hustling feels free, shipping is always instant.
+
+### ⚠️ Ducks Are Lost Through Moral Compromise Only
+- Ship below quality threshold → lose a duck
+- Blame a coworker → lose a duck
+- Never earned back
+- 0 ducks = burnout ending
 
 ---
 
