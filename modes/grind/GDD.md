@@ -128,6 +128,51 @@ Three paths to escape:
 
 ---
 
+## Caught Hustling
+
+Every time you choose HUSTLE, there's a chance your boss notices. Detection chance increases if your task is overdue, decreases if you've been shipping quality work. See BALANCE.md for exact values.
+
+### How You Get Caught
+
+**Boss Walks By**
+```
+You quickly Alt+Tab from your startup code to Jira — not fast enough.
+Boss: "Was that... a login page? For what app?"
+```
+
+**Screen Share Accident**
+```
+During standup you share your screen. VSCode has "my-startup-app" in the title bar.
+PM: "Interesting project name. Is that for PROJ-1337?"
+```
+
+**IT Flags Your Git Activity**
+```
+IT: "We noticed some unusual git commits on your work laptop during work hours."
+```
+
+**Coworker Snitches**
+```
+Bob saw you working on something that wasn't work. He mentioned it in his 1:1.
+Boss messages you: "We need to talk."
+```
+
+### 3-Strike System
+
+**Strike 1 — Warning**
+Boss pulls you aside. Detection chance increases for the next few days. No other penalty — but they're watching.
+
+**Strike 2 — PIP**
+Performance Improvement Plan. Detection chance increases for 30 days. Must ship next 3 tasks at 70%+ or instant fired. PIP counter visible on screen.
+
+**Strike 3 — Fired**
+"Security will escort you out." Game over: *Caught Red-Handed* ending.
+
+### The Core Question
+You're not asking *if* you'll get caught. You're asking *can you finish before Strike 3?*
+
+---
+
 ## Production Outages
 
 Triggered when poorly shipped tasks accumulate and bugs are high.
