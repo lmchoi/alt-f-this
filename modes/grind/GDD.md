@@ -1,43 +1,57 @@
 # The Daily Grind — Game Design Document
 
 **Mode:** grind (V1)
-**Tagline:** "Papers Please meets Office Space with duck-based emotional damage"
+**Target:** 10-15 min per run, 3-5 runs before repetition
 
 ---
 
 ## Vision
 
-A darkly comedic management game where you're a tech worker trapped in corporate hell. Every work ticket is a moral dilemma. Every shortcut creates future pain. Escape with $5K before bugs make work impossible.
+A darkly comedic game. You're a tech worker trapped in corporate hell, secretly building a startup on company time. Every shortcut creates future pain. Escape before the job swallows you whole.
 
 ---
 
 ## Core Design Principles
 
 ### 1. No Forgiveness, Only Forward
-Every choice has permanent consequences. No undo, no reset, no cleanup.
+Every choice compounds. No undo, no cleanup, no recovery.
 
 - Bugs NEVER decrease (technical debt is forever)
-- Ducks rarely regenerate (burnout accumulates)
-- Shipped work can't be unshipped (production outages linger)
+- Shipped work can't be unshipped (bugs compound)
+- Difficulty accelerates — you're always racing the spiral
 
-### 2. Simplicity Through Subtraction
-Max 3 actions. Every action affects multiple resources.
+### 2. Three Actions, All Interconnected
+WORK / HUSTLE / SHIP IT. Every action trades across all three currencies.
 
-- Max 3 work actions: WORK / HUSTLE / SHIP IT
-- Tutorial < 30 seconds (learn by playing)
+- **Bugs** — your past catching up with you (only affects WORK)
+- **Money** — your way out (HUSTLE earns it faster, WORK earns it safely)
 
-### 3. The Death Spiral Is The Game
-Difficulty should accelerate. No equilibrium state.
+3 actions is enough. The context makes them feel different every day.
 
-- Bugs accumulate faster than you can work
-- Tasks get harder while you get slower
+### 3. The Only Winning Move
+Ship *just good enough*. Hustle *just enough*. Escape before either trap closes.
 
-### 4. Emotional Bookkeeping
-Resources represent feelings, not numbers.
+- Ship bad work → bugs creep higher (death spiral)
+- Only HUSTLE → caught and fired before you escape
+- Only WORK → bugs slow you down, salary never enough to escape (golden handcuffs)
 
-- **Ducks** = patience/sanity/fucks-to-give (not "health points")
-- **Bugs** = guilt/technical debt (not "difficulty modifier")
-- **Money** = escape velocity/freedom countdown (not "score")
+The game lives in the middle. That's the skill.
+
+### 4. Fail Fast, Fail Legibly
+Dumb strategies end in 2 minutes. The game teaches itself through fast failure.
+
+- Spam WORK → bugs slow you to a crawl, never earn enough to escape
+- Spam HUSTLE → caught and fired before you escape
+- Spam SHIP IT → bug spiral, work grinds to halt
+
+By run 3-4 the player understands the loop without a tutorial screen.
+
+### 5. Endings Are Difficulty Tiers
+Players self-select their challenge via endings. No explicit difficulty modes needed.
+
+- Run 1-2: just try to escape
+- Run 3+: chase a specific ending
+- THE PERFECTIONIST is the hard mode. THE SPEED RUNNER is the speedrun. The game sets its own challenge.
 
 ---
 
@@ -47,10 +61,12 @@ Resources represent feelings, not numbers.
 
 **Each day, pick one action:**
 - **WORK** — Make progress on the current corporate task
-- **HUSTLE** — Build your escape (side project/network)
-- **SHIP IT** — Complete task now, add bugs based on quality
+- **HUSTLE** — Earn side income toward escape (risky)
 
-**Core Tension:** "Can I build my escape before they fire me for neglecting corporate work?"
+**On the task card:**
+- **SHIP IT** — Complete task at current quality, add bugs, get new task. Ends the day.
+
+**Core Tension:** "Can I earn enough to escape before they fire me for neglecting corporate work?"
 
 ---
 
@@ -59,9 +75,7 @@ Resources represent feelings, not numbers.
 | Resource | Start | Game Over |
 |----------|-------|-----------|
 | Money | $0 | — |
-| Ducks | 3 | 0 = burnout |
 | Bugs | 0 | 100+ = death spiral |
-| Escape Progress | 0% | — |
 | Day | 1 | — |
 
 ---
@@ -70,52 +84,32 @@ Resources represent feelings, not numbers.
 
 **WORK**
 - Progress on task, scaled by complexity + bugs
+- Complexity shown on task card as 🍝 (1-3 bowls) — never as a number
 - Paid on payday (every 5 days)
 
 **HUSTLE**
-- Build escape progress (+5%/day)
-- Earn $200
-- Risk firing if overdue
+- Earn side income toward escape
+- Risk detection if overdue
 
 **SHIP IT**
 - Complete task at current quality
-- Adds bugs: `(100 - progress) / 10`
-- Tech Debt category: bugs × 3
+- Adds bugs based on how incomplete it is — the worse the quality, the more bugs
 - Triggers new task assignment
-
----
-
-## Task Categories
-
-**Optics** — Political risk
-- Short deadlines (1 day overdue = PIP warning)
-- CEO might love or hate the result
-
-**Tech Debt** — Long-term consequences
-- Bug multiplier 3× when shipped incomplete
-- Long deadlines
-
-**Critical** — Immediate stakes
-- Shipped below 80% → guaranteed production outage next day
-- Customer-facing consequences
 
 ---
 
 ## Win Conditions
 
-Three paths to escape:
+Save enough to escape.
 
-1. **$5,000** — Pure corporate grind, no escape progress needed
-2. **$3,000 + 75% escape** — Balanced approach
-3. **$2,000 + 100% escape** — Full hustler, startup self-sustaining
+WORK earns salary (payday every few days). HUSTLE earns side income (risky). Both count. HUSTLE is faster but gets you caught — WORK is safe but risks golden handcuffs.
 
 ---
 
 ## Loss Conditions
 
-- **Burnout** — 0 ducks
-- **Death Spiral** — 100+ bugs (work becomes impossible)
-- **Fired (deadline)** — Task overdue 3+ days and already on PIP
+- **Death Spiral** — bugs pile up until work becomes impossible
+- **Fired (deadline)** — task overdue too long and already on PIP
 
 ---
 
@@ -132,38 +126,13 @@ Three paths to escape:
 
 Every time you choose HUSTLE, there's a chance your boss notices. Detection chance increases if your task is overdue, decreases if you've been shipping quality work. See BALANCE.md for exact values.
 
-### How You Get Caught
-
-**Boss Walks By**
-```
-You quickly Alt+Tab from your startup code to Jira — not fast enough.
-Boss: "Was that... a login page? For what app?"
-```
-
-**Screen Share Accident**
-```
-During standup you share your screen. VSCode has "my-startup-app" in the title bar.
-PM: "Interesting project name. Is that for PROJ-1337?"
-```
-
-**IT Flags Your Git Activity**
-```
-IT: "We noticed some unusual git commits on your work laptop during work hours."
-```
-
-**Coworker Snitches**
-```
-Bob saw you working on something that wasn't work. He mentioned it in his 1:1.
-Boss messages you: "We need to talk."
-```
-
 ### 3-Strike System
 
 **Strike 1 — Warning**
 Boss pulls you aside. Detection chance increases for the next few days. No other penalty — but they're watching.
 
 **Strike 2 — PIP**
-Performance Improvement Plan. Detection chance increases for 30 days. Must ship next 3 tasks at 70%+ or instant fired. PIP counter visible on screen.
+Performance Improvement Plan. Detection chance increases. Must ship the next few tasks at decent quality or instant fired. PIP counter visible on screen.
 
 **Strike 3 — Fired**
 "Security will escort you out." Game over: *Caught Red-Handed* ending.
@@ -173,28 +142,36 @@ You're not asking *if* you'll get caught. You're asking *can you finish before S
 
 ---
 
-## Production Outages
-
-Triggered when poorly shipped tasks accumulate and bugs are high.
-
-- Outage chance = `bugs × 0.5% × poorly_shipped_tasks.count`
-- Critical tasks shipped <80%: guaranteed next-day outage
-- On outage: choose responsibility / scapegoat / blame system
-- 2 PIP warnings = fired; 3 blame strikes = company collapse
-
----
-
 ## Victory Endings
+
+> ⚠️ See DECISIONS.md — victory-endings (triggers not locked)
 
 Based on player stats:
 
-- **THE PERFECTIONIST** — <20 bugs, >30 days: "You escaped with your soul intact."
-- **THE PRAGMATIST** — 20-50 bugs, avg 60-80% quality: "You made the deals you had to make."
-- **THE BURNT-OUT HUSTLER** — 0 ducks remaining: "I escaped, but at what cost?"
-- **THE SPEED RUNNER** — <25 days: "You got out before they could break you."
-- **THE TECHNICAL DEBT MONSTER** — 50-90 bugs: "You left a trail of destruction."
-- **THE AI PROMPT ENGINEER** — Avg <40% quality: "You shipped TODO comments as features."
-- **THE SURVIVOR** — 3+ production outages: "You crawled through hell and came out broken."
+| Ending | Trigger | Quote |
+|--------|---------|-------|
+| THE PERFECTIONIST | Few bugs, took your time | "You escaped with your soul intact." |
+| THE PRAGMATIST | Moderate bugs, consistent quality | "You made the deals you had to make." |
+| THE SPEED RUNNER | Escaped fast | "You got out before they could break you." |
+| THE TECHNICAL DEBT MONSTER | Lots of bugs | "You left a trail of destruction." |
+| THE AI PROMPT ENGINEER | Consistently low quality | "You shipped TODO comments as features." |
+
+---
+
+## Recap Screen
+
+Shown at end of every run (win or loss). Frostpunk-style — every choice surfaced in hindsight.
+
+```
+Day 18 — You escaped.
+You shipped 6 tasks. 3 under 60%.
+31 bugs followed you out the door.
+
+THE TECHNICAL DEBT MONSTER
+"You left a trail of destruction."
+```
+
+Players read it, cringe, and immediately want to do better. This is the replay hook.
 
 ---
 
@@ -204,8 +181,6 @@ Based on player stats:
 - **Specific tech references** — "blockchain todo app", not "do the thing"
 - **Absurdist but grounded** — corporate demands are ridiculous but recognizable
 - **Dark without being mean** — satirical, not cruel
-
-**Ducks** = fucks to give (subtle wordplay, NEVER explicit). Always use "ducks" + 🦆 in UI.
 
 ---
 

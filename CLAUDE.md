@@ -17,16 +17,16 @@ A darkly comedic time-allocation strategy game built in Godot 4.5 where you're a
 **Active build target: [modes/grind/GDD.md](modes/grind/GDD.md). All modes in [modes/](modes/).**
 
 ### Core Concept (Grind)
-A darkly comedic 3-button game. Each day pick one action: WORK / HUSTLE / SHIP IT. Escape with your startup before bugs make work impossible, you get caught hustling, or golden handcuffs trap you forever. 10-15 min per run, replayable via distinct endings.
+A darkly comedic game. Each day pick a daily action (WORK / HUSTLE) and decide whether to ship the current task (SHIP IT — on the task card). Escape with your startup before bugs make work impossible, you get caught hustling, or golden handcuffs trap you forever. 10-15 min per run, replayable via distinct endings.
 
 ### Core Loop
 1. **Pick action** — WORK (safe), HUSTLE (risky), or SHIP IT (permanent)
-2. **Consequences** — bugs added, ducks lost, escape progress made
+2. **Consequences** — bugs added, ducks lost, money earned
 3. **End of day** — payday, overdue check, detection roll if hustled
 4. **Next day** — same situation, slightly worse
 
 ### Key Design Principles
-1. **3 actions, all interconnected** — every action trades across bugs / ducks / escape
+1. **3 actions, all interconnected** — every action trades across bugs / ducks / money
 2. **No forgiveness, only forward** — bugs never decrease, ducks never recover, every choice compounds
 3. **Bugs only affect WORK** — hustling feels free, but the job rots while you do it
 4. **Ducks lost through moral compromise only** — ship badly, blame coworkers
@@ -72,7 +72,7 @@ Before implementing any feature:
 - GameManager holds all state with property setters that emit signals
 - UI components connect to signals in `_ready()`
 - Never update UI directly - always emit signals from GameManager
-- **V2 Note:** Architecture remains the same, core loop logic will be rebuilt
+- Core loop logic lives in GameManager — rebuild for grind from scratch, don't reuse V2 logic
 
 ---
 
@@ -87,11 +87,13 @@ If a number affects feel or balance, it belongs in a data file — not hardcoded
 - Promotion trigger (tasks to golden handcuffs)
 - Detection chance, strike consequences
 - Payday interval, salary amounts
-- Escape progress per hustle
+- Hustle income per day
 
 **In code:** logic only — never magic numbers.
 
 This means balance can be tuned without opening Godot or touching any `.gd` files.
+
+**Design reference:** `modes/grind/BALANCE.md` — when you change a value there, mirror it in `data/balance.json`.
 
 ### ⚠️ Bugs Only Affect WORK
 Bugs slow down job task progress. They do not affect HUSTLE or SHIP IT speed. This is intentional — hustling feels free, shipping is always instant.
@@ -142,4 +144,29 @@ All game text should be:
 - Design direction ("should outages be instant or delayed?")
 - Balance tuning ("is 10x too harsh?")
 - Architecture decisions ("centralised or distributed?")
+
+### Decide Now vs Playtest Later
+
+> **Decide now** if changing it requires touching code or architecture.
+> **Playtest** if changing it only requires changing a number in a config file.
+
+Use this to push back on design decisions that don't need to be made yet. If the answer is "just put it in balance.json and tune later", say so.
+
+### Constraints vs Consequences
+
+Two distinct event types — never mix them up:
+
+- **Constraints** — things that happen *to* the player at the **start of day**. Limit options for that day. (e.g. workmate needs help → productivity hit)
+- **Consequences** — things that happen *because of* the player's action, **post-action**. Punish choices. (e.g. chose HUSTLE → detection roll)
+
+Both phases exist in the day loop architecture. Only consequences fire in V1. Constraints are parked for later — do not retrofit them into post-action logic.
+
+### Idea Tags
+
+Tag ideas in discussion and docs to clarify what kind of decision they are:
+
+- `[ARCHITECTURE]` — requires code/system design decision now
+- `[DESIGN]` — core mechanic or player experience decision, decide before building
+- `[BALANCE]` — just a number, goes in balance.json, decide via playtesting
+- `[JUICE]` — feel, animation, sound — build plain first, add later
 
